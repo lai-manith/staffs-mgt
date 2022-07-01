@@ -1,0 +1,338 @@
+<div class="app-content create-staff">
+  <div class="app-title">
+    <div class="head-left">
+      <a [routerLink]="['../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">{{_id ? 'ព័ត៌មានបុគ្គលិក' : 'បញ្ជីបុគ្គលិក'}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="form" #ngForm="ngForm" (ngSubmit)="onSubmit()" class="creation-form" autocomplete="off">
+    <div class="grid gap-x-16 col-lg-2">
+      <div class="left-side">
+        <div class="box mb-16">
+          <div class="header-label">ព័ត៌មានទូទៅ</div>
+          <div class="grid gap-x-16 col-sm-2">
+            <div *ngIf="_id">
+              <label>លេខសម្គាល់បុគ្គលិក</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="staff_id" placeholder="*">
+                <mat-error *ngIf="form.get('staff_id').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>នាមត្រកូល</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="first_name" placeholder="*">
+                <mat-error *ngIf="form.get('first_name').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>នាមខ្លួន</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="last_name" placeholder="*">
+                <mat-error *ngIf="form.get('last_name').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>តំណែង</label>
+              <mat-form-field appearance="outline">
+                <mat-select formControlName="position" placeholder="*">
+                  <mat-option *ngFor="let p of position" [value]="p._id">{{ p.title }}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>expand_more</mat-icon>
+                <mat-error *ngIf="form.get('position').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>អាយុ</label>
+              <mat-form-field appearance="outline">
+                <input type="number" matInput formControlName="age" placeholder="*">
+                <mat-error *ngIf="form.get('age').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>ភេទ</label>
+              <mat-radio-group color="primary"
+                [ngClass]="{'invalid': ngForm.submitted &amp;&amp; form.get('gender').invalid}"
+                formControlName="gender">
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="female">Female</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div>
+              <label>ថ្ងៃកំណើត</label>
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker" formControlName="date_of_birth" (click)="picker.open()"
+                  placeholder="*" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker startView="multi-year" #picker></mat-datepicker>
+                <mat-error *ngIf="form.get('date_of_birth').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>សញ្ជាតិ : </label>
+              <mat-form-field appearance="outline" (click)="_id ? getNationality() : ''">
+                <mat-select formControlName="nationality"
+                  placeholder="*">
+                  <mat-option *ngFor="let c of nationality" [value]="c._id">{{ c.nationality }}</mat-option>
+                </mat-select>
+                <mat-icon matSuffix>expand_more</mat-icon>
+                <mat-error *ngIf="form.get('nationality').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>អុីម៊ែល</label>
+              <mat-form-field appearance="outline">
+                <input type="email" matInput formControlName="email" placeholder="">
+                <mat-error *ngIf="form.get('email').errors?.required">
+                  ទាមទារ
+                </mat-error>
+                <mat-error *ngIf="form.get('email').errors?.email || form.get('email').errors?.pattern">
+                  អុីម៊ែលមិនត្រឹមត្រូវ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>លេខទូរស័ព្ទ</label>
+              <mat-form-field appearance="outline">
+                <input type="text" matInput formControlName="phone" placeholder="*">
+                <mat-error *ngIf="form.get('phone').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div *ngIf="!_id">
+              <label>ប្រាក់ខែ</label>
+              <mat-form-field appearance="outline">
+                <input type="number" matInput formControlName="salary" placeholder="*">
+                <span matSuffix class="money-label">ដុល្លារ($)</span>
+                <mat-error *ngIf="form.get('salary').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>ថ្ងៃចូលធ្វើការ</label>
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker1" formControlName="hire_date" (click)="picker1.open()"
+                  placeholder="*" readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker1">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker startView="multi-year" #picker1></mat-datepicker>
+                <mat-error *ngIf="form.get('hire_date').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>ថ្ងៃផុតកុងត្រា</label>
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker2" formControlName="contact_expiry_date" (click)="picker2.open()"
+                  placeholder="*" (dateChange)="onExpiredContact($event)">
+                <mat-datepicker-toggle matSuffix [for]="picker2">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker startView="multi-year" #picker2></mat-datepicker>
+                <mat-error *ngIf="form.get('contact_expiry_date').errors?.required">
+                  ទាមទារ
+                </mat-error>
+                <mat-error *ngIf="form.get('contact_expiry_date').errors?.isExpired">
+                  ថ្ងៃកុងត្រាបានផុតកំណត់
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+        <div class="place-of-birth">
+          <div class="box mb-16">
+            <div class="header-label">ទីកន្លែងកំណើត</div>
+            <div class="grid gap-x-16 col-sm-2" formGroupName="place_of_birth">
+              <div>
+                <label>រាជធានី/ខេត្ត : </label>
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="city_provinces" (selectionChange)="onBirthCityProvinceChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of cityProvinces" [value]="c._id">{{ c.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('place_of_birth.city_provinces').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ស្រុក/ខណ្ឌ : </label>
+                <mat-form-field appearance="outline" (click)="onBirthDistrictClick()">
+                  <mat-select formControlName="districts" (selectionChange)="onBirthDistrictChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of birthDistricts" [value]="c._id">{{ c.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('place_of_birth.districts').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ឃុំ/សង្កាត់ : </label>
+                <mat-form-field appearance="outline" (click)="onBirthCommuneClick()">
+                  <mat-select formControlName="communes" (selectionChange)="onBirthCommuneChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of birthCommunes" [value]="c._id">{{ c.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('place_of_birth.communes').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ភូមិ : </label>
+                <mat-form-field appearance="outline" (click)="onBirthVillageClick()">
+                  <mat-select formControlName="villages" placeholder="*">
+                    <mat-option *ngFor="let c of birthVillages" [value]="c._id">{{ c.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('place_of_birth.villages').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-span-sm-2">
+                <label>អាសយដ្ឋាន : </label>
+                <mat-form-field appearance="outline" class="desc">
+                  <textarea matInput rows="5" formControlName="detail"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="box mb-16">
+          <div class="upload-user-profile">
+            <div class="header-label">រួបភាព</div>
+            <div>
+              <label>ប្រភេទរូបភាព: JPEG, PNG and JPG</label>
+              <app-image-uploader [uploadProgress]="uploadProgress" [file]="form.value.profile"
+                (uploadFileEvent)="fileChange($event)"></app-image-uploader>
+            </div>
+          </div>
+        </div>
+
+        <div class="box mb-16">
+          <div class="upload-file">
+            <div class="header-label">ឯកសារ</div>
+            <div>
+              <label>ប្រភេទឯកសារ: DOCX, PDF</label>
+              <app-file-uploader [file]="form.value.attach_files" [fileName]="form.value.file_name"
+                (uploadCVEvent)="docChange($event)"></app-file-uploader>
+            </div>
+          </div>
+        </div>
+
+        <div class="box mb-16">
+          <div class="current-address">
+            <div class="header-label">ទីកន្លែងបច្ចុប្បន្ន</div>
+            <div class="grid gap-x-16 col-sm-2" formGroupName="address">
+              <div>
+                <label>រាជធានី/ខេត្ត : </label>
+                <mat-form-field appearance="outline">
+                  <mat-select formControlName="city_provinces" (selectionChange)="onCurrentCityProvinceChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of cityProvinces" [value]="c._id">{{ c.name }}</mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('address').get('city_provinces').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ស្រុក/ខណ្ឌ/ក្រុង : </label>
+                <mat-form-field appearance="outline" (click)="onCurrentDistrictClick()">
+                  <mat-select formControlName="districts" (selectionChange)="onCurrentDistrictChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of currentDistricts" [value]="c._id">{{ c.name }}</mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('address').get('districts').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ឃុំ/សង្កាត់ : </label>
+                <mat-form-field appearance="outline" (click)="onCurrentCommuneClick()">
+                  <mat-select formControlName="communes" (selectionChange)="onCurrentCommuneChange($event)"
+                    placeholder="*">
+                    <mat-option *ngFor="let c of currentCommunes" [value]="c._id">{{ c.name }}</mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('address').get('communes').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ភូមិ : </label>
+                <mat-form-field appearance="outline" (click)="onCurrentVillageClick()">
+                  <mat-select formControlName="villages" placeholder="*">
+                    <mat-option *ngFor="let c of currentVillages" [value]="c._id">{{ c.name }}</mat-option>
+                  </mat-select>
+                  <mat-icon matSuffix>expand_more</mat-icon>
+                  <mat-error *ngIf="form.get('address').get('villages').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-span-sm-2">
+                <label>អាសយដ្ឋាន : </label>
+                <mat-form-field appearance="outline" class="desc">
+                  <textarea matInput rows="5" formControlName="detail"></textarea>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="group-btn group-action">
+      <button mat-raised-button type="button" routerLink="../">
+        <mat-icon>highlight_off</mat-icon>
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" class="button-submit">
+        <mat-icon>save</mat-icon>
+        <span>Submit</span>
+        <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>

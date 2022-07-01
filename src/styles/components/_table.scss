@@ -1,0 +1,44 @@
+@use '../variables'as *;
+
+.mat-table {
+  .group-picture-name {
+    display: flex;
+    align-items: center;
+  }
+
+  .status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+
+    &::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: $rounded-full;
+      margin-right: $spacing-sm;
+    }
+
+    &.active {
+      color: $color-primary;
+      background-color: rgba($color: $color-primary, $alpha: 0.2);
+      font-weight: 500;
+
+      &::before {
+        background-color: $color-primary;
+      }
+    }
+
+    &.inactive {
+      color: $color-red;
+      background-color: rgba($color: $color-red, $alpha: 0.2);
+
+      &::before {
+        background-color: $color-red;
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+@use '../variables';
+
+/* custom mat card */
+.mat-card {
+  border-radius: variables.$rounded-lg !important;
+}

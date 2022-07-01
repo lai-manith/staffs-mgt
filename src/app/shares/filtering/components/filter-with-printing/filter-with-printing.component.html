@@ -1,0 +1,45 @@
+<mat-card class="mat-elevation-z0 filter-card with-print grid gap-16 col-md-3 bg-grey mb-16 border">
+
+    <div class="col-span-md-2">
+        <div class="filter-search">
+            <div class="box filter-box">
+                <button mat-stroked-button [matMenuTriggerFor]="menu" class="bg-white rounded-md py-2">
+                    <mat-icon svgIcon="filter" matPrefix class="filter-icon"></mat-icon>
+                    <span class="px-8">Filters</span>
+                    <mat-icon matSuffix>expand_more</mat-icon>
+                </button>
+                <mat-menu #menu>
+                    <button mat-menu-item>
+                        <mat-icon>dialpad</mat-icon>
+                        <span>Redial</span>
+                    </button>
+                    <button mat-menu-item disabled>
+                        <mat-icon>voicemail</mat-icon>
+                        <span>Check voice mail</span>
+                    </button>
+                    <button mat-menu-item>
+                        <mat-icon>notifications_off</mat-icon>
+                        <span>Disable alerts</span>
+                    </button>
+                </mat-menu>
+            </div>
+
+            <div class="box search-box ">
+                <mat-form-field appearance="outline">
+                    <input matInput #searchQuery (keyup)="search(searchQuery.value)" placeholder="search...">
+                    <mat-icon svgIcon="search" matPrefix></mat-icon>
+                    <button *ngIf="searchQuery.value" mat-icon-button matSuffix
+                        (click)="searchQuery.value = ''; clear()">
+                        <mat-icon>clear</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+    <div class="group-btn">
+        <button mat-stroked-button color="print" class="btn-sm">
+            <mat-icon svgIcon="print" matPrefix></mat-icon>
+        </button>
+    </div>
+</mat-card>

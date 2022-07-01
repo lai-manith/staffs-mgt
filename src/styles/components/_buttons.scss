@@ -1,0 +1,94 @@
+@use '../variables' as *;
+
+.group-btn {
+  button:not(:last-child) {
+    margin-right: $spacing-md;
+  }
+  .button-manage {
+    background-color: $info-color;
+    color: #fff;
+  }
+}
+
+/* button small */
+.btn-sm {
+  min-width: 32px !important;
+  padding: 0 $spacing-xs !important;
+}
+
+/* button large */
+.btn-lg {
+  width: 300px;
+  border-radius: $rounded-xl !important;
+  padding: 10px $spacing-md !important;
+  font-size: 20px;
+}
+
+//* Tooltip
+.custom-tooltip {
+  background-color: $color-primary;
+  font-size: 11px;
+  overflow: visible !important;
+  box-shadow: 0px 1px 2px #00000029, 0px 2px 4px #0000001f,
+    0px 1px 8px #0000001a;
+  border-right-color: #fff !important;
+  position: relative;
+
+  @media screen and (max-width: map-get($map: $grid-breakpoints, $key: 'sm')) {
+    display: none;
+  }
+  // &::after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 40%;
+  //   left: 100%;
+  //   margin-top: -3px;
+  //   border-width: 6.5px;
+  //   border-style: solid;
+  //   border-color: transparent transparent  transparent $color-primary;
+  // }
+}
+
+// button.save {
+//   margin-top: 2em;
+//   align-self: flex-end;
+//   font-size: 1em;
+//   width: 175px;
+//   height: 47px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
+
+.lds-ripple {
+  display: inline-block;
+  position: relative;
+  width: 30px;
+  height: 30px;
+}
+.lds-ripple div {
+  position: absolute;
+  border: 4px solid #fff;
+  opacity: 1;
+  border-radius: 50%;
+  animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+}
+.lds-ripple div:nth-child(2) {
+  animation-delay: -0.5s;
+}
+@keyframes lds-ripple {
+  0% {
+    top: 14px;
+    left: 14px;
+    width: 0;
+    height: 0;
+    opacity: 1;
+  }
+  100% {
+      top: 0px;
+      left: 0px;
+      width: 30px;
+      height: 30px;
+      opacity: 0;
+  }
+}

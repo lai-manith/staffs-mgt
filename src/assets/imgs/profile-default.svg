@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 150 150">
+  <g id="Group_3647" data-name="Group 3647" transform="translate(-1165 -1375)">
+    <path id="Path_3251" data-name="Path 3251" d="M75,0A75,75,0,1,1,0,75,75,75,0,0,1,75,0Z" transform="translate(1165 1375)" fill="rgba(128,128,128,0.1)"/>
+    <g id="businessman" transform="translate(1205 1415)">
+      <g id="Group_3644" data-name="Group 3644">
+        <g id="Group_3643" data-name="Group 3643">
+          <circle id="Ellipse_150" data-name="Ellipse 150" cx="19.091" cy="19.091" r="19.091" transform="translate(15.909)" fill="rgba(0,0,0,0.6)"/>
+          <path id="Path_3252" data-name="Path 3252" d="M62.17,284.508a70.438,70.438,0,0,0-13.529-5.253,1.584,1.584,0,0,0-1.911,1l-6.521,18.192-1.974-9.874,3.048-9.145a1.593,1.593,0,0,0-1.51-2.094H30.227a1.593,1.593,0,0,0-1.51,2.094l3.048,9.145-1.974,9.874L23.27,280.254a1.587,1.587,0,0,0-1.911-1A70.43,70.43,0,0,0,7.83,284.508,14.316,14.316,0,0,0,0,297.277v2.329a6.371,6.371,0,0,0,6.364,6.364H63.636A6.371,6.371,0,0,0,70,299.606v-2.329A14.316,14.316,0,0,0,62.17,284.508Z" transform="translate(0 -235.969)" fill="rgba(0,0,0,0.6)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

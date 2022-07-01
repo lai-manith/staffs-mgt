@@ -1,0 +1,125 @@
+<mat-dialog-content class="app-content">
+  <div class="app-title">
+    <h1 class="title">ជ្រើសរើសបុគ្គលិក</h1>
+  </div>
+</mat-dialog-content>
+<mat-divider></mat-divider>
+<mat-dialog-content class="app-content">
+  <div class="mt-16"></div>
+  <app-filter-without-create-new [filters]="filters" (queryFilter)="setParams($event)" (queryEvent)="onSearch($event)"></app-filter-without-create-new>
+    <div id="table">
+      <div class="progress-table">
+        <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+      </div>
+      <table mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ល.រ</th>
+          <td mat-cell *matCellDef="let element, let i=index">
+            <span class="mobile-label">ល.រ:</span>
+            <span>{{params.page === 1 ? (i + 1) : i + 1 + (params.limit * (params.page - 1))}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="col-header-name"> ឈ្មោះ </th>
+          <td mat-cell *matCellDef="let element" class="col-image-name">
+            <span class="mobile-label">ឈ្មោះ:</span>
+            <div class="thumbnail-list">
+              <div
+                [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+                class="profile-picture"></div>
+              <span>{{element | fullName}}</span>
+            </div>
+
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="age">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>អាយុ</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">អាយុ:</span>
+            <span>{{ element.age + 'ឆ្នាំ' }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ភេទ</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ភេទ:</span>
+            <span>{{ element.gender }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>តំណែង</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">តំណែង:</span>
+            <span>{{ element.position?.title }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="hire_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃចូលធ្វើការ</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ថ្ងៃចូលធ្វើការ:</span>
+            <span>
+              {{ element.hire_date | date: 'dd' }}
+              {{ element.hire_date | date: 'MM' | khmerMonth }}
+              {{ element.hire_date | date: 'yyyy' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="contact_expiry_date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃផុតកុងត្រា</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ថ្ងៃផុតកុងត្រា:</span>
+            <span>
+              {{ element.contact_expiry_date | date: 'dd' }}
+              {{ element.contact_expiry_date | date: 'MM' | khmerMonth }}
+              {{ element.contact_expiry_date | date: 'yyyy' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef> សកម្មភាព </th>
+          <td mat-cell *matCellDef="let element; let i=index">
+            <span class="mobile-label">សកម្មភាព:</span>
+            <mat-checkbox class="mat-checkbox action"
+            [checked]="selected === (params.page === 1 ? (i + 1) :  i + 1 + (params.limit * (params.page - 1)))"
+            (change)="selected = (params.page === 1 ? (i + 1) :  i + 1 + (params.limit * (params.page - 1)));
+            onChooseSchool($event, element)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">
+            <div class="empty grid p-32  content-center">
+              <app-empty *ngIf="!isLoading; else loading"></app-empty>
+              <ng-template #loading>
+                <strong align="center">កំពុងផ្ទុក...</strong>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <app-pagination [total]="total" [limit]="params.limit" [page]="params.page" [surroundButton]="6"
+      (changed)="goTo($event)">
+    </app-pagination>
+</mat-dialog-content>
+<mat-dialog-actions align="end" style="padding: 20px 0!important;">
+  <button mat-raised-button mat-dialog-close>
+    <mat-icon>highlight_off</mat-icon>
+    Cancel
+  </button>
+  <button form="form" mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+    <mat-icon>check_circle_outline</mat-icon>
+    Confirm
+  </button>
+</mat-dialog-actions>

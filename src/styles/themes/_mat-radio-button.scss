@@ -1,0 +1,13 @@
+@use '../variables';
+
+.mat-radio-group {
+    display: block;
+    padding: variables.$spacing-xs 0 2em 0;
+    border-top: 0.3em solid transparent;
+    .mat-radio-button {
+        line-height: 1.5;
+        &:not(:last-child) {
+            margin-right: variables.$spacing-lg;
+        }
+    }
+}

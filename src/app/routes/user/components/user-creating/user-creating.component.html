@@ -1,0 +1,152 @@
+<div class="app-content">
+  <div class="app-title">
+    <div class="head-left">
+      <a [routerLink]="['../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">{{_id ? 'ព័ត៌មានបុគ្គលិក' : 'បញ្ជីបុគ្គលិក'}}</h1>
+    </div>
+  </div>
+
+  <form [formGroup]="form" #ngForm="ngForm" (ngSubmit)="onSubmit()" class="creation-form" autocomplete="off">
+    <div class="grid gap-x-16 col-lg-2">
+      <div class="left-side">
+        <div class="general-info">
+          <div class="header-label">ព័ត៌មានទូទៅ</div>
+          <div class="grid gap-x-16 col-sm-2">
+            <div>
+              <label>នាមត្រកូល</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="first_name" placeholder="*">
+                <mat-error *ngIf="form.get('first_name').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>នាមខ្លួន</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="last_name" placeholder="*">
+                <mat-error *ngIf="form.get('last_name').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>ថ្ងៃកំណើត</label>
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker" formControlName="dob" (click)="picker.open()" placeholder="*"
+                  readonly>
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker startView="multi-year" #picker></mat-datepicker>
+                <mat-error *ngIf="form.get('dob').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <label>ភេទ</label>
+              <mat-radio-group color="primary"
+                [ngClass]="{'invalid': ngForm.submitted &amp;&amp; form.get('gender').invalid}"
+                formControlName="gender">
+                <mat-radio-button value="male">Male</mat-radio-button>
+                <mat-radio-button value="female">Female</mat-radio-button>
+              </mat-radio-group>
+            </div>
+            <div>
+              <label>អុីម៊ែល</label>
+              <mat-form-field appearance="outline">
+                <input type="email" matInput formControlName="email" placeholder="">
+                <mat-error *ngIf="form.get('email').errors?.required">
+                  ទាមទារ
+                </mat-error>
+                <mat-error *ngIf="form.get('email').errors?.email || form.get('email').errors?.pattern">
+                  អុីម៊ែលមិនត្រឹមត្រូវ
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="upload-user-profile">
+          <div class="header-label">រួបភាព</div>
+          <div class="mb-16">
+            <label>ប្រភេទរូបភាព: JPEG, PNG and JPG</label>
+            <app-image-uploader [uploadProgress]="uploadProgress"  [file]="form.value.profile" (uploadFileEvent)="fileChange($event)"></app-image-uploader>
+          </div>
+        </div>
+        <div class="grid gap-x-16 col-1">
+          <div>
+            <label>ឈ្មោឈ្មោះអ្នកប្រើប្រាស់</label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="username" placeholder="*">
+              <mat-error *ngIf="form.get('username').errors?.required">
+                ទាមទារ
+              </mat-error>
+              <mat-error *ngIf="form.get('username').errors?.minlength && !form.get('username').errors?.required">
+                ត្រូវបញ្ចុលយ៉ាងតិច៦តួ
+              </mat-error>
+              <mat-error *ngIf="form.get('username').errors?.maxlength && !form.get('username').errors?.required">
+                ត្រូវបញ្ចុលយ៉ាងច្រើន៤០តួ
+              </mat-error>
+              <mat-error *ngIf="form.get('username').errors?.pattern && !form.get('username').errors?.minlength">
+                មិនអាចដកឃ្លា និងសញ្ញា
+              </mat-error>
+              <mat-error *ngIf="form.get('username').errors?.duplicated">
+                ឈ្មោះនេះមានរូចហើយ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="grid gap-x-16 col-sm-2">
+          <div>
+            <label>ពាក្យសម្ងាត់</label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="password" placeholder="*">
+              <mat-error *ngIf="form.get('password').errors?.required">
+                ទាមទារ
+              </mat-error>
+              <mat-error
+              *ngIf="form.get('password').errors?.minlength && !form.get('confirm_password').errors?.required">
+              ពាក្យសម្ងាត់ត្រូវបញ្ចុលយ៉ាងតិច៨តួ
+            </mat-error>
+              <mat-error *ngIf="form.get('password').errors?.minlength && !form.get('password').errors?.required">
+                ពាក្យសម្ងាត់ត្រូវបញ្ចុលយ៉ាងតិច៨តួ
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <label>បញ្ជាក់ពាក្យសម្ងាត់</label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="confirm_password" placeholder="*">
+              <mat-error *ngIf="form.get('confirm_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+              <mat-error
+                *ngIf="form.get('confirm_password').errors?.mustMatch && !form.get('confirm_password').errors?.required">
+                ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នា
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="group-btn group-action">
+      <button mat-raised-button type="button" routerLink="../">
+        <mat-icon>highlight_off</mat-icon>
+        Cancel
+      </button>
+      <button mat-raised-button color="primary">
+        <mat-icon>save</mat-icon>
+        Submit
+        <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+      </button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,230 @@
+@use '../../../styles/variables';
+
+$lg-width: 250px;
+$sm-width: 84px;
+.menu-list {
+  margin-top: 120px;
+
+  .menu-item-title {
+    padding-left: 10px;
+  }
+  .mat-list-item {
+    margin-top: 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    color: variables.$color-secondary;
+  }
+  .mat-list-item,
+  .menu-item-title {
+    font-size: 16px;
+    border-radius: 11px;
+  }
+  .mat-expansion-panel {
+    .mat-expansion-panel-header {
+      &.active {
+        &.mat-expanded {
+        }
+      }
+    }
+    .mat-nav-list {
+      margin: 0;
+      mat-icon {
+        width: 20px;
+        height: 20px;
+        font-size: 18px;
+      }
+      .mat-list-item {
+        span {
+          font-size: 14px;
+        }
+      }
+    }
+    &.parents {
+      .mat-nav-list {
+        border-radius: 11px;
+        .mat-list-item {
+          border-radius: 11px !important;
+        }
+      }
+    }
+  }
+}
+mat-sidenav {
+  width: $sm-width;
+  @media screen and (min-width: 959px) {
+    transition: width 0.2s ease;
+    &.large-width {
+      width: $lg-width;
+    }
+  }
+
+  .main-logo {
+    cursor: pointer;
+    background-color: white;
+    height: 120px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    z-index: 1;
+    img {
+      object-fit: cover;
+      border-radius: 50%;
+      margin: 12px auto auto auto;
+      max-width: 80%;
+    }
+    position: absolute;
+    left: 50%;
+    width: 100%;
+    transform: translateX(-50%);
+  }
+  background-color: #fff;
+  mat-nav-list {
+    overflow-x: hidden;
+    padding-top: unset !important;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    mat-list-item {
+      color: black;
+      .logo {
+        margin-top: 20px;
+        margin-bottom: 12px;
+        .main-logo {
+          img {
+            background: #777d749c;
+          }
+        }
+      }
+    }
+    .logo {
+      margin: 55px 0;
+      pointer-events: none;
+      cursor: auto !important;
+      span {
+        width: 100%;
+        text-align: center;
+      }
+      &:hover {
+        background: none;
+        pointer-events: none;
+      }
+    }
+  }
+}
+.explicit-lg-ml {
+  margin-left: $lg-width !important;
+}
+.explicit-sm-ml {
+  margin-left: $sm-width !important;
+}
+
+.mat-drawer-content {
+  transition: margin-left 0.2s ease;
+  overflow: unset;
+  padding: variables.$layout-gap;
+}
+.profile-menu-btn {
+  color: white;
+  margin-right: 4px;
+  padding: 0px 0px 0px 9px;
+  ::ng-deep .mat-button-wrapper {
+    display: flex;
+    flex-direction: row;
+    .profile-info {
+      line-height: 1.5;
+      text-align: right;
+      font-weight: 600;
+      letter-spacing: 1.3px;
+    }
+    .role {
+      font-weight: lighter;
+      font-size: 12.5px;
+    }
+  }
+}
+
+.expansion-panel {
+  box-shadow: none !important;
+  color: variables.$color-secondary;
+  span {
+    font-weight: normal;
+  }
+}
+
+:host ::ng-deep .mat-expansion-panel {
+  border-radius: unset !important;
+  .mat-expansion-panel-header-description,
+  .mat-expansion-indicator:after {
+    color: #0000008a !important;
+  }
+  .mat-expansion-panel-header {
+    height: 55px !important;
+    display: flex;
+    padding: 0 16px;
+    border-radius: 11px;
+    .mat-content {
+      align-items: center;
+      .mat-icon {
+        margin-right: 10px;
+        min-width: 24px;
+      }
+    }
+  }
+
+  .mat-expansion-panel-body {
+    padding: 0px !important;
+
+    .mat-list-item {
+      height: 50px !important;
+      font-size: 14px;
+    }
+
+    .expand {
+      // span {
+      //   display: block;
+      // }
+    }
+
+    .mat-nav-list {
+      .mat-list-item {
+        &.no-expand {
+          .mat-list-item-content {
+            height: 100%;
+            flex-direction: row;
+            box-sizing: border-box;
+            display: flex;
+            place-content: center;
+            align-items: center;
+            span {
+              display: none;
+            }
+            mat-icon {
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.svg-active {
+  filter: invert(48%) sepia(85%) saturate(218%) hue-rotate(98deg) brightness(92%) contrast(86%);
+}
+.app-root-content {
+  height: calc(100vh - variables.$layout-gap * 2);
+  overflow: auto;
+}
+.dash-row {
+  margin-top: calc(70px + variables.$layout-gap);
+}
+.mat-error,
+.mat-hint {
+  line-height: 16px;
+}
+
+.avatar-default {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}

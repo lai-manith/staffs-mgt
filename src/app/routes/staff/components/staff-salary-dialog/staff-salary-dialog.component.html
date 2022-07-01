@@ -1,0 +1,41 @@
+<div class="detail-form">
+  <mat-dialog-content class="app-content">
+    <div class="class-dialog form-dialog">
+      <div class="app-title">
+        <h1 class="title">កែប្រែប្រាក់ខែ</h1>
+      </div>
+      <form id="form" [formGroup]="form" autocomplete="off">
+        <div class="mat-elevation-z0 grid gap-x-16 col-lg-2 col-xl-2">
+          <div>
+            <label class="required" for="">ប្រាក់ខែបច្ចុប្បន្ន</label>
+            <mat-form-field appearance="outline">
+              <input type="number" readonly matInput formControlName="current_salary" placeholder="*" />
+              <span matSuffix>ដុល្លារ($)</span>
+            </mat-form-field>
+          </div>
+          <div>
+            <label class="required" for="">ប្រាក់ខែថ្មី</label>
+            <mat-form-field appearance="outline">
+              <input type="number" matInput formControlName="new_salary" placeholder="*" />
+              <span matSuffix>ដុល្លារ($)</span>
+              <mat-error *ngIf="form.get('new_salary').errors?.required">
+                ទាមទារ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" style="padding: 20px 0!important;">
+    <button mat-raised-button mat-dialog-close>
+      <mat-icon>cancel</mat-icon>
+      Cancel
+    </button>
+    <button class="button-submit" form="form" mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+      <mat-icon>check_circle_outline</mat-icon>
+      Confirm
+      <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+    </button>
+  </mat-dialog-actions>
+</div>

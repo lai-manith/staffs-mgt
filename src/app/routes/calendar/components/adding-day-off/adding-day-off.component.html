@@ -1,0 +1,51 @@
+<mat-dialog-content>
+  <div class="box box-building new-user-dialog">
+    <div class="box-header">
+      ការបង្កើតមុខងារថ្មី
+    </div>
+    <div class="horizontal"></div>
+    <form id="form" [formGroup]="form" autocomplete="off">
+      <div class="form-group">
+        <div class="row">
+          <label for="" class="col-sm-4 col-form-label">មុខងារជាភាសាខ្មែរ : </label>
+          <div class="col-sm-8">
+            <mat-form-field class="form-control" appearance="outline">
+              <input matInput formControlName="title" placeholder="*" required>
+              <mat-error *ngIf="form.get('title').errors?.required">
+                Required
+              </mat-error>
+              <mat-error *ngIf="form.get('title').errors?.exist && !form.get('title').errors?.required">
+                Existed
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <label for="" class="col-sm-4 col-form-label">មុខងារជាភាសាអង់គ្លេស : </label>
+          <div class="col-sm-8">
+            <mat-form-field class="form-control" appearance="outline">
+              <input matInput placeholder="*" formControlName="title_en" required>
+              <mat-error *ngIf="form.get('title_en').errors?.required">
+                Required
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <label for="" class="col-sm-4 col-form-label">ការពិពណ៌នា : </label>
+          <div class="col-sm-8">
+            <mat-form-field class="form-control" appearance="outline">
+              <textarea matInput rows="8" formControlName="description"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button form="form" color="primary" type="submit" class="my-button-custom" (click)="onSubmit()">
+    <mat-icon>save</mat-icon>
+    រក្សាទុក
+  </button>
+</mat-dialog-actions>

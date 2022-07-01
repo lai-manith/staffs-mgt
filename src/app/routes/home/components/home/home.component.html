@@ -1,0 +1,41 @@
+<div class="home">
+  <h1 class="title">ផ្ទាំងគ្រប់គ្រង</h1>
+  <div class="grid col-lg-12 col-sm-1 col-md-1 col-xs-1 gap-16">
+    <div class="chart-container col-span-lg-8">
+      <div class="title-and-more">
+        <mat-card-header>
+          <mat-card-title> <h2>ស្ថិតិបុគ្គលិកថ្មី</h2></mat-card-title>
+        </mat-card-header>
+      </div>
+      <app-line-chart
+        class="line-chart"
+        [lineChartDataset]="lineChartDataset"
+        [lineChartLabel]="lineChartLabel"
+      ></app-line-chart>
+    </div>
+    <div class="chart-container col-span-lg-4 ">
+      <div class="title-and-more ">
+        <mat-card-header>
+          <mat-card-title><h2>បុគ្គលិកតាមភេទ</h2></mat-card-title>
+        </mat-card-header>
+      </div>
+      <app-doughnut-chart *ngIf="dougnutChartDataset && doughnutChartLabels"
+        class="doughnut-chart"
+        [dougnutChartDataset]="dougnutChartDataset"
+        [doughnutChartLabels]="doughnutChartLabels"
+        [dougnutChartDataTotal]="dougnutChartDataTotal"
+      ></app-doughnut-chart>
+    </div>
+  </div>
+  <div class="mt-16"></div>
+  <div class="grid col-lg-12 col-sm-1 col-md-1 col-xs-1 gap-16 mt-16 app-content">
+    <div class="title-and-more col-span-lg-12">
+      <mat-card-header>
+        <mat-card-title><h2>បុគ្គលិកជិតផុតកុងត្រា</h2></mat-card-title>
+      </mat-card-header>
+    </div>
+    <div class="col-span-lg-12">
+      <app-faculty-list></app-faculty-list>
+    </div>
+  </div>
+</div>

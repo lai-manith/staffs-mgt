@@ -1,0 +1,26 @@
+.snackbar-custom {
+  color: #fff;
+  font-weight: 500;
+  .snackbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .snackbar-message {
+    display: flex;
+    align-items: center;
+    mat-icon {
+        margin-right: 5px;
+    }
+  }
+}
+.snackbar-custom.snackbar-success {
+  background-color: #4CAF50;
+}
+.snackbar-custom.snackbar-error {
+  background-color: #F44336;
+}
+
+.cdk-global-overlay-wrapper + .snackbar-custom {
+  pointer-events: visible;
+}

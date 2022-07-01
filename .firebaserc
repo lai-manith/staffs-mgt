@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "staff mgt": "admin-staff",
+    "default": "admin-staff"
+  },
+  "targets": {}
+}

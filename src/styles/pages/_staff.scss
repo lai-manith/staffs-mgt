@@ -1,0 +1,21 @@
+@use '../variables' as *;
+
+.staff-detail {
+  .value.active {
+    color: $success-color;
+  }
+  .value.inactive {
+    color: $danger-color;
+  }
+}
+
+.create-staff {}
+
+.staff-salary {
+  .trending-down {
+    color: $color-light-red;
+  }
+  .trending-up {
+    color: $color-primary;
+  }
+}

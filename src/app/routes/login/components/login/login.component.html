@@ -1,0 +1,189 @@
+<div class="main-form">
+  <div class="form-login" id="login">
+    <div class="form">
+      <div class="content-form">
+        <!-- title form login -->
+        <div class="title-form">
+          <p>សូមស្វាគមន៍មកកាន់</p>
+          <p>ប្រព័ន្ធគ្រប់គ្រងបុគ្គលិក</p>
+        </div>
+        <!-- end of title form login -->
+        <div class="space-2"></div>
+
+
+        <div *ngIf="formState == 0" class="form-field" @fastFadeLeft>
+          <form [formGroup]="form" (ngSubmit)="form.valid && onSubmit()">
+
+            <!-- input field username and passord -->
+            <div class="user-detail">
+              <mat-form-field class="example-full-width username">
+                <mat-label>ឈ្មោះគណនី</mat-label>
+                <mat-icon matPrefix>perm_identity</mat-icon>
+                <input type="text" matInput formControlName="username" required name="username">
+                <img @fadeIn *ngIf="form.value.username" class="done-icon" src="/assets/icons/done-sign.svg" alt="">
+                <img @fadeIn *ngIf="form.get('username').touched && !form.value.username" class="undone-icon"
+                  src="/assets/icons/incorrect_icon.svg" alt="">
+                <!-- <mat-error @fadeLeft *ngIf="form.get('username').errors?.required">
+                                    Username is required!
+                                </mat-error> -->
+              </mat-form-field>
+              <hr style="border: 1px solid #92e3a9;">
+              <mat-form-field class="example-full-width password">
+                <mat-label>ពាក្យសម្ងាត់</mat-label>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input type="password" matInput formControlName="password" required name="password">
+                <img @fadeIn *ngIf="form.value.password" class="done-icon" src="/assets/icons/done-sign.svg" alt="">
+                <img @fadeIn *ngIf="form.get('password').touched && !form.value.password" class="undone-icon"
+                  src="/assets/icons/incorrect_icon.svg" alt="">
+                <!-- <mat-error @fadeLeft *ngIf="form.get('password').errors?.required">
+                                    Password is required!
+                                </mat-error> -->
+              </mat-form-field>
+            </div>
+            <!-- end of input field username and passord -->
+
+            <!-- button login -->
+            <div class="btn-login mt-18">
+              <button mat-button [disabled]="loading" class="submit-button">
+                <mat-spinner [diameter]="24" *ngIf="loading" class="loading-spinner loading-spinner--white"></mat-spinner>
+                <mat-icon *ngIf="!loading">login</mat-icon>
+                ចូល
+              </button>
+              <div class="mt-18"></div>
+              <a class="forgot-password" (click)="onForgotPassword()">
+                ភ្លេចពាក្យសម្ងាត់?
+              </a>
+            </div>
+            <!-- end of button login -->
+
+          </form>
+        </div>
+
+
+        <div *ngIf="formState == 1" class="form-field" @fastFadeIn>
+          <form [formGroup]="formEmail" (ngSubmit)="formEmail.valid && onGetCode()">
+            <h3 style="text-align: center;">ការស្តារគណនី</h3>
+            <p class="desc-title" style="text-align: center;">សូម​បញ្ចូលអាសយដ្ឋានអុីម៉ែល
+              ដើម្បីស្តារគណនីរបស់អ្នកឡើងវិញ។</p>
+            <div class="user-detail">
+              <mat-form-field style="margin-top: unset;">
+                <mat-label>អុីម៉ែល</mat-label>
+                <mat-icon matPrefix>email</mat-icon>
+                <input type="email" matInput formControlName="email" required name="email">
+              </mat-form-field>
+            </div>
+            <div class="btn-login mt-18">
+              <button [disabled]="formEmail.invalid" mat-button color="primary">
+                <mat-icon>fiber_pin</mat-icon>
+                ស្នើលេខកូដ
+              </button>
+              <div class="back mt-18">
+                <mat-icon matPrefix>keyboard_backspace</mat-icon>
+                <a (click)="onBackToLogin()">
+                  ត្រលប់ក្រោយ
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div *ngIf="formState == 2" class="form-field" style="text-align: center;" @fastFadeIn>
+          <h3 style="text-align: center;">ការស្តារគណនី</h3>
+          <p class="desc-title" style="text-align: center;">
+            សូមវាយបញ្ចូលលេខកូដដែលបានបញ្ជូនទៅកាន់
+            <br>
+            <span style="font-weight: bold; font-size: 16px;">{{ formEmail.get('email').value }}</span>
+          </p>
+          <ng-otp-input [ngClass]="invalidCode ? 'my-otp-input-invalid' : 'my-otp-input'"
+            (onInputChange)="onOtpChange($event)" [config]="config" style="margin: 10px 0;"></ng-otp-input>
+          <div class="space-2"></div>
+          <div style="margin-top: 10px;">
+            <span *ngIf="!isCodeExpired; else codeExpire;">
+              {{ resendTime.min | number: '2.0-0' }} : {{ resendTime.sec | number: '2.0-0' }}
+            </span>
+            <ng-template #codeExpire>
+              <span>
+                មិនបានទទួលលេខកូដ?
+                <a style="color: #59558e; cursor: pointer;" (click)="onResend()">
+                  បញ្ជូនម្តងទៀត
+                </a>
+              </span>
+            </ng-template>
+          </div>
+          <div class="space-2"></div>
+          <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់spam របស់អ្នក</p>
+          <div class="back">
+            <mat-icon matPrefix>keyboard_backspace</mat-icon>
+            <a (click)="onBackToEmail()">
+              ត្រលប់ក្រោយ
+            </a>
+          </div>
+        </div>
+
+        <div *ngIf="formState == 3" class="form-field" style="text-align: center;" @fastFadeIn>
+          <form [formGroup]="formResetPassword" (ngSubmit)="formResetPassword.valid && onSubmitReset()">
+            <h3 style="text-align: center;">កំណត់ពាក្យសម្ងាត់ថ្មី</h3>
+            <div class="user-detail">
+              <mat-form-field class="example-full-width password">
+                <mat-label>ពាក្យសម្ងាត់ថ្មី</mat-label>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input type="password" matInput formControlName="new_password" required name="password">
+                <img @fadeIn
+                  *ngIf="formResetPassword.value.new_password && !formResetPassword.get('new_password').errors?.minlength"
+                  class="done-icon" src="/assets/imgs/done-sign.svg" alt="">
+                <img @fadeIn
+                  *ngIf="formResetPassword.get('new_password').touched && !formResetPassword.value.new_password"
+                  class="undone-icon" src="/assets/imgs/incorrect_icon.svg" alt="">
+                <mat-error *ngIf="formResetPassword.get('new_password').errors?.minlength">
+                  យ៉ាងតិច៨តួ
+                </mat-error>
+                <mat-error *ngIf="formResetPassword.get('new_password').errors?.required">
+                  ចាំបាច់
+                </mat-error>
+              </mat-form-field>
+              <hr style="border: 1px solid hsl(0deg 0% 93%);">
+              <mat-form-field class="example-full-width password">
+                <mat-label>បញ្ជាក់ពាក្យសម្ងាត់</mat-label>
+                <mat-icon matPrefix>lock</mat-icon>
+                <input type="password" matInput formControlName="confirm_password" required name="confirm_password">
+                <img @fadeIn
+                  *ngIf="formResetPassword.value.confirm_password && !formResetPassword.get('confirm_password').errors?.mustMatch"
+                  class="done-icon" src="/assets/imgs/done-sign.svg" alt="">
+                <img @fadeIn
+                  *ngIf="formResetPassword.get('confirm_password').touched && !formResetPassword.value.confirm_password"
+                  class="undone-icon" src="/assets/imgs/incorrect_icon.svg" alt="">
+                <mat-error *ngIf="formResetPassword.get('confirm_password').errors?.required">
+                  ចាំបាច់
+                </mat-error>
+                <mat-error
+                  *ngIf="formResetPassword.get('confirm_password').errors?.mustMatch && !formResetPassword.get('confirm_password').errors?.required">
+                  ពាក្យសម្ងាត់មិនដូចគ្នា
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="space-2"></div>
+            <div class="btn-login">
+              <button [disabled]="formResetPassword.invalid" mat-button>
+                <mat-icon>save</mat-icon>
+                យល់ព្រម
+              </button>
+            </div>
+            <div style="margin-top: 10px;">
+              <span>
+                {{ expireTime.min | number: '2.0-0' }} : {{ expireTime.sec | number: '2.0-0' }}
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- image log in page -->
+    <div class="image-form">
+      <div class="image-svg">
+        <img src="https://res.cloudinary.com/dxrkctl9c/image/upload/v1639122414/image/sign-in-animate_eea8az.svg"
+          alt="login.svg">
+      </div>
+    </div>
+    <!-- end of image log in page -->
+  </div>
+</div>

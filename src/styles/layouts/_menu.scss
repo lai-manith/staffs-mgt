@@ -1,0 +1,182 @@
+@use 'sass:map';
+@use '../constant';
+@use '../variables';
+.app-menu {
+  position: relative;
+  .dashboard-toolbar {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fe;
+    z-index: 2;
+    position: absolute;
+    padding: 0;
+    height: auto;
+    width: calc(100% - variables.$layout-gap * 2);
+    .dashboard__header {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      background: #3f51b5;
+      color: white;
+      padding: 0.5rem 2rem;
+      min-height: 70px;
+      width: 100%;
+      opacity: 0.97;
+      border-radius: 12px;
+      background: rgb(97, 67, 133);
+      background-image: map-get($map: constant.$linear-gradient-colors, $key: 'gradient-primary');
+      h1 {
+        margin: 0;
+        padding: 0;
+        font-weight: 400;
+        flex: 1;
+        margin-left: 32px;
+      }
+      .icon {
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+    }
+
+    .header-action {
+      display: flex;
+
+      .action {
+        display: grid;
+        grid-template-columns: repeat(2, [col] 40px);
+        gap: 16px;
+
+        .item {
+          &.vertical-line {
+            width: 1px;
+            background-color: #ffffff;
+          }
+        }
+      }
+
+      .avtar {
+        display: flex;
+        .avtar-icon {
+          border-radius: 6px;
+          width: 40px;
+          height: 40px;
+          background-size: cover;
+          object-fit: cover;
+          background-color: #fff;
+          margin-left: 10px;
+        }
+      }
+    }
+    .dash-row {
+      display: block;
+      width: 100%;
+      overflow: auto;
+    }
+    .dash-row + .dash-row {
+      margin: 0rem 1rem;
+    }
+  }
+  .mat-form-field-flex {
+    width: 100%;
+  }
+
+  .no-wrap {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-wrap: break-word;
+    padding-right: 50px !important;
+  }
+
+  .mat-dialog-container {
+    background: #f8f9fe;
+    padding: 50px 80px !important;
+    .mat-dialog-actions {
+      button.mat-focus-indicator.mat-button.mat-button-base.mat-primary {
+        color: #59595b;
+      }
+      button {
+        background: #fff;
+        padding: 5px 25px;
+      }
+    }
+  }
+
+  .example-sidenav .mat-drawer-inner-container {
+    overflow: auto;
+  }
+  .app-container {
+    height: 100vh;
+    @media screen and (min-width: map-get($map: variables.$grid-breakpoints,$key: 'md')) {
+      padding-left: variables.$layout-gap;
+    }
+    background: #f5f5f5;
+    .example-sidenav {
+      border-radius: 16px;
+      border: none;
+      margin-top: variables.$layout-gap;
+      margin-bottom: variables.$layout-gap;
+      @media screen and (max-width: map-get($map: variables.$grid-breakpoints,$key: 'md')) {
+        margin-left: variables.$layout-gap;
+      }
+      /* width */
+      ::-webkit-scrollbar {
+        width: 0px !important;
+      }
+
+      /* Track */
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1 !important;
+      }
+
+      /* Handle */
+      ::-webkit-scrollbar-thumb {
+        background: #888 !important;
+      }
+
+      /* Handle on hover */
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555 !important;
+      }
+    }
+  }
+
+  .mat-list-base .mat-list-item.mat-list-item-with-avatar,
+  .mat-list-base .mat-list-option.mat-list-item-with-avatar {
+    height: 55px !important;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  mat-nav-list#list-nav {
+    .active {
+      span,
+      mat-icon,
+      .mat-expansion-indicator::after {
+        filter: invert(48%) sepia(85%) saturate(218%) hue-rotate(98deg) brightness(92%) contrast(86%);
+        color: variables.$color-primary !important;
+        font-weight: 600;
+      }
+    }
+    mat-list-item {
+      .mat-list-item-content {
+        width: 100%;
+      }
+    }
+
+    //*Custom child nav style
+    .mat-expansion-panel .mat-expansion-panel-body .expand {
+      span {
+        display: flex;
+      }
+      .mat-list-item-content {
+        margin-left: 1em;
+      }
+    }
+    .mat-list-text {
+      display: none !important;
+    }
+  }
+}

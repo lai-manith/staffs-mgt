@@ -1,0 +1,64 @@
+<div class="app-content">
+  <div class="app-title grid gap-16 col-sm-2">
+    <div class="head-left">
+      <a [routerLink]="['../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">បញ្ជីតំណែង</h1>
+    </div>
+    <div class="group-btn">
+      <button mat-raised-button color="primary" type="submit" form="form" (click)="onSubmit()">
+        <mat-icon>save</mat-icon>
+        រក្សាទុក
+      </button>
+    </div>
+  </div>
+  <div class="sub-title mt-16 mb-16">ព័ត៌មានទូទៅ</div>
+  <div class="_content mb-25">
+    <form id="form" [formGroup]="form" class="container content-form" autocomplete="off" #ngForm="ngForm">
+      <div class="col-sm-12">
+        <div class="box">
+          <div class="horizontal"></div>
+          <div class="form-group">
+            <div class="row">
+              <label for="" class="col-sm-4 col-form-label">ឈ្មោះ : </label>
+              <div class="col-sm-8">
+                <mat-form-field class="form-control" appearance="outline">
+                  <input matInput formControlName="title" placeholder="*">
+                  <mat-error *ngIf="form.get('title').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <label for="" class="col-sm-4 col-form-label">ឈ្មោះជាភាសាឡាតាំង : </label>
+              <div class="col-sm-8">
+                <mat-form-field class="form-control" appearance="outline">
+                  <input matInput formControlName="title_en" placeholder="*">
+                  <mat-error *ngIf="form.get('title_en').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <label for="" class="col-sm-4 col-form-label">ការពិពណ៌នា : </label>
+              <div class="col-sm-8">
+                <mat-form-field class="form-control" appearance="outline">
+                  <textarea matInput rows="5" formControlName="description" placeholder="*"></textarea>
+                  <mat-error *ngIf="form.get('description').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

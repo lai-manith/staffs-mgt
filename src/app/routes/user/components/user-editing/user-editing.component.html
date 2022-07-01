@@ -1,0 +1,135 @@
+<div class="app-content">
+  <div class="content-account">
+    <div class="app-title grid gap-16 col-sm-2">
+      <div class="head-left">
+        <a [routerLink]="['../']" mat-icon-button>
+          <mat-icon>
+            keyboard_arrow_left
+          </mat-icon>
+        </a>
+        <div class="mr-16"></div>
+        <h1 class="title">បញ្ជីតំណែង</h1>
+      </div>
+      <div class="group-btn group-action">
+        <button type="button" mat-raised-button routerLink="..">
+          <mat-icon>cancel</mat-icon>
+          បោះបង់
+        </button>
+        <button [disabled]="form.invalid" type="submit" form="form" mat-flat-button color="primary"
+          (click)="onUpdate()">
+          <mat-icon>save</mat-icon>
+          រក្សាទុក
+          <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+        </button>
+      </div>
+    </div>
+
+    <form [formGroup]="form" class="creation-form" autocomplete="off">
+      <div class="grid gap-x-16 col-lg-2">
+        <div class="left-side">
+          <div class="general-info">
+            <div class="header-label">ព័ត៌មានទូទៅ</div>
+            <div class="grid gap-x-16 col-sm-2">
+              <div>
+                <label>នាមត្រកូល</label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="first_name" placeholder="*">
+                  <mat-error *ngIf="form.get('first_name').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>នាមខ្លួន</label>
+                <mat-form-field appearance="outline">
+                  <input matInput formControlName="last_name" placeholder="*">
+                  <mat-error *ngIf="form.get('last_name').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ថ្ងៃកំណើត</label>
+                <mat-form-field appearance="outline">
+                  <input matInput [matDatepicker]="picker" formControlName="dob" (click)="picker.open()" placeholder="*"
+                    readonly>
+                  <mat-datepicker-toggle matSuffix [for]="picker">
+                    <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                  </mat-datepicker-toggle>
+                  <mat-datepicker startView="multi-year" #picker></mat-datepicker>
+                  <mat-error *ngIf="form.get('dob').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div>
+                <label>ភេទ</label>
+                <mat-radio-group color="primary" [ngClass]="{'invalid': form.get('gender').invalid}"
+                  formControlName="gender">
+                  <mat-radio-button value="male">Male</mat-radio-button>
+                  <mat-radio-button value="female">Female</mat-radio-button>
+                </mat-radio-group>
+              </div>
+              <div>
+                <label>អុីម៊ែល</label>
+                <mat-form-field appearance="outline">
+                  <input type="email" matInput formControlName="email" placeholder="">
+                  <mat-error *ngIf="form.get('email').errors?.required">
+                    ទាមទារ
+                  </mat-error>
+                  <mat-error *ngIf="form.get('email').errors?.email || form.get('email').errors?.pattern">
+                    អុីម៊ែលមិនត្រឹមត្រូវ
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="right-side">
+          <div class="upload-user-profile">
+            <div class="header-label">រួបភាព</div>
+            <div class="mb-16">
+              <label>ប្រភេទរូបភាព: JPEG, PNG and JPG</label>
+              <app-image-uploader [uploadProgress]="uploadProgress" [file]="form.value.profile"
+                (uploadFileEvent)="fileChange($event)"></app-image-uploader>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<ng-template #ConfirmUpdateDialog>
+  <mat-dialog-content>
+    <form focusInvalidInput [formGroup]="confirmUpdateForm" class="box request-account-status">
+      <div class="box-header">
+        ការបញ្ជាក់ពាក្យសម្ងាត់
+      </div>
+
+      <div class="image-request">
+        <img src="https://res.cloudinary.com/dxrkctl9c/image/upload/v1639121305/image/password-animate_kl148c.svg"
+          alt="image.svg">
+      </div>
+      <label>ពាក្យសម្ងាត់អ្នកស្នើសុំ : </label>
+      <mat-form-field appearance="outline">
+        <input type="password" #requester_password matInput formControlName="requester_password"
+          autocomplete="new-password" placeholder="*">
+        <button *ngIf="confirmUpdateForm.value.requester_password" type='button' mat-icon-button matSuffix
+          color="primary" (mousedown)="requester_password.type='text'" (mouseout)="requester_password.type='password'"
+          (mouseup)="requester_password.type='password'" (touchstart)="requester_password.type='text'"
+          (touchend)="requester_password.type='password'">
+          <mat-icon>{{requester_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="confirmUpdateForm.get('requester_password').errors?.required">
+          ទាមទារ
+        </mat-error>
+      </mat-form-field>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>បោះបង់</button>
+    <button class="button-submit" [disabled]="confirmUpdateForm.invalid" mat-flat-button color="primary" (click)="onConfirmSubmit()">យល់ព្រម</button>
+  </mat-dialog-actions>
+</ng-template>

@@ -1,0 +1,21 @@
+<section class="image-upload-drag">
+    <div appDropZone (fileDropped)="fileChangeEvent($event)" [class.content-required]="!file" class="upload-card bg-grey rounded-md border-dashed border p-16 mt-4">
+        <div class="relative-div">
+            <div *ngIf="hasFile" class="have-file-uplod file-content">
+                <mat-icon (click)="removeFile()" class="clear-icon ml-8 clear-btn">clear</mat-icon>
+                <mat-icon class="doc mr-4" svgIcon="excel_alt"></mat-icon>
+                <div class="file-name">{{fileName}}</div>
+            </div>
+            <div *ngIf="!hasFile" [style.backgroundImage]="'url(' + defaultImage + ')'" class="profile-picture svg">
+            </div>
+        </div>
+        <div *ngIf="!hasFile">
+          ទាញឯកសាររបស់អ្នកមកកាន់ទីនេះឬ
+            <span class="text-primary btn-browse" (click)="pickFile.value = ''; pickFile.click()">
+                ស្វែករក
+            </span>
+        </div>
+    </div>
+    <input type="file" #pickFile (change)="fileChangeEvent(pickFile.files)" accept=".doc, .docx, application/msword, .pdf"
+        hidden>
+</section>

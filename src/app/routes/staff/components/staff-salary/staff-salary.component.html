@@ -1,0 +1,167 @@
+<div class="app-content staff-salary">
+  <div class="app-title">
+    <div class="head-left">
+      <a [routerLink]="['../../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">បញ្ជីបុគ្គលិក</h1>
+    </div>
+  </div>
+
+  <div class="detail-form grid gap-16 col-12">
+      <div class="profile-with-name mb-16 col-span-4">
+          <img class="school-profile"
+              [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
+              alt="profile picture">
+          <div class="grid gap-4 ml-16">
+              <div class="value name mb-8">{{staff | fullName}}</div>
+              <div>ID: {{' '+ staff?.staff_id}}</div>
+          </div>
+      </div>
+      <div class="col-span-8">
+          <div label="General Information">
+              <div class="grid gap-16 col-sm-3">
+                  <div>
+                      <label>ភេទ</label>
+                      <div class="value">{{staff?.gender}}</div>
+                  </div>
+                  <div>
+                      <label>ថ្ងៃកំណើត</label>
+                      <div class="value">
+                        {{ staff?.date_of_birth | date: 'dd' }}
+                        {{ staff?.date_of_birth | date: 'MM' | khmerMonth }}
+                        {{ staff?.date_of_birth | date: 'yyyy' }}
+                      </div>
+                  </div>
+                  <div>
+                      <label>ជនជាតិ</label>
+                      <div class="value">Khmer</div>
+                  </div>
+                  <div>
+                      <label>Nationality</label>
+                      <div class="value">{{staff?.nationality.nationality}}</div>
+                  </div>
+                  <div>
+                      <label>តំណែង</label>
+                      <div class="value">{{staff?.position?.title}}</div>
+                  </div>
+                  <div>
+                      <label>Phone Number</label>
+                      <div class="phone-number">
+                          <div class="value">{{staff?.phone}}</div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="mt-16"></div>
+<div class="app-content staff-salary">
+  <div class="detail-form">
+    <div class="flex justify-between mb-16">
+      <div class="header-label">ប្រវត្តិប្រាក់ខែ</div>
+      <button mat-raised-button color="primary" class="create-btn" (click)="updateSalary()">
+        <mat-icon svgIcon="add_new"></mat-icon>
+        កែប្រែប្រាក់ខែ
+      </button>
+    </div>
+    <div id="table">
+      <div class="progress-table">
+        <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ល.រ</th>
+          <td mat-cell *matCellDef="let element, let i=index">
+            <span class="mobile-label">ល.រ:</span>
+            <span>{{params.page === 1 ? (i + 1) : i + 1 + (params.limit * (params.page - 1))}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="col-header-name"> ឈ្មោះ </th>
+          <td mat-cell *matCellDef="let element" class="col-image-name">
+            <span class="mobile-label">ឈ្មោះ:</span>
+            <div class="thumbnail-list">
+              <div
+                [ngStyle]="{ 'background-image': element.staff.profile ? 'url(' + (element.staff.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+                class="profile-picture"></div>
+              <span>{{element.staff.first_name}} {{element.staff.last_name}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="current_salary">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ប្រាក់ខែចាស់</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ប្រាក់ខែចាស់:</span>
+            <span>{{ '$ ' + element.current_salary }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="last_salary">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ប្រាក់ខែថ្មី</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ប្រាក់ខែថ្មី:</span>
+            <span>{{ '$ ' + element.last_salary }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃបង្កើត</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ថ្ងៃបង្កើត:</span>
+            <span>
+              {{ element.createAt | date: 'dd' }}
+              {{ element.createAt | date: 'MM' | khmerMonth }}
+              {{ element.createAt | date: 'yyyy' }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ស្ថានភាព</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ស្ថានភាព:</span>
+            <mat-icon class="trending-up" *ngIf="element.status === 1">trending_up</mat-icon>
+            <mat-icon class="trending-down" *ngIf="element.status === -1">trending_down</mat-icon>
+            <mat-icon *ngIf="element.status === 0">trending_flat</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header></th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label"></span>
+            <div class="action">
+              <button mat-stroked-button class="btn-sm" (click)="onDelete(element._id)">
+                <mat-icon svgIcon="trash_can"></mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">
+            <div class="empty grid p-32  content-center">
+              <app-empty *ngIf="!isLoading; else loading"></app-empty>
+              <ng-template #loading>
+                <strong align="center">កំពុងផ្ទុក...</strong>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <app-pagination [total]="total" [limit]="params.limit" [page]="params.page" [surroundButton]="6"
+      (changed)="goTo($event)">
+    </app-pagination>
+  </div>
+</div>

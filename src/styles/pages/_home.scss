@@ -1,0 +1,73 @@
+@use '../variables';
+.home {
+  .student-chart {
+    height: 409px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 2rem;
+    border-radius: 1rem;
+  }
+  .stat-detail {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    div {
+      margin-left: 1em;
+    }
+    h1 {
+      font-weight: bold;
+    }
+
+    h1,
+    p {
+      color: #24292f;
+      margin: 0;
+    }
+  }
+  .title {
+    display: grid;
+    font-size: 24px;
+    font-weight: 600;
+    &::after {
+      content: '';
+      width: 50px;
+      height: 5px;
+      background: variables.$linear-gradient-primary;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+  }
+}
+.title-and-more {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+  .mat-card-header-text .mat-card-title {
+    margin-bottom: 0;
+    h1,
+    h2,
+    h3 {
+      margin-bottom: 0;
+    }
+  }
+
+  .mat-icon-button {
+    &:hover {
+      background-color: rgba(81, 78, 134, 0.1);
+    }
+    line-height: normal;
+    min-width: auto;
+    height: 35px;
+    width: 35px;
+    .mat-icon {
+      height: auto;
+      width: auto;
+      line-height: normal;
+      font-size: 21px;
+    }
+  }
+}

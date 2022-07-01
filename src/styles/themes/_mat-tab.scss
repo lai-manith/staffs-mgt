@@ -1,0 +1,35 @@
+@use '../variables';
+
+.mat-tab-group, .mat-tab-nav-bar {
+    .mat-tab-label, .mat-tab-link {
+        height: 40px;
+        border-width: 1px;
+        border-style: solid none solid none;
+        border-color: variables.$border-grey;
+        &:first-child {
+            border-left-style: solid;
+            border-top-left-radius: variables.$rounded-lg;
+            border-bottom-left-radius: variables.$rounded-lg;
+        }
+        &:last-child {
+            border-right-style: solid;
+            border-top-right-radius: variables.$rounded-lg;
+            border-bottom-right-radius: variables.$rounded-lg;
+        }
+        &.mat-tab-label-active {
+            background-color: variables.$background-light-grey;
+            border-right-style: solid;
+            border-left-style: solid;
+            opacity: 1;
+            font-weight: bold;
+        }
+    }
+    .mat-ink-bar {
+        display: none
+    }
+}
+
+.mat-tab-header {
+    border-bottom: none;
+    margin-bottom: variables.$spacing-md;
+}

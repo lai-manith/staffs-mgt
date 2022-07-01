@@ -1,0 +1,80 @@
+<div class="app-content calendar">
+  <div class="app-title">
+    <div class="header">
+      <h1 class="title">ប្រតិទិនឈប់សម្រាករបស់បុគ្គលិក</h1>
+    </div>
+  </div>
+
+  <div class="table">
+    <div class="calendar-header">
+      <section class="calendar-button">
+        <button class="date-back" mat-button type="button" (click)="decreaseMonth()">
+          <mat-icon>west</mat-icon>
+        </button>
+        <button class="date-today" mat-button type="button" (click)="setCurrentMonth()">ថ្ងៃនេះ</button>
+        <button class="date-forward" mat-button type="button" (click)="increaseMonth()">
+          <mat-icon>east</mat-icon>
+        </button>
+      </section>
+      <section class="date-display">
+        <div class="space-2"></div>
+        <span>{{displayDate.month | khmerMonth}} {{displayDate.year}}</span>
+      </section>
+    </div>
+    <div class="wrapper" *ngIf="calendar">
+      <table class='calendar-table'>
+        <thead>
+          <tr>
+            <th>ថ្ងៃច័ន្ទ</th>
+            <th>ថ្ងៃអង្គារ</th>
+            <th>ថ្ងៃពុធ</th>
+            <th>ថ្ងៃព្រហស្បតិ៍</th>
+            <th>ថ្ងៃសុក្រ</th>
+            <th>ថ្ងៃសៅរ៏</th>
+            <th>ថៃ្ងអាទិត្យ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of calendar | calendarDate: 7; let i = index">
+            <td (click)="onSetEvent(c)" class="calendar-day"
+              [ngClass]="{'active-month': c.isActiveMonth,'active-date': c.isToday,'past-date': c.isPastDate, 'today': c.isToday}"
+              *ngFor="let c of row; let j = index" (mouseenter)="onCardHover(c.dateString)">
+              <button mat-button class="calendar-day-header">
+                <div class="date-holyday">
+                  <section class="number" [ngClass]="c.isHoliday?'is-holiday':''">{{c.date.getDate()}}</section>
+                  <div *ngIf="c.dateString === dateString && c.isActiveMonth"
+                    class="add-dayoff alert">
+                    <div @flyInOut>
+                      <button color="primary" mat-icon-button (click)="onAddDayOff(c.date)">
+                        <mat-icon>add_circle</mat-icon>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="event-content">
+                  <div class="holiday-sign">
+                    <span class="info-alert" *ngFor="let e of c.day_off">
+                      <span [matMenuTriggerFor]="menu"
+                        class="name">{{e.staff.first_name + ' ' + e.staff.last_name}}</span>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="'/staff/staff-active/detail/' + e.staff._id">
+                          <mat-icon color="primary">visibility</mat-icon>
+                          <span>ព័ត៌មានលំអិត</span>
+                        </button>
+                        <button mat-menu-item (click)="onDeleteDayOff(e._id)">
+                          <mat-icon color="warn">delete</mat-icon>
+                          <span>លុប</span>
+                        </button>
+                      </mat-menu>
+                    </span>
+                  </div>
+                </div>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

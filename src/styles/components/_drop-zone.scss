@@ -1,0 +1,144 @@
+@use '../variables' as *;
+
+.image-upload-drag {
+  .invalid .drop-zone {
+    border-color: #f44336;
+  }
+
+  .drop-zone {
+    // padding: 16px;
+    // width: 100%;
+    // min-height: 80px;
+    // border-radius: 5px;
+    // border: 2px dashed rgba(#000, 0.1);
+    // background-color: variables.$text-color-light-gray;
+    // text-align: center;
+    // margin-bottom: 15px;
+
+    &.fileover {
+      border: 2px dashed $primary-color;
+    }
+
+    .icon-upload {
+      font-size: 80px;
+      margin-top: 10px;
+      // margin-bottom: 10px;
+      user-select: none;
+      color: $secondary-color;
+    }
+
+    .btn-browse {
+      color: $primary-color;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    .file-name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      // padding: 0 10px;
+    }
+  }
+
+  .content-thumbnail {
+    width: 46px;
+    height: 56px;
+    border-radius: 6px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    margin: {
+      left: auto;
+      right: auto;
+    }
+
+    &.video,
+    &.file {
+      height: 150px;
+      width: 150px;
+      cursor: pointer;
+      border-radius: 100%;
+    }
+  }
+
+  .dragCursor {
+    cursor: move;
+  }
+
+  .cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+    background-color: white;
+  }
+
+  .cdk-drag-preview .mat-row {
+    padding: 0 14px !important;
+  }
+
+  .cdk-drag-placeholder {
+    position: relative;
+
+    &::before {
+      position: absolute;
+      content: '';
+      height: 100%;
+      width: 100%;
+      background: #ccc !important;
+      border: dotted 3px #999;
+      min-height: 60px;
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+    }
+  }
+
+  .cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .cdk-drop-list-dragging .mat-row:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+
+  .file-content {
+    position: relative;
+    display: inline-block;
+
+    &:hover {
+      .clear-btn {
+        display: block;
+      }
+    }
+
+    .clear-btn {
+      display: none;
+      position: absolute;
+      right: 0;
+      transform: translate(0);
+      background-color: $danger-color;
+      color: white;
+      cursor: pointer;
+      border-radius: 50%;
+      border: 2px solid;
+      box-sizing: content-box;
+    }
+  }
+
+  .browse-file {
+    cursor: pointer;
+  }
+
+  content-required {
+    border-color: red;
+  }
+
+  .reorder-btn-container {
+    justify-content: space-between;
+  }
+}

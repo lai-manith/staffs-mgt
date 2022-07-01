@@ -1,0 +1,41 @@
+@use '../variables' as *;
+
+$pixels: 36;
+
+@mixin edge-margins($edge: false, $value) {
+    @if $edge {
+        margin-#{$edge}: $value + px;
+    } @else {
+        margin: $value + px;
+    }
+}
+
+@mixin axis-margins($axis, $value) {
+    @if ($axis == x) {
+        margin-left: $value + px;
+        margin-right: $value + px;
+    } @else if ($axis == y) {
+        margin-top: $value + px;
+        margin-bottom: $value + px;
+    }
+}
+
+@for $i from 0 to $pixels {
+    
+    // margin on each edges
+    @each $name, $edge in $edges {
+        .m#{$name}-#{$i} {
+            @include edge-margins($edge, $i);
+        }
+    }
+    .m-#{$i} {
+        @include edge-margins(false, $i);
+    }
+
+    // margin on axis
+    @each $axis in $edge-axis {
+        .m#{$axis}-#{$i} {
+            @include axis-margins($axis, $i);
+        }
+    }
+}

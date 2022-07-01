@@ -1,0 +1,25 @@
+<mat-dialog-content align="center">
+  <div class="alert-icon-dialog">
+    <img [src]="icon" alt="icon.svg" />
+  </div>
+  <h2>{{title}}</h2>
+  <span>{{message}}</span>
+</mat-dialog-content>
+<mat-dialog-actions class="btn-action-dialog" [ngClass]="!button ? 'justify-center' : 'justify-between'">
+  <button mat-raised-button matDialogClose="cancel">
+    <mat-icon>highlight_off</mat-icon>
+    បោះបង់
+  </button>
+  <button *ngIf="button === 'delete'" mat-raised-button matDialogClose="confirm" color="primary">
+    <mat-icon>done</mat-icon>
+    យល់ព្រម
+  </button>
+  <button *ngIf="button === 'save'" mat-raised-button matDialogClose="confirm" color="primary">
+    <mat-icon>save</mat-icon>
+    រក្សាទុក
+  </button>
+  <button *ngIf="button === 'confirm'" mat-raised-button matDialogClose="confirm" color="primary">
+    <mat-icon>check_circle_outline</mat-icon>
+    យល់ព្រម
+  </button>
+</mat-dialog-actions>

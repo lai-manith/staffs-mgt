@@ -1,0 +1,15 @@
+@use '../variables';
+
+/* custom mat button */
+.mat-stroked-button {
+  border-radius: variables.$rounded-sm !important;
+}
+
+.mat-raised-button {
+  border-radius: variables.$rounded-md  !important;
+  color: variables.$color-primary;
+}
+
+.mat-flat-button {
+  border-radius: variables.$rounded-sm !important;
+}

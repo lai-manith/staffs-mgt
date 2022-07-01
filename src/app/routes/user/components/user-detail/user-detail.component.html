@@ -1,0 +1,378 @@
+<div class="app-content">
+  <div class="content-account">
+    <div class="app-title grid gap-16 col-sm-2">
+      <div class="head-left">
+        <a [routerLink]="['../../']" mat-icon-button>
+          <mat-icon>
+            keyboard_arrow_left
+          </mat-icon>
+        </a>
+        <div class="mr-16"></div>
+        <h1 class="title">បញ្ជីតំណែង</h1>
+      </div>
+      <div class="group-btn">
+        <button type="button" mat-flat-button color="accent" [routerLink]="'edit'">
+          <mat-icon>edit</mat-icon>
+          កែប្រែ
+        </button>
+        <span class="space-2"></span>
+        <button mat-flat-button *ngIf="isSelf" color="print" (click)="onResetPassword()">
+          <mat-icon matPrefix>lock</mat-icon>
+          ផ្លាស់ប្តូរពាក្យសំងាត់
+        </button>
+        <button color="primary" *ngIf="isVerified != null" matSuffix mat-flat-button
+          (click)="isVerified ? onBindEmail(2) : (isVerified === false ? onBindEmail(1) : '')">
+          <mat-icon matPrefix>mail</mat-icon>
+          {{isVerified ? 'ប្ដូរ' : (isVerified === false ? 'ភ្ជាប់' : '')}}
+        </button>
+        <button mat-flat-button *ngIf="isSelf == false" (click)="onSetStatusAccount(false)" color="warn">
+          <mat-icon>person_off</mat-icon>
+          បិទគណនី
+        </button>
+      </div>
+    </div>
+
+    <!-- userLoad detail -->
+    <div class="detail-form grid gap-16 col-lg-2">
+      <div class="left-side">
+        <div class="profile-with-name mb-16">
+          <img class="lecturer-profile" [src]="(userLoad?.profile | staticFile) || 'assets/imgs/profile-default.svg'" alt="profile picture">
+          <div class="grid gap-4 ml-16">
+            <div class="value name mb-8">{{!userLoad ? '—/—' : userLoad?.first_name + '' + userLoad?.last_name}}</div>
+            <div>តំណែង: អ្នកគ្រប់គ្រង</div>
+          </div>
+        </div>
+      </div>
+      <div class="right-side">
+        <div class="general-info">
+          <div class="header-label">ព័ត៌មានទូទៅ</div>
+          <div class="grid gap-16 col-sm-2">
+            <div>
+              <label>នាមត្រកូល</label>
+              <div class="value">{{userLoad?.first_name}}</div>
+            </div>
+            <div>
+              <label>នាមខ្លួន</label>
+              <div class="value">{{userLoad?.last_name}}</div>
+            </div>
+            <div>
+              <label>ភេទ</label>
+              <div class="value">{{userLoad?.gender}}</div>
+            </div>
+            <div>
+              <label>ថ្ងៃកំណើត</label>
+              <div class="value">
+                {{ userLoad?.dob | date: 'dd' }}
+                {{ userLoad?.dob | date: 'MM' | khmerMonth }}
+                {{ userLoad?.dob | date: 'yyyy' }}
+              </div>
+            </div>
+            <div>
+              <label>អុីម៊ែល</label>
+              <div class="value">{{userLoad?.email || '—/—'}}</div>
+            </div>
+            <div>
+              <label>លេខទូរស័ព្ទ</label>
+              <div class="value">{{userLoad?.phone}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #ResetPasswordDailog>
+  <mat-dialog-content>
+    <form *ngIf="!isSelf" id="resetPasswordForm" focusInvalidInput [formGroup]="resetPasswordForm">
+      <label>ពាក្យសម្ងាត់ថ្មី : </label>
+      <mat-form-field appearance="outline">
+        <input type="password" #new_password matInput formControlName="new_password" autocomplete="new-password"
+          placeholder="*">
+        <button *ngIf="resetPasswordForm.value.new_password" type='button' mat-icon-button matSuffix color="primary"
+          (mousedown)="new_password.type='text'" (mouseout)="new_password.type='password'"
+          (mouseup)="new_password.type='password'" (touchstart)="new_password.type='text'"
+          (touchend)="new_password.type='password'">
+          <mat-icon>{{new_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="resetPasswordForm.get('new_password').errors?.required">
+          ទាមទារ
+        </mat-error>
+        <mat-error
+          *ngIf="resetPasswordForm.get('new_password').errors?.minlength && !resetPasswordForm.get('new_password').errors?.required">
+          បញ្ចូលយ៉ាងតិច៨តួ
+        </mat-error>
+      </mat-form-field>
+
+      <label>បញ្ចាក់ពាក្យសម្ងាត់ : </label>
+      <mat-form-field appearance="outline">
+        <input type="password" #confirm_password matInput formControlName="confirm_password" autocomplete="new-password"
+          placeholder="*">
+        <button *ngIf="resetPasswordForm.value.confirm_password" type='button' mat-icon-button matSuffix color="primary"
+          (mousedown)="confirm_password.type='text'" (mouseout)="confirm_password.type='password'"
+          (mouseup)="confirm_password.type='password'" (touchstart)="confirm_password.type='text'"
+          (touchend)="confirm_password.type='password'">
+          <mat-icon>{{confirm_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="resetPasswordForm.get('confirm_password').errors?.required">
+          ទាមទារ
+        </mat-error>
+        <mat-error
+          *ngIf="resetPasswordForm.get('confirm_password').errors?.minlength && !resetPasswordForm.get('confirm_password').errors?.required">
+          បញ្ចូលយ៉ាងតិច៨តួ
+        </mat-error>
+        <mat-error
+          *ngIf="resetPasswordForm.get('confirm_password').errors?.mustMatch && !resetPasswordForm.get('confirm_password').errors?.required">
+          ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នា
+        </mat-error>
+      </mat-form-field>
+
+      <mat-divider></mat-divider>
+
+      <label>ពាក្យសម្ងាត់គណនីនេះ : </label>
+      <mat-form-field appearance="outline">
+        <input type="password" #requester_password matInput formControlName="requester_password"
+          autocomplete="new-password" placeholder="*">
+        <button *ngIf="resetPasswordForm.value.requester_password" type='button' mat-icon-button matSuffix
+          color="primary" (mousedown)="requester_password.type='text'" (mouseout)="requester_password.type='password'"
+          (mouseup)="requester_password.type='password'" (touchstart)="requester_password.type='text'"
+          (touchend)="requester_password.type='password'">
+          <mat-icon>{{requester_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="resetPasswordForm.get('requester_password').errors?.required">
+          ទាមទារ
+        </mat-error>
+      </mat-form-field>
+    </form>
+
+    <form *ngIf="isSelf" id="resetPasswordForm" focusInvalidInput [formGroup]="resetPasswordForm">
+      <div class="box-header mb-18">
+        &nbsp;<strong>ផ្លាស់ប្តូរពាក្យសម្ងាត់</strong>
+      </div>
+      <div class="horizontal"></div>
+      <div class="form-group">
+        <div class="row">
+          <label>ពាក្យសម្ងាត់ចាស់ : </label>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <input type="password" #requester_password matInput formControlName="requester_password"
+                autocomplete="new-password" placeholder="*">
+              <button *ngIf="resetPasswordForm.value.requester_password" type='button' mat-icon-button matSuffix
+                color="primary" (mousedown)="requester_password.type='text'"
+                (mouseout)="requester_password.type='password'" (mouseup)="requester_password.type='password'"
+                (touchstart)="requester_password.type='text'" (touchend)="requester_password.type='password'">
+                <mat-icon>{{requester_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="resetPasswordForm.get('requester_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="mb-18"></div>
+        <div class="row">
+          <label>ពាក្យសម្ងាត់ថ្មី : </label>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <input type="password" #new_password matInput formControlName="new_password" autocomplete="new-password"
+                placeholder="*">
+              <button *ngIf="resetPasswordForm.value.new_password" type='button' mat-icon-button matSuffix
+                color="primary" (mousedown)="new_password.type='text'" (mouseout)="new_password.type='password'"
+                (mouseup)="new_password.type='password'" (touchstart)="new_password.type='text'"
+                (touchend)="new_password.type='password'">
+                <mat-icon>{{new_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="resetPasswordForm.get('new_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+              <mat-error
+                *ngIf="resetPasswordForm.get('new_password').errors?.minlength && !resetPasswordForm.get('new_password').errors?.required">
+                បញ្ចូលយ៉ាងតិច៨តួ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <label>បញ្ចាក់ពាក្យសម្ងាត់ : </label>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <input type="password" #confirm_password matInput formControlName="confirm_password"
+                autocomplete="new-password" placeholder="*">
+              <button *ngIf="resetPasswordForm.value.confirm_password" type='button' mat-icon-button matSuffix
+                color="primary" (mousedown)="confirm_password.type='text'" (mouseout)="confirm_password.type='password'"
+                (mouseup)="confirm_password.type='password'" (touchstart)="confirm_password.type='text'"
+                (touchend)="confirm_password.type='password'">
+                <mat-icon>{{confirm_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="resetPasswordForm.get('confirm_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+              <mat-error
+                *ngIf="resetPasswordForm.get('confirm_password').errors?.minlength && !resetPasswordForm.get('confirm_password').errors?.required">
+                បញ្ចូលយ៉ាងតិច៨តួ
+              </mat-error>
+              <mat-error
+                *ngIf="resetPasswordForm.get('confirm_password').errors?.mustMatch && !resetPasswordForm.get('confirm_password').errors?.required">
+                ពាក្យសម្ងាត់ទាំងពីរមិនត្រូវគ្នា
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="btn-custom">
+    <button mat-raised-button mat-dialog-close class="cancel-btn">បោះបង់</button>
+    <button mat-flat-button color="primary" (click)="onChangePassword(resetPasswordForm.value)">យល់ព្រម</button>
+  </mat-dialog-actions>
+
+</ng-template>
+
+<ng-template #ConfirmStatus>
+  <mat-dialog-content>
+    <form focusInvalidInput [formGroup]="confirmStatus" class="box request-account-status">
+      <div class="box-header">
+        ចំណាំ៖{{isActive ? ' នៅពេលគណនីត្រូវបានបិទ គណនីនឹងមិនដំណើរការ' : ' នៅពេលគណនីត្រូវបានបើក គណនីនឹងដំណើរការធម្មតា'}}
+      </div>
+      <div class="horizontal"></div>
+      <div class="form-group">
+        <div class="row">
+          <div class="image-request">
+            <img [src]="isActive ? imgCloseAccount : imgOpenAccount" alt="image.svg">
+          </div>
+        </div>
+        <div class="row">
+          <label>ពាក្យសម្ងាត់អ្នកស្នើសុំ : </label>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <input type="password" #requester_password matInput formControlName="requester_password"
+                autocomplete="new-password" placeholder="*">
+              <button *ngIf="confirmStatus.value.requester_password" type='button' mat-icon-button matSuffix
+                color="primary" (mousedown)="requester_password.type='text'"
+                (mouseout)="requester_password.type='password'" (mouseup)="requester_password.type='password'"
+                (touchstart)="requester_password.type='text'" (touchend)="requester_password.type='password'">
+                <mat-icon>{{requester_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="confirmStatus.get('requester_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>បោះបង់</button>
+    <button [disabled]="confirmStatus.invalid" mat-flat-button color="primary"
+      (click)="onConfirmStatusSubmit()">យល់ព្រម</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #ConfirmUpdateDialog>
+  <mat-dialog-content>
+    <form focusInvalidInput [formGroup]="confirmUpdateForm" class="box request-account-status">
+      <div class="box-header">
+        ការបញ្ជាក់ពាក្យសម្ងាត់
+      </div>
+      <div class="horizontal"></div>
+      <div class="form-group">
+        <div class="row">
+          <div class="image-request">
+            <img src="https://res.cloudinary.com/dxrkctl9c/image/upload/v1639121305/image/password-animate_kl148c.svg"
+              alt="image.svg">
+          </div>
+        </div>
+        <div class="row">
+          <label>ពាក្យសម្ងាត់អ្នកស្នើសុំ : </label>
+          <div class="col-sm-8">
+            <mat-form-field appearance="outline">
+              <input type="password" #requester_password matInput formControlName="requester_password"
+                autocomplete="new-password" placeholder="*">
+              <button *ngIf="confirmUpdateForm.value.requester_password" type='button' mat-icon-button matSuffix
+                color="primary" (mousedown)="requester_password.type='text'"
+                (mouseout)="requester_password.type='password'" (mouseup)="requester_password.type='password'"
+                (touchstart)="requester_password.type='text'" (touchend)="requester_password.type='password'">
+                <mat-icon>{{requester_password.type==='text'?'visibility_off': 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="confirmUpdateForm.get('requester_password').errors?.required">
+                ទាមទារ
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>បោះបង់</button>
+    <button [disabled]="confirmUpdateForm.invalid" mat-flat-button color="primary"
+      (click)="onConfirmSubmit()">យល់ព្រម</button>
+  </mat-dialog-actions>
+</ng-template>
+
+<ng-template #BindEmailDialog>
+  <mat-dialog-content>
+    <form id="bindEmailForm" focusInvalidInput [formGroup]="bindEmailForm">
+      <div class="box-header mb-18">
+        <strong>ភ្ជាប់ការប្រើប្រាស់អុីម៉ែល</strong>
+      </div>
+      <div class="horizontal"></div>
+      <div class="form-group">
+        <div *ngIf="!isGetCode; else hasCode">
+          <div class="row">
+            <div class="col-sm-12">
+              <mat-form-field appearance="outline">
+                <input type="email" matInput formControlName="email" autocomplete="off" placeholder="*">
+                <mat-error *ngIf="bindEmailForm.get('email').errors?.email">
+                  Invalid
+                </mat-error>
+                <mat-error *ngIf="bindEmailForm.get('email').errors?.required">
+                  Required
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="btn-custom" align="center">
+            <button mat-flat-button type="button" color="primary" class="btn-save-custom" (click)="onGetCode()">
+              ស្នើលេខកូដ
+            </button>
+          </div>
+        </div>
+        <ng-template #hasCode>
+          <div style="text-align: center;">
+            <h4>លេខកូដផ្ទៀងផ្ទាត់</h4>
+            <p>
+              សូមវាយបញ្ចូលលេខកូដដែលបានបញ្ជូនទៅកាន់
+              <br>
+              <span style="font-weight: bold; font-size: 16px;">{{ bindEmailForm.get('email').value
+                              }}</span>
+            </p>
+            <ng-otp-input [ngClass]="invalidCode ? 'my-otp-input-invalid' : 'my-otp-input'"
+              (onInputChange)="funcVerifyStatus === 1 ? onOtpChange($event) : onChangeVerifyEmail($event)"
+              [config]="config" style="margin: 10px 0;">
+            </ng-otp-input>
+            <div style="margin-top: 10px;">
+              <span *ngIf="!isCodeExpired; else codeExpire;">
+                {{ resendTime.min | number: '2.0-0' }} : {{ resendTime.sec | number: '2.0-0' }}
+              </span>
+              <ng-template #codeExpire>
+                <span>
+                  មិនបានទទួលលេខកូដ?
+                  <a style="color: #4f9573; cursor: pointer;" (click)="onResend()">
+                    បញ្ជូនម្តងទៀត
+                  </a>
+                </span>
+              </ng-template>
+            </div>
+            <div class="space-2"></div>
+            <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់spam របស់អ្នក</p>
+          </div>
+        </ng-template>
+      </div>
+    </form>
+  </mat-dialog-content>
+</ng-template>

@@ -1,0 +1,84 @@
+<div class="app-menu" (window:resize)="onResize()">
+  <mat-sidenav-container class="app-container" autosize>
+    <mat-sidenav #sidenav class="example-sidenav" [class.large-width]="mobileQuery || isExpanded"
+      [mode]="mobileQuery ? 'over' : 'side'" [opened]="!mobileQuery" [disableClose]="!mobileQuery">
+      <div class="main-logo" routerLink="/">
+        <img
+          src="{{account?.schools?.profile_image ? (account.schools?.profile_image) : 'assets/imgs/school-profile.svg'}}"
+          width="68" height="68" alt="logo-image" />
+      </div>
+      <mat-nav-list class="menu-list" id="list-nav">
+        <div *ngFor="let m of menu">
+          <mat-list-item #tooltip="matTooltip" [matTooltip]="!isExpanded ? m.title : ''" matTooltipPosition="right"
+            *ngIf="m.child.length <= 0 " [routerLink]="m.route" [routerLinkActive]="m.route ? 'active' : ''"
+            [routerLinkActiveOptions]="{exact:false}">
+            <span class="menu-item-title" *ngIf="isExpanded">{{ m.title }}</span>
+            <mat-icon mat-list-icon *ngIf="m.svgIcon !== '' " [svgIcon]="m.svgIcon" color="primary"
+              [class.svg-active]="m.route && route.url.includes(m.route)"></mat-icon>
+          </mat-list-item>
+          <mat-expansion-panel *ngIf="m.child.length > 0" class="expansion-panel "
+            [class.parents]="isChildActive(m.child)">
+            <mat-expansion-panel-header [class.active]="isChildActive(m.child)" #tooltipParent="matTooltip"
+              [matTooltip]="!isExpanded ? m.title : ''" matTooltipPosition="right">
+              <mat-icon mat-list-icon *ngIf="m.icon !== ''">{{ m.icon }}</mat-icon>
+              <mat-icon mat-list-icon *ngIf="m.svgIcon !== ''" [svgIcon]="m.svgIcon"></mat-icon>
+              <span class="menu-item-title">{{m.title }}</span>
+            </mat-expansion-panel-header>
+            <mat-nav-list class="expansion-panel-body">
+              <mat-list-item #tooltip="matTooltip" [matTooltip]="!isExpanded ? c.title : ''" matTooltipPosition="right"
+                *ngFor="let c of m.child" class=" {{ isExpanded ? 'expand' : 'no-expand' }}" [routerLink]="c.route"
+                routerLinkActive="active" [routerLinkActiveOptions]="{exact:false}">
+                <span class="menu-item-title">{{ c.title }}</span>
+                <mat-icon mat-list-icon *ngIf="c.icon !== ''">{{ c.icon }}</mat-icon>
+                <mat-icon mat-list-icon *ngIf="c.svgIcon !== ''" [svgIcon]="c.svgIcon"></mat-icon>
+              </mat-list-item>
+            </mat-nav-list>
+          </mat-expansion-panel>
+        </div>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content [class.explicit-sm-ml]="!mobileQuery && !isExpanded"
+      [class.explicit-lg-ml]=" !mobileQuery  && isExpanded">
+      <div class="example-sidenav-content app-root-content" [class.nav-text-hidden]="!isExpanded"
+        [class.nav-text-show]="isExpanded">
+        <mat-toolbar class="dashboard-toolbar">
+          <header class="dashboard__header">
+            <button class="icon" mat-icon-button (click)="toggleSideNav()">
+              <mat-icon svgIcon="menu-hamburger"></mat-icon>
+            </button>
+            <h1>{{activeAcademicYear}}</h1>
+            <div class="header-action">
+              <div class="action">
+                <app-notification [routeId]="routeId"></app-notification>
+              </div>
+              <div class="avtar">
+                <button mat-button [matMenuTriggerFor]="beforeMenu" class="profile-menu-btn">
+                  <div class="profile-info">
+                    {{account| fullName}} <br />
+                    <span class="role">អ្នកគ្រប់គ្រង</span>
+                  </div>
+                  <img mat-card-avatar class="avtar-icon" alt="avatar"
+                    [src]="account?.profile? (account?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
+                    onerror="this.src='/assets/imgs/profile-default.svg'" />
+                </button>
+                <mat-menu #beforeMenu="matMenu" xPosition="before">
+                  <button mat-menu-item [routerLink]="['/setting/detail/', account?._id]"
+                    routerLinkActive="router-link-active">
+                    <mat-icon>account_circle</mat-icon>
+                    Profile
+                  </button>
+                  <button mat-menu-item (click)="logout()">
+                    <mat-icon>logout</mat-icon>Logout
+                  </button>
+                </mat-menu>
+              </div>
+            </div>
+          </header>
+        </mat-toolbar>
+        <section class="dash-row ">
+          <router-outlet></router-outlet>
+        </section>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

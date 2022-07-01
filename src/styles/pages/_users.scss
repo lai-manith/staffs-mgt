@@ -1,0 +1,139 @@
+@use '../variables'as *;
+
+.new-user-dialog {
+  margin-bottom: 0;
+
+  .person-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    background-repeat: no-repeat;
+  }
+
+  .btn-custom {
+    padding: 5px 40px;
+
+    mat-icon {
+      display: inline-flex;
+    }
+  }
+
+  .cancel {
+    background-color: #f8f8f8;
+    color: #ff2c2c;
+  }
+}
+
+.content-account {
+  .content-form {
+    display: flex;
+    flex-wrap: wrap;
+
+    .validate-gender {
+      color: #f44336;
+      font-size: 75%;
+      margin-left: 12px;
+    }
+
+    .done-icon {
+      position: absolute;
+      right: 0px;
+      background: #4caf50;
+      z-index: 1;
+      border-radius: 100%;
+      padding: 2px;
+      top: 20%;
+
+    }
+
+    .undone-icon {
+      position: absolute;
+      right: 0px;
+      background: #ff4459;
+      z-index: 1;
+      border-radius: 100%;
+      padding: 2px;
+      top: 20%;
+
+    }
+
+    .feather-image-icon {
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      margin-right: 8px;
+    }
+
+    .email {
+      .mat-form-field-appearance-outline .mat-form-field-suffix {
+        top: -8px !important;
+      }
+    }
+
+    .section-file {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .profile-image {
+        width: 15em;
+        height: 15em;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: 50%;
+        border-radius: 50%;
+        min-width: 150px;
+        box-shadow: 0 0 4px #d2d2d2;
+      }
+
+      .btn-cancel-header {
+        display: flex;
+        height: 200px;
+        transform: translate(-44px);
+        align-items: flex-start;
+      }
+    }
+  }
+}
+
+.request-account-status {
+  .image-request {
+    width: 100%;
+    height: 20em;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+}
+
+
+.link-email-dialog {
+  mat-dialog-content {
+    overflow-y: hidden;
+    section.box {
+      padding: 0;
+      .header-label {
+        margin-bottom: 27px;
+      }
+      .resend {
+        color: $primary-color;
+        cursor: pointer;
+      }
+    }
+    mat-dialog-actions {
+      min-height: 70px;
+    }
+  }
+  .my-otp-input-invalid {
+    input {
+      border: 1px solid $danger-color;
+    }
+  }
+  .my-otp-input {
+    input {
+      border: 1px solid #c5c5c5;
+    }
+  }
+}

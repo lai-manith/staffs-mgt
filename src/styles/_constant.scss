@@ -1,0 +1,139 @@
+@use './variables' as *;
+
+$btn-size: 36;
+$icon-size: 20;
+$sm-icon-size: 16;
+
+$sizes: (
+    "sm": $rounded-sm,
+    "md": $rounded-md,
+    "lg": $rounded-lg,
+    "xl": $rounded-xl,
+    "2xl": $rounded-2xl,
+    "full": $rounded-full
+);
+
+$text-colors: (
+    "primary": $color-primary,
+    "white": $color-white,
+    "grey": $color-grey,
+);
+
+$background-colors: (
+    "primary": $color-primary,
+    "white": $color-white,
+    "grey": $background-light-grey,
+);
+
+$linear-gradient-colors: (
+    "gradient-primary": $linear-gradient-primary,
+    "light-gradient-primary": $linear-light-gradient-primary
+);
+
+/* rounded */
+@each $name, $size in $sizes {
+    .rounded-#{$name} {
+        border-radius: $size !important;
+    }
+}
+
+/* text color */
+@each $name, $color in $text-colors {
+    .text-#{$name} {
+        color: $color;
+    }
+}
+
+/* background color */
+@each $name, $color in $background-colors {
+    .bg-#{$name} {
+        background-color: $color;
+    }
+}
+@each $name, $color in $linear-gradient-colors {
+    .bg-#{$name} {
+        background: $color;
+    }
+}
+
+// icon
+.mat-icon[svgicon] {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: $icon-size * 1px;
+  width: $icon-size * 1px;
+  height: $icon-size * 1px;
+  min-width: $icon-size * 1px;
+  min-height: $icon-size * 1px;
+  line-height: 20px !important;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+button.mat-flat-button.btn-sm {
+  height: $btn-size * 1px;
+  width: $btn-size * 1px;
+  min-width: $btn-size * 1px !important;
+  padding: 0 8px !important;
+  border-radius: 50% !important;
+
+  .mat-icon {
+      width: $sm-icon-size * 1px;
+      height: $sm-icon-size * 1px;
+      font-size: $sm-icon-size * 1px;
+      // &[svgicon] {
+      display: flex;
+      align-items: center;
+      margin: auto;
+      // }
+  }
+}
+
+// flex
+.flex {
+  display: flex;
+
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+// align
+.item-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.content-center {
+  place-content: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+button {
+  mat-spinner {
+    margin-left: 5px;
+    display: inline-block !important;
+  }
+
+  .mat-progress-spinner circle,
+  .mat-spinner circle {
+    stroke: #fff !important;
+  }
+}

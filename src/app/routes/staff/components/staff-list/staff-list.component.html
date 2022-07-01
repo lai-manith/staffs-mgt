@@ -1,0 +1,24 @@
+<div class="app-content about-of-study">
+  <section>
+    <div class="app-title">
+      <h1 class="title">បញ្ជីបុគ្គលិក</h1>
+      <button mat-raised-button color="primary" class="create-btn" routerLink="create">
+        <mat-icon svgIcon="add_new"></mat-icon>
+        បង្កើតថ្មី
+      </button>
+    </div>
+    <mat-tab-group animationDuration="500ms" [selectedIndex]="index" (selectedIndexChange)="onIndexChange($event)">
+      <mat-tab label="បុគ្គលិកទាំងអស់">
+        <app-staff *ngIf="index === 0"></app-staff>
+      </mat-tab>
+
+      <mat-tab label="បុគ្គលិកកំពុងធ្វើការ">
+        <app-staff *ngIf="index === 1"></app-staff>
+      </mat-tab>
+
+      <mat-tab label="បុគ្គលិកបានបញ្ឈប់">
+        <app-staff *ngIf="index === 2"></app-staff>
+      </mat-tab>
+    </mat-tab-group>
+  </section>
+</div>

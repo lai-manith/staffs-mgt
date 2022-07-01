@@ -1,0 +1,41 @@
+@use '../variables' as *;
+
+$pixels: 36;
+
+@mixin edge-paddings($edge: false, $value) {
+    @if $edge {
+        padding-#{$edge}: $value + px !important;
+    } @else {
+        padding: $value + px !important;
+    }
+}
+
+@mixin axis-paddings($axis, $value) {
+    @if ($axis == x) {
+        padding-left: $value + px !important;
+        padding-right: $value + px !important;
+    } @else if ($axis == y) {
+        padding-top: $value + px !important;
+        padding-bottom: $value + px !important;
+    }
+}
+
+@for $i from 0 to $pixels {
+
+    // padding on each edges
+    @each $name, $edge in $edges {
+        .p#{$name}-#{$i} {
+            @include edge-paddings($edge, $i);
+        }
+    }
+    .p-#{$i} {
+        @include edge-paddings(false, $i);
+    }
+
+    // padding on axis
+    @each $axis in $edge-axis {
+        .p#{$axis}-#{$i} {
+            @include axis-paddings($axis, $i);
+        }
+    }
+}

@@ -1,0 +1,140 @@
+@use '../variables';
+
+.creation-form,
+.detail-form {
+  .button-submit {
+    mat-spinner {
+      margin-left: 5px;
+      display: inline-block;
+    }
+
+    .mat-progress-spinner circle,
+    .mat-spinner circle {
+      stroke: #fff !important;
+    }
+  }
+
+  .box {
+    border: 1px solid variables.$athens-gray-color;
+    border-radius: 20px;
+    padding: 16px;
+  }
+
+  .header-label {
+    color: variables.$color-primary;
+    margin-bottom: variables.$spacing-md;
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .group-action {
+    text-align-last: end;
+  }
+
+  .value {
+    color: variables.$color-black;
+
+    &.name {
+      font-size: 24px;
+    }
+  }
+
+  label {
+    color: variables.$santas-gray;
+  }
+
+  .phone-number {
+    display: flex;
+
+    svg {
+      vertical-align: top;
+    }
+  }
+
+  .profile-with-name {
+    display: flex;
+    align-items: center;
+  }
+
+  .right-side {
+
+    .resume-file,
+    .cv {
+      display: flex;
+      align-items: center;
+    }
+
+    .resume-file {
+      .download-btn {
+        margin-left: auto;
+      }
+    }
+  }
+
+  .invalid {
+    color: variables.$color-required;
+  }
+
+  .required::after {
+    content: '*';
+    color: variables.$color-required;
+    vertical-align: middle;
+    margin-left: 4px;
+  }
+
+  mat-form-field.desc {
+    .mat-form-field-wrapper {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  @media screen and (min-width: 1280px) {
+    .right-side {
+      padding-left: variables.$spacing-md;
+
+      // .header-label {
+      //   display: block !important;
+      //   visibility: hidden;
+      // }
+    }
+  }
+}
+
+app-selection-filter {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  .selection-card {
+    background-color: #fff;
+  }
+
+  .mat-form-field-wrapper {
+    margin-bottom: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .mat-form-field-infix {
+    margin: 0 !important;
+  }
+
+  span.mat-form-field-label-wrapper {
+    padding-top: 0 !important;
+  }
+
+  .mat-form-field-flex {
+    padding-top: 0 !important;
+  }
+
+  .mat-form-field-underline {
+    bottom: 0;
+  }
+}
+
+.selection-filter-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+}

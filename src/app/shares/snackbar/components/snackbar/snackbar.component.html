@@ -1,0 +1,12 @@
+<div class="snackbar">
+  <div class="snackbar-message">
+    <mat-icon *ngIf="status===1">task_alt</mat-icon>
+    <mat-icon *ngIf="status===0">error_outline</mat-icon>
+    <span>{{alertMessage}}</span>
+  </div>
+  <div class="dismiss">
+    <button mat-icon-button (click)="sbRef.dismiss()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+  </div>
+</div>

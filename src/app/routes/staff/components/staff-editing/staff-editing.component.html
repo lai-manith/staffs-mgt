@@ -1,0 +1,185 @@
+<div class="app-content staff-detail">
+  <div class="app-title">
+    <div class="head-left">
+      <a [routerLink]="['../../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">បញ្ជីបុគ្គលិក</h1>
+    </div>
+    <div class="group-btn" *ngIf="isActive == true">
+      <button mat-flat-button color="accent" routerLink="edit">
+        <mat-icon svgIcon="edit"></mat-icon>
+        កែប្រែ
+      </button>
+      <button mat-flat-button color="print" (click)="onPrint()">
+        <mat-icon svgIcon="print"></mat-icon>
+        បោះពុម្ភ
+      </button>
+      <button mat-flat-button color="warn" (click)="onSetStatusAccount(isActive)">
+        <mat-icon>person_off</mat-icon>
+        បញ្ឈប់
+      </button>
+    </div>
+    <div class="group-btn" *ngIf="isActive == false">
+      <button mat-flat-button color="accent" (click)="onSetStatusAccount(isActive)">
+        <mat-icon>person_add_alt</mat-icon>
+        បន្ដធ្វើការ
+      </button>
+      <button mat-flat-button color="warn" (click)="onDelete()">
+        <mat-icon>delete</mat-icon>
+        លុប
+      </button>
+    </div>
+  </div>
+
+  <!-- staff detail -->
+  <div class="detail-form grid gap-x-16 col-lg-2">
+    <div class="left-side">
+      <div class="box mb-16">
+        <div class="header-label">ព័ត៌មានទូទៅ</div>
+        <div class="grid gap-16 col-sm-2">
+          <div>
+            <label>លេខសម្គាល់បុគ្គលិក</label>
+            <div class="value">{{staff?.staff_id}}</div>
+          </div>
+          <div>
+            <label>នាមត្រកូល</label>
+            <div class="value">{{staff?.first_name}}</div>
+          </div>
+          <div>
+            <label>នាមខ្លួន</label>
+            <div class="value">{{staff?.last_name}}</div>
+          </div>
+          <div>
+            <label>អាយុ</label>
+            <div class="value">{{staff?.age}}</div>
+          </div>
+          <div>
+            <label>ភេទ</label>
+            <div class="value">{{staff?.gender}}</div>
+          </div>
+          <div>
+            <label>ថ្ងៃកំណើត</label>
+            <div class="value">
+              {{ staff?.date_of_birth | date: 'dd' }}
+              {{ staff?.date_of_birth | date: 'MM' | khmerMonth }}
+              {{ staff?.date_of_birth | date: 'yyyy' }}
+            </div>
+          </div>
+          <div>
+            <label>សញ្ជាតិ</label>
+            <div class="value">{{staff?.nationality?.nationality}}</div>
+          </div>
+          <div>
+            <label>អុីម៊ែល</label>
+            <div class="value">{{staff?.email || '—/—'}}</div>
+          </div>
+          <div>
+            <label>លេខទូរស័ព្ទ</label>
+            <div class="value">{{staff?.phone}}</div>
+          </div>
+          <div>
+            <label>ប្រាក់ខែ</label>
+            <section class="phone-number">
+              <div class="value">{{'$' + ' ' + staff?.salary}}</div>
+            </section>
+          </div>
+          <div>
+            <label>ថ្ងៃចូលធ្វើការ</label>
+            <div class="value">
+              {{ staff?.hire_date | date: 'dd' }}
+              {{ staff?.hire_date | date: 'MM' | khmerMonth }}
+              {{ staff?.hire_date | date: 'yyyy' }}
+            </div>
+          </div>
+          <div>
+            <label>ថ្ងៃផុតកុងត្រា</label>
+            <div class="value">
+              {{ staff?.contact_expiry_date | date: 'dd' }}
+              {{ staff?.contact_expiry_date | date: 'MM' | khmerMonth }}
+              {{ staff?.contact_expiry_date | date: 'yyyy' }}
+            </div>
+          </div>
+          <div>
+            <label>ស្ថានភាព</label>
+            <div class="value" [ngClass]="staff?.status?.name_en">{{staff?.status?.name}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="box mb-16">
+        <div class="header-label">ទីកន្លែងកំណើត</div>
+        <div class="grid gap-16 col-sm-2">
+          <div>
+            <label>រាជធានី/ខេត្ត</label>
+            <div class="value">{{staff?.place_of_birth.city_provinces.name}}</div>
+          </div>
+          <div>
+            <label>ស្រុក/ខណ្ឌ</label>
+            <div class="value">{{staff?.place_of_birth.districts.name}}</div>
+          </div>
+          <div>
+            <label>ឃុំ/សង្កាត់</label>
+            <div class="value">{{staff?.place_of_birth.communes.name}}</div>
+          </div>
+          <div>
+            <label>ភូមិ</label>
+            <div class="value">{{staff?.place_of_birth.villages.name}}</div>
+          </div>
+          <div class="col-span-sm-2">
+            <label>អាសយដ្ឋាន</label>
+            <div class="value">{{staff?.place_of_birth.detail}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="right-side">
+      <section class="box mb-16">
+        <div class="header-label">រូបភាព</div>
+        <div align="center">
+            <div [style.background-image]="staff?.profile
+            ? 'url('+ (staff?.profile | staticFile) +')'
+            : 'url('+ imgDefault +')'" class="lecturer-profile"></div>
+        </div>
+      </section>
+      <section class="box mb-16">
+        <div class="header-label">ឯកសារ</div>
+        <div class="flex justify-center item-center">
+          <mat-icon class="doc mr-4" svgIcon="excel_alt"></mat-icon>
+          <div *ngIf="staff?.attach_files" class="file-name">{{staff?.file_name}}</div>
+          <div *ngIf="!staff?.attach_files">មិនមានឯកសារ</div>
+          <a *ngIf="staff?.attach_files" target="_blank" [href]="(staff?.attach_files | staticFile)" style="color: #757575">
+            <mat-icon class="ml-8">open_in_new</mat-icon>
+          </a>
+        </div>
+      </section>
+      <div class="box mb-16">
+        <div class="header-label">ទីកន្លែងបច្ចុប្បន្ន</div>
+        <div class="grid gap-16 col-sm-2">
+          <div>
+            <label>រាជធានី/ខេត្ត</label>
+            <div class="value">{{staff?.address.city_provinces.name}}</div>
+          </div>
+          <div>
+            <label>ស្រុក/ខណ្ឌ</label>
+            <div class="value">{{staff?.address.districts.name}}</div>
+          </div>
+          <div>
+            <label>ឃុំ/សង្កាត់</label>
+            <div class="value">{{staff?.address.communes.name}}</div>
+          </div>
+          <div>
+            <label>ភូមិ</label>
+            <div class="value">{{staff?.address.villages.name}}</div>
+          </div>
+          <div class="col-span-sm-2">
+            <label>អាសយដ្ឋាន</label>
+            <div class="value">{{staff?.address.detail}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

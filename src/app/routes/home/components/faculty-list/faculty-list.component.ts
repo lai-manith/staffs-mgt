@@ -1,0 +1,111 @@
+import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router, ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
+import { Staff } from 'src/app/models/staff';
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { PositionService } from 'src/app/services/position.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { StaffService } from 'src/app/services/staff.service';
+import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
+
+@Component({
+  selector: 'app-faculty-list',
+  templateUrl: './faculty-list.component.html',
+  styleUrls: ['./faculty-list.component.scss']
+})
+export class FacultyListComponent {
+  displayedColumns: string[] = [
+    'ID',
+    'name',
+    'age',
+    'gender',
+    'position',
+    'hire_date',
+    'contact_expiry_date',
+    '_id'
+  ];
+  imgDefault: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
+  dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);
+  total: number;
+  params = {
+    page: 1,
+    limit: 10,
+    search: '',
+    image_size: 150,
+    status: null,
+    gender: null,
+    position: null
+  };
+  isLoading: boolean = true;
+  loadingTimeout: ReturnType<typeof setTimeout>;
+  images: string[];
+
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+    private route: ActivatedRoute,
+    private dashboardService: DashboardService,
+    private snackBarService: SnackbarService,
+  ) {}
+
+  ngOnInit() {
+    this.onLoad();
+  }
+
+  onLoad() {
+    this.setLoading(true);
+    this.dashboardService
+      .getNearlyExpiredStaff(this.params)
+      .pipe(
+        map(map => {
+          for (let data of map.list) {
+            data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+            data.profile = data.profile || this.imgDefault;
+          }
+          return map;
+        })
+      )
+      .subscribe(
+        res => {
+          this.dataSource = new MatTableDataSource(res.list);
+          this.total = res.total;
+          this.setLoading(false);
+        },
+        err =>
+          this.snackBarService.onShowSnackbar({
+            message: err.message ?? err.error.message,
+            component: SnackbarComponent,
+            isError: true
+          })
+      );
+  }
+
+
+  onCreate() {
+    this.router.navigate(['create-new'], {relativeTo: this.route});
+  }
+
+
+  goTo(event) {
+    this.params.limit = event.limit;
+    this.params.page = event.page;
+    this.setLoading(false);
+    this.onLoad();
+  }
+
+  private setLoading(isLoading: boolean): void {
+    if (this.loadingTimeout) {
+      clearTimeout(this.loadingTimeout);
+    }
+    let delayTime = 300;
+    if (!isLoading) {
+      delayTime = 0;
+    }
+    this.loadingTimeout = setTimeout(() => {
+      this.isLoading = isLoading;
+      this.loadingTimeout = null;
+    }, delayTime);
+  }
+}

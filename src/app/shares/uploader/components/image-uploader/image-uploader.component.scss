@@ -1,0 +1,27 @@
+.upload-card {
+    text-align: center;
+    .relative-div {
+        position: relative;
+        .mat-icon {
+            position: absolute;
+            top: -6px;
+            right: calc(50% - 50px);
+            background-color: #fc7e7e;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+        }
+        .profile-picture {
+            margin-left: auto;
+            margin-right: auto;
+            &.svg {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    }
+}
+.btn-browse {
+    font-weight: 700;
+    cursor: pointer;
+}

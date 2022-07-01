@@ -1,0 +1,5 @@
+%float-container::after {
+  content: "";
+  clear: both;
+  display: block;
+}

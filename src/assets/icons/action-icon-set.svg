@@ -1,0 +1,286 @@
+<svg>
+	<defs>
+		<svg id="add_new" xmlns="http://www.w3.org/2000/svg" width="23.917" height="18" viewBox="0 0 23.917 18">
+			<g id="add-svgrepo-com_1_" data-name="add-svgrepo-com (1)" transform="translate(0 -63.333)">
+				<path id="Path_2590" data-name="Path 2590" d="M26.294,88.676a4.968,4.968,0,0,1,5.938-4.871A5.391,5.391,0,0,0,22.22,79.919a3.807,3.807,0,1,0-2.646,6.6l-.064,0A3.808,3.808,0,0,1,15.892,83.9a4.044,4.044,0,0,0-2.314,3.655h0A4.044,4.044,0,0,0,17.622,91.6h9.626A4.942,4.942,0,0,1,26.294,88.676Z" transform="translate(-12.944 -12.944)" fill="rgba(255,255,255,0.25)" />
+				<g id="Group_2682" data-name="Group 2682" transform="translate(0 63.333)">
+					<path id="Path_2591" data-name="Path 2591" d="M22.638,72.17a.634.634,0,0,0-.978.807,4.332,4.332,0,1,1-7.625,3.415v0c-.01-.064-.018-.129-.025-.194,0-.017,0-.033,0-.05,0-.051-.009-.1-.012-.155,0-.018,0-.037,0-.055,0-.067-.005-.135-.005-.2a4.334,4.334,0,0,1,5.181-4.249.634.634,0,0,0,.732-.445A6.025,6.025,0,0,0,9.088,66.03a4.442,4.442,0,0,0-6.837,3.741,4.494,4.494,0,0,0,.072.8,4.678,4.678,0,0,0,2.355,8.72H14a5.6,5.6,0,1,0,8.642-7.122ZM13.2,78.023H4.678a3.409,3.409,0,0,1-2.027-6.151,4.432,4.432,0,0,0,3.915,2.341h.073a.634.634,0,0,0,0-1.268,3.173,3.173,0,1,1,2.206-5.5.634.634,0,0,0,1-.185,4.757,4.757,0,0,1,8.956,2.9c-.162-.014-.324-.021-.485-.021a5.607,5.607,0,0,0-5.6,5.6q0,.073,0,.146c0,.028,0,.056,0,.084s0,.04,0,.06c0,.039,0,.078.007.118,0,.008,0,.016,0,.024A5.54,5.54,0,0,0,13.2,78.023Z" transform="translate(0 -63.333)" fill="#fff" />
+					<path id="Path_2592" data-name="Path 2592" d="M341.766,275.872h-1.293v-1.293a.634.634,0,1,0-1.268,0v1.293h-1.293a.634.634,0,1,0,0,1.268h1.293v1.293a.634.634,0,1,0,1.268,0V277.14h1.293a.634.634,0,1,0,0-1.268Z" transform="translate(-321.523 -264.107)" fill="#fff" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="eye_alt" xmlns="http://www.w3.org/2000/svg" width="18.667" height="12.444" viewBox="0 0 18.667 12.444">
+			<path id="Icon_awesome-eye" data-name="Icon awesome-eye" d="M18.554,10.249A10.394,10.394,0,0,0,9.333,4.5,10.4,10.4,0,0,0,.113,10.249a1.048,1.048,0,0,0,0,.946,10.394,10.394,0,0,0,9.221,5.749A10.4,10.4,0,0,0,18.554,11.2,1.048,1.048,0,0,0,18.554,10.249Zm-9.221,5.14A4.667,4.667,0,1,1,14,10.722,4.667,4.667,0,0,1,9.333,15.389Zm0-7.778a3.089,3.089,0,0,0-.82.123A1.551,1.551,0,0,1,6.345,9.9,3.1,3.1,0,1,0,9.333,7.611Z" transform="translate(0 -4.5)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="pen_alt_outline" xmlns="http://www.w3.org/2000/svg" width="22" height="21.024" viewBox="0 0 22 21.024">
+			<g id="Icon_feather-edit-3" data-name="Icon feather-edit-3" transform="translate(-3.5 -3.318)">
+				<path id="Path_2753" data-name="Path 2753" d="M18,30H28" transform="translate(-3.5 -6.658)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+				<path id="Path_2754" data-name="Path 2754" d="M19.5,5.008a2.357,2.357,0,0,1,3.333,3.333L8.944,22.231,4.5,23.342,5.611,18.9Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="pen_alt" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+			<path id="Icon_feather-edit-2" data-name="Icon feather-edit-2" d="M15.1,3.926a2.282,2.282,0,0,1,3.228,3.228L7.438,18.047,3,19.257l1.21-4.438Z" transform="translate(-3 -3.257)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="trash_can" xmlns="http://www.w3.org/2000/svg" width="12.453" height="16" viewBox="0 0 12.453 16">
+			<g id="delete-svgrepo-com" transform="translate(-31.481 0)">
+				<g id="Group_2679" data-name="Group 2679" transform="translate(31.481 0)">
+					<path id="Path_2589" data-name="Path 2589" d="M42.988,3.73,41.41,2.98l.082-.172A1.515,1.515,0,0,0,40.774.792L39.416.147A1.513,1.513,0,0,0,37.4.864l-.082.172L35.74.287a1.66,1.66,0,0,0-2.208.786l-.4.85a.563.563,0,0,0,.267.751L37.576,4.66H32.045a.563.563,0,0,0-.561.61l.74,8.884a2.024,2.024,0,0,0,2,1.845h4.143a2.024,2.024,0,0,0,2-1.845L41.031,6.3l1.589.755a.563.563,0,0,0,.751-.267l.4-.85A1.66,1.66,0,0,0,42.988,3.73ZM38.417,1.348a.386.386,0,0,1,.515-.183l1.359.645a.387.387,0,0,1,.183.515l-.082.172L38.335,1.52Zm.836,12.713a.89.89,0,0,1-.882.812H34.229a.89.89,0,0,1-.882-.812l-.69-8.274h7.286Zm3.5-8.606-.162.341L34.387,1.9l.162-.341a.531.531,0,0,1,.707-.252L42.5,4.747A.532.532,0,0,1,42.756,5.455Z" transform="translate(-31.481 0)" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="approve_alt" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+			<g id="Icon_ionic-ios-checkmark-circle-outline" data-name="Icon ionic-ios-checkmark-circle-outline" transform="translate(-3.375 -3.375)">
+				<path id="Path_2570" data-name="Path 2570" d="M18.158,12.9l-.635-.653a.136.136,0,0,0-.1-.043h0a.131.131,0,0,0-.1.043l-4.4,4.431-1.6-1.6a.139.139,0,0,0-.2,0l-.642.642a.144.144,0,0,0,0,.206L12.5,17.947a.639.639,0,0,0,.422.206.669.669,0,0,0,.418-.2h0l4.821-4.846A.154.154,0,0,0,18.158,12.9Z" transform="translate(-3.439 -4.302)" fill="#fff" />
+				<path id="Path_2571" data-name="Path 2571" d="M10.875,4.385a6.488,6.488,0,1,1-4.59,1.9,6.447,6.447,0,0,1,4.59-1.9m0-1.01a7.5,7.5,0,1,0,7.5,7.5,7.5,7.5,0,0,0-7.5-7.5Z" fill="#fff" />
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="reject_alt" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+			<g id="Icon_ionic-ios-checkmark-circle-outline" data-name="Icon ionic-ios-checkmark-circle-outline" transform="translate(-3.375 -3.375)">
+				<path id="Path_2571" data-name="Path 2571" d="M10.875,4.385a6.488,6.488,0,1,1-4.59,1.9,6.447,6.447,0,0,1,4.59-1.9m0-1.01a7.5,7.5,0,1,0,7.5,7.5,7.5,7.5,0,0,0-7.5-7.5Z" fill="#fff" />
+				<g id="Group_2624" data-name="Group 2624">
+					<line id="Line_45" data-name="Line 45" x2="5.242" y2="5.5" transform="translate(8.254 8.125)" fill="none" stroke="#fff" stroke-width="1" />
+					<line id="Line_46" data-name="Line 46" x1="5.242" y2="5.5" transform="translate(8.254 8.125)" fill="none" stroke="#fff" stroke-width="1" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="cancel_alt" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+			<g id="Group_2756" data-name="Group 2756" transform="translate(-3.375 -3.375)">
+				<path id="Path_2571" data-name="Path 2571" d="M10.875,4.385a6.488,6.488,0,1,1-4.59,1.9,6.447,6.447,0,0,1,4.59-1.9m0-1.01a7.5,7.5,0,1,0,7.5,7.5,7.5,7.5,0,0,0-7.5-7.5Z" fill="#302b63" />
+				<g id="Group_2624" data-name="Group 2624">
+					<line id="Line_45" data-name="Line 45" x2="5.242" y2="5.5" transform="translate(8.254 8.125)" fill="none" stroke="#302b63" stroke-width="1" />
+					<line id="Line_46" data-name="Line 46" x1="5.242" y2="5.5" transform="translate(8.254 8.125)" fill="none" stroke="#302b63" stroke-width="1" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="lock_alt" xmlns="http://www.w3.org/2000/svg" width="15" height="16.5" viewBox="0 0 15 16.5">
+			<g id="Icon_feather-lock" data-name="Icon feather-lock" transform="translate(-3.75 -2.25)">
+				<path id="Path_2621" data-name="Path 2621" d="M6,16.5H16.5A1.5,1.5,0,0,1,18,18v5.25a1.5,1.5,0,0,1-1.5,1.5H6a1.5,1.5,0,0,1-1.5-1.5V18A1.5,1.5,0,0,1,6,16.5Z" transform="translate(0 -6.75)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+				<path id="Path_2622" data-name="Path 2622" d="M10.5,9.75v-3a3.75,3.75,0,1,1,7.5,0v3" transform="translate(-3 0)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="more_vert" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="4" height="18" viewBox="0 0 4 18">
+			<defs>
+				<clipPath id="clip-path">
+					<rect width="4" height="18" fill="none" />
+				</clipPath>
+			</defs>
+			<g id="Repeat_Grid_10" data-name="Repeat Grid 10" clip-path="url(#clip-path)">
+				<g transform="translate(-15 -7)">
+					<rect id="Rectangle_1227" data-name="Rectangle 1227" width="4" height="4" rx="2" transform="translate(15 7)" fill="rgba(0,0,0,0.39)" />
+				</g>
+				<g transform="translate(-15)">
+					<rect id="Rectangle_1227-2" data-name="Rectangle 1227" width="4" height="4" rx="2" transform="translate(15 7)" fill="rgba(0,0,0,0.39)" />
+				</g>
+				<g transform="translate(-15 7)">
+					<rect id="Rectangle_1227-3" data-name="Rectangle 1227" width="4" height="4" rx="2" transform="translate(15 7)" fill="rgba(0,0,0,0.39)" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="course_alt_outline" xmlns="http://www.w3.org/2000/svg" width="14.25" height="16.5" viewBox="0 0 14.25 16.5">
+			<g id="files-svgrepo-com" transform="translate(-2.25 -1.25)">
+				<path id="Path_1007" data-name="Path 1007" d="M13.375,2H8.2a1.2,1.2,0,0,0-.825.375A1.2,1.2,0,0,0,7,3.2v9.6A1.29,1.29,0,0,0,8.2,14h7.35a1.29,1.29,0,0,0,1.2-1.2V5.375Z" transform="translate(-1)" fill="none" stroke="#ad5389" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+				<path id="Path_1008" data-name="Path 1008" d="M3,7.6v9.6a1.2,1.2,0,0,0,.375.825A1.2,1.2,0,0,0,4.2,18.4h7.35" transform="translate(0 -1.4)" fill="none" stroke="#ad5389" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+				<path id="Path_1009" data-name="Path 1009" d="M15,2V5.75h3.75" transform="translate(-3)" fill="none" stroke="#ad5389" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" />
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="md_open" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15">
+			<path id="Icon_ionic-md-open" data-name="Icon ionic-md-open" d="M17.834,17.833H6.166V6.167h5.209V4.5H6.166A1.671,1.671,0,0,0,4.5,6.167V17.833A1.671,1.671,0,0,0,6.166,19.5H17.834A1.671,1.671,0,0,0,19.5,17.833V12.625H17.834ZM13.25,4.5V6.167h3.417L8.25,14.583,9.417,15.75l8.417-8.417V10.75H19.5V4.5Z" transform="translate(-4.5 -4.5)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="attach_file" xmlns="http://www.w3.org/2000/svg" width="11.049" height="12.628" viewBox="0 0 11.049 12.628">
+			<path id="Icon_metro-attachment" data-name="Icon metro-attachment" d="M11.351,5.961l-.8-.8-4.005,4a1.7,1.7,0,0,0,2.4,2.4l4.807-4.806a2.832,2.832,0,1,0-4.005-4L4.7,7.8l-.011.01A3.95,3.95,0,0,0,10.278,13.4l.01-.011h0l3.445-3.444-.8-.8L9.487,12.588l-.01.01A2.817,2.817,0,0,1,5.493,8.615L5.5,8.6h0L10.55,3.558a1.7,1.7,0,0,1,2.4,2.4L8.147,10.767a.566.566,0,1,1-.8-.8l4.005-4.005Z" transform="translate(-3.535 -1.928)" fill="#9d9a9a" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="filter-date" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<g clip-path="url(#clip0_130_8782)">
+				<path d="M5.673 0C5.85865 0 6.0367 0.0737498 6.16797 0.205025C6.29925 0.336301 6.373 0.514348 6.373 0.7V2.009H13.89V0.709C13.89 0.523348 13.9637 0.345301 14.095 0.214025C14.2263 0.0827498 14.4043 0.009 14.59 0.009C14.7757 0.009 14.9537 0.0827498 15.085 0.214025C15.2162 0.345301 15.29 0.523348 15.29 0.709V2.009H18C18.5303 2.009 19.0388 2.21958 19.4139 2.59443C19.7889 2.96929 19.9997 3.47774 20 4.008V18.001C19.9997 18.5313 19.7889 19.0397 19.4139 19.4146C19.0388 19.7894 18.5303 20 18 20H2C1.46974 20 0.961184 19.7894 0.58614 19.4146C0.211096 19.0397 0.00026513 18.5313 0 18.001L0 4.008C0.00026513 3.47774 0.211096 2.96929 0.58614 2.59443C0.961184 2.21958 1.46974 2.009 2 2.009H4.973V0.699C4.97327 0.513522 5.04713 0.335731 5.17838 0.204672C5.30963 0.0736123 5.48752 -1.89263e-07 5.673 0V0ZM1.4 7.742V18.001C1.4 18.0798 1.41552 18.1578 1.44567 18.2306C1.47583 18.3034 1.52002 18.3695 1.57574 18.4253C1.63145 18.481 1.69759 18.5252 1.77039 18.5553C1.84319 18.5855 1.92121 18.601 2 18.601H18C18.0788 18.601 18.1568 18.5855 18.2296 18.5553C18.3024 18.5252 18.3685 18.481 18.4243 18.4253C18.48 18.3695 18.5242 18.3034 18.5543 18.2306C18.5845 18.1578 18.6 18.0798 18.6 18.001V7.756L1.4 7.742ZM6.667 14.619V16.285H5V14.619H6.667ZM10.833 14.619V16.285H9.167V14.619H10.833ZM15 14.619V16.285H13.333V14.619H15ZM6.667 10.642V12.308H5V10.642H6.667ZM10.833 10.642V12.308H9.167V10.642H10.833ZM15 10.642V12.308H13.333V10.642H15ZM4.973 3.408H2C1.92121 3.408 1.84319 3.42352 1.77039 3.45367C1.69759 3.48382 1.63145 3.52802 1.57574 3.58374C1.52002 3.63945 1.47583 3.70559 1.44567 3.77839C1.41552 3.85119 1.4 3.92921 1.4 4.008V6.343L18.6 6.357V4.008C18.6 3.92921 18.5845 3.85119 18.5543 3.77839C18.5242 3.70559 18.48 3.63945 18.4243 3.58374C18.3685 3.52802 18.3024 3.48382 18.2296 3.45367C18.1568 3.42352 18.0788 3.408 18 3.408H15.29V4.337C15.29 4.52265 15.2162 4.7007 15.085 4.83197C14.9537 4.96325 14.7757 5.037 14.59 5.037C14.4043 5.037 14.2263 4.96325 14.095 4.83197C13.9637 4.7007 13.89 4.52265 13.89 4.337V3.408H6.373V4.328C6.373 4.51365 6.29925 4.6917 6.16797 4.82297C6.0367 4.95425 5.85865 5.028 5.673 5.028C5.48735 5.028 5.3093 4.95425 5.17803 4.82297C5.04675 4.6917 4.973 4.51365 4.973 4.328V3.408V3.408Z" fill="black" />
+			</g>
+			<defs>
+				<clipPath id="clip0_130_8782">
+					<rect width="20" height="20" fill="white" />
+				</clipPath>
+			</defs>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="filter-grading" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<g clip-path="url(#clip0_130_8799)">
+				<path d="M3 2.5C3.00001 2.06117 3.11553 1.63007 3.33495 1.25004C3.55437 0.87 3.86996 0.554415 4.25 0.335V17.5C4.25 17.8315 4.3817 18.1495 4.61612 18.3839C4.85054 18.6183 5.16848 18.75 5.5 18.75H15.5C15.8315 18.75 16.1495 18.6183 16.3839 18.3839C16.6183 18.1495 16.75 17.8315 16.75 17.5V2.5C16.75 2.16848 16.6183 1.85054 16.3839 1.61612C16.1495 1.3817 15.8315 1.25 15.5 1.25H13V0H15.5C16.163 0 16.7989 0.263392 17.2678 0.732233C17.7366 1.20107 18 1.83696 18 2.5V17.5C18 18.163 17.7366 18.7989 17.2678 19.2678C16.7989 19.7366 16.163 20 15.5 20H5.5C4.83696 20 4.20107 19.7366 3.73223 19.2678C3.26339 18.7989 3 18.163 3 17.5V2.5ZM5.5 0V8.125C5.5 8.24107 5.53232 8.35485 5.59334 8.45358C5.65436 8.55232 5.74168 8.63211 5.84549 8.68402C5.94931 8.73592 6.06553 8.7579 6.18113 8.74747C6.29673 8.73705 6.40714 8.69464 6.5 8.625L8.625 7.03125L10.75 8.625C10.8429 8.69464 10.9533 8.73705 11.0689 8.74747C11.1845 8.7579 11.3007 8.73592 11.4045 8.68402C11.5083 8.63211 11.5956 8.55232 11.6567 8.45358C11.7177 8.35485 11.75 8.24107 11.75 8.125V0H5.5ZM6.75 6.875V1.25H10.5V6.875L9 5.75C8.89182 5.66886 8.76023 5.625 8.625 5.625C8.48977 5.625 8.35818 5.66886 8.25 5.75L6.75 6.875Z" fill="black" />
+			</g>
+			<defs>
+				<clipPath id="clip0_130_8799">
+					<rect width="20" height="20" fill="white" />
+				</clipPath>
+			</defs>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="download" xmlns="http://www.w3.org/2000/svg" width="21.529" height="15" viewBox="0 0 21.529 15">
+			<g id="cloud-download-sign-svgrepo-com" transform="translate(0 -92.799)">
+				<g id="Group_2597" data-name="Group 2597" transform="translate(0 92.799)">
+					<path id="Path_2486" data-name="Path 2486" d="M18.394,98.024a4.844,4.844,0,0,0-5.66-3.357,4.839,4.839,0,0,0-8.659,2.971c0,.033,0,.066,0,.1a5.081,5.081,0,0,0,1,10.061H16.448a5.081,5.081,0,0,0,1.945-9.775Zm-5.311,4.915-1.761,1.76a.789.789,0,0,1-1.116,0l-1.76-1.76a.789.789,0,1,1,1.117-1.116l.413.413v-3.7a.79.79,0,0,1,1.579,0v3.7l.413-.413a.789.789,0,1,1,1.116,1.117Z" transform="translate(0 -92.799)" fill="#fff" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="bookmark" xmlns="http://www.w3.org/2000/svg" width="13.228" height="17.007" viewBox="0 0 13.228 17.007">
+			<path id="Icon_material-bookmark" data-name="Icon material-bookmark" d="M18.838,4.5H9.39a1.887,1.887,0,0,0-1.88,1.89L7.5,21.507l6.614-2.834,6.614,2.834V6.39A1.9,1.9,0,0,0,18.838,4.5Z" transform="translate(-7.5 -4.5)" fill="#fff" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="upload" xmlns="http://www.w3.org/2000/svg" width="21.333" height="20" viewBox="0 0 21.333 20">
+			<path id="Icon_metro-upload" data-name="Icon metro-upload" d="M11.9,14.523h2.667V9.189h4L13.237,3.856,7.9,9.189h4Zm4-3v2.056l6.106,2.277-8.772,3.271L4.465,15.856l6.106-2.277V11.523l-8,3v5.333l10.667,4,10.667-4V14.523Z" transform="translate(-2.571 -3.856)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="21.273" height="20.397" viewBox="0 0 21.273 20.397" id="fav-star">
+			<path id="Icon_awesome-star" data-name="Icon awesome-star" d="M10.478.673,8.007,5.683l-5.529.806a1.212,1.212,0,0,0-.67,2.066l4,3.9-.946,5.506a1.21,1.21,0,0,0,1.756,1.275l4.946-2.6,4.946,2.6a1.211,1.211,0,0,0,1.756-1.275l-.946-5.506,4-3.9a1.212,1.212,0,0,0-.67-2.066l-5.529-.806L12.65.673a1.212,1.212,0,0,0-2.172,0Z" transform="translate(-0.927 0.501)" fill="none" stroke="#e6e6e6" stroke-width="1" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="21.273" height="20.397" viewBox="0 0 21.273 20.397" id="fav-star-fill">
+			<path id="Icon_awesome-star" data-name="Icon awesome-star" d="M10.478.673,8.007,5.683l-5.529.806a1.212,1.212,0,0,0-.67,2.066l4,3.9-.946,5.506a1.21,1.21,0,0,0,1.756,1.275l4.946-2.6,4.946,2.6a1.211,1.211,0,0,0,1.756-1.275l-.946-5.506,4-3.9a1.212,1.212,0,0,0-.67-2.066l-5.529-.806L12.65.673a1.212,1.212,0,0,0-2.172,0Z" transform="translate(-0.927 0.501)" fill="#ffc107" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="19.54" height="18.185" viewBox="0 0 19.54 18.185" id="fav-heart">
+			<path id="Icon_material-favorite" data-name="Icon material-favorite" d="M12.27,21.51l-1.344-1.224C6.152,15.957,3,13.1,3,9.6A5.049,5.049,0,0,1,8.1,4.5,5.551,5.551,0,0,1,12.27,6.437,5.551,5.551,0,0,1,16.441,4.5a5.049,5.049,0,0,1,5.1,5.1c0,3.5-3.152,6.359-7.926,10.7Z" transform="translate(-2.5 -4)" fill="none" stroke="#e6e6e6" stroke-width="1" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="arrow_right" xmlns="http://www.w3.org/2000/svg" width="11.115" height="18" viewBox="0 0 11.115 18">
+			<path id="Icon_material-navigate-next" data-name="Icon material-navigate-next" d="M15,9l-2.115,2.115L19.755,18l-6.87,6.885L15,27l9-9Z" transform="translate(-12.885 -9)" fill="rgba(117,123,151,0.2)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="exit" xmlns="http://www.w3.org/2000/svg" width="14.063" height="15" viewBox="0 0 14.063 15">
+			<path id="Icon_metro-exit" data-name="Icon metro-exit" d="M5.383,11.3V9.428h4.688V7.553H5.383V5.678L2.571,8.491Zm.938-.937v3.75h4.688v2.813l5.625-2.813V1.928H6.321V6.616h.938V2.866h7.5l-3.75,1.875v8.437H7.258V10.366Z" transform="translate(-2.571 -1.928)" fill="#ff5d5d" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="redo" xmlns="http://www.w3.org/2000/svg" width="15.01" height="15" viewBox="0 0 15.01 15">
+			<path id="Icon_awesome-redo" data-name="Icon awesome-redo" d="M15.215,0H13.8a.357.357,0,0,0-.357.374l.119,2.463A7.381,7.381,0,1,0,12.889,13.1a.357.357,0,0,0,.014-.519l-1.012-1.012a.357.357,0,0,0-.487-.016A5.238,5.238,0,1,1,12.292,4.7L9.27,4.551a.357.357,0,0,0-.374.357V6.32a.357.357,0,0,0,.357.357h5.962a.357.357,0,0,0,.357-.357V.357A.357.357,0,0,0,15.215,0Z" transform="translate(-0.562 0)" fill="#fff" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="bookmark" xmlns="http://www.w3.org/2000/svg" width="13.228" height="17.007" viewBox="0 0 13.228 17.007">
+			<path id="Icon_material-bookmark" data-name="Icon material-bookmark" d="M18.838,4.5H9.39a1.887,1.887,0,0,0-1.88,1.89L7.5,21.507l6.614-2.834,6.614,2.834V6.39A1.9,1.9,0,0,0,18.838,4.5Z" transform="translate(-7.5 -4.5)" fill="#fff" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="upload" xmlns="http://www.w3.org/2000/svg" width="21.333" height="20" viewBox="0 0 21.333 20">
+			<path id="Icon_metro-upload" data-name="Icon metro-upload" d="M11.9,14.523h2.667V9.189h4L13.237,3.856,7.9,9.189h4Zm4-3v2.056l6.106,2.277-8.772,3.271L4.465,15.856l6.106-2.277V11.523l-8,3v5.333l10.667,4,10.667-4V14.523Z" transform="translate(-2.571 -3.856)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="upload" xmlns="http://www.w3.org/2000/svg" width="21.333" height="20" viewBox="0 0 21.333 20">
+			<path id="Icon_metro-upload" data-name="Icon metro-upload" d="M11.9,14.523h2.667V9.189h4L13.237,3.856,7.9,9.189h4Zm4-3v2.056l6.106,2.277-8.772,3.271L4.465,15.856l6.106-2.277V11.523l-8,3v5.333l10.667,4,10.667-4V14.523Z" transform="translate(-2.571 -3.856)" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="21.273" height="20.397" viewBox="0 0 21.273 20.397" id="fav-star">
+			<path id="Icon_awesome-star" data-name="Icon awesome-star" d="M10.478.673,8.007,5.683l-5.529.806a1.212,1.212,0,0,0-.67,2.066l4,3.9-.946,5.506a1.21,1.21,0,0,0,1.756,1.275l4.946-2.6,4.946,2.6a1.211,1.211,0,0,0,1.756-1.275l-.946-5.506,4-3.9a1.212,1.212,0,0,0-.67-2.066l-5.529-.806L12.65.673a1.212,1.212,0,0,0-2.172,0Z" transform="translate(-0.927 0.501)" fill="none" stroke="#e6e6e6" stroke-width="1" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="21.273" height="20.397" viewBox="0 0 21.273 20.397" id="fav-star-fill">
+			<path id="Icon_awesome-star" data-name="Icon awesome-star" d="M10.478.673,8.007,5.683l-5.529.806a1.212,1.212,0,0,0-.67,2.066l4,3.9-.946,5.506a1.21,1.21,0,0,0,1.756,1.275l4.946-2.6,4.946,2.6a1.211,1.211,0,0,0,1.756-1.275l-.946-5.506,4-3.9a1.212,1.212,0,0,0-.67-2.066l-5.529-.806L12.65.673a1.212,1.212,0,0,0-2.172,0Z" transform="translate(-0.927 0.501)" fill="#ffc107" />
+		</svg>
+	</defs>
+	<defs>
+		<svg xmlns="http://www.w3.org/2000/svg" width="19.54" height="18.185" viewBox="0 0 19.54 18.185" id="fav-heart">
+			<path id="Icon_material-favorite" data-name="Icon material-favorite" d="M12.27,21.51l-1.344-1.224C6.152,15.957,3,13.1,3,9.6A5.049,5.049,0,0,1,8.1,4.5,5.551,5.551,0,0,1,12.27,6.437,5.551,5.551,0,0,1,16.441,4.5a5.049,5.049,0,0,1,5.1,5.1c0,3.5-3.152,6.359-7.926,10.7Z" transform="translate(-2.5 -4)" fill="none" stroke="#e6e6e6" stroke-width="1" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="chat-info" xmlns="http://www.w3.org/2000/svg" width="26.225" height="26.225" viewBox="0 0 26.225 26.225">
+			<path id="Icon_awesome-info-circle" data-name="Icon awesome-info-circle" d="M13.675.563A13.112,13.112,0,1,0,26.787,13.675,13.114,13.114,0,0,0,13.675.563Zm0,5.816A2.221,2.221,0,1,1,11.454,8.6,2.221,2.221,0,0,1,13.675,6.378Zm2.961,13.43a.634.634,0,0,1-.634.634H11.348a.634.634,0,0,1-.634-.634V18.539a.634.634,0,0,1,.634-.634h.634V14.521h-.634a.634.634,0,0,1-.634-.634V12.617a.634.634,0,0,1,.634-.634h3.384a.634.634,0,0,1,.634.634V17.9H16a.634.634,0,0,1,.634.634Z" transform="translate(-0.563 -0.563)" fill="#757b97" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="chat-attach" xmlns="http://www.w3.org/2000/svg" width="20.388" height="20.472" viewBox="0 0 20.388 20.472">
+			<path id="Path_304" data-name="Path 304" d="M18.7,1.768A6.534,6.534,0,0,0,14.33,0,6.359,6.359,0,0,0,9.957,1.768a1.4,1.4,0,0,0-.372,1.024,1.951,1.951,0,0,0,.372,1.024,1.4,1.4,0,0,0,1.024.372h0A1.951,1.951,0,0,0,12,3.815a3.484,3.484,0,0,1,4.839,0,3.924,3.924,0,0,1,.837,2.326,3.379,3.379,0,0,1-1.024,2.419l-8.1,8.1a3.484,3.484,0,0,1-4.839,0,3.48,3.48,0,0,1-.931-2.326,3.379,3.379,0,0,1,1.024-2.419L7.258,8.468a1.012,1.012,0,0,1,1.4,0,1.132,1.132,0,0,1,0,1.489L6.142,12.469a1.4,1.4,0,0,0-.372,1.024,1.951,1.951,0,0,0,.372,1.024,1.542,1.542,0,0,0,1.954,0L10.608,12a3.819,3.819,0,0,0,0-5.4A3.727,3.727,0,0,0,7.91,5.49,3.305,3.305,0,0,0,5.3,6.514L1.861,9.957A5.9,5.9,0,0,0,0,14.331,6.359,6.359,0,0,0,1.768,18.7a6.534,6.534,0,0,0,4.374,1.768A6.359,6.359,0,0,0,10.515,18.7l8.1-8.1a5.967,5.967,0,0,0,1.768-4.374A6.1,6.1,0,0,0,18.7,1.768Z" fill="#cecfd0" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="chat-video" xmlns="http://www.w3.org/2000/svg" width="20.379" height="20.379" viewBox="0 0 20.379 20.379">
+			<path id="Path_305" data-name="Path 305" d="M18.681,0H1.7A1.7,1.7,0,0,0,0,1.7V18.681a1.7,1.7,0,0,0,1.7,1.7H18.681a1.7,1.7,0,0,0,1.7-1.7V1.7A1.7,1.7,0,0,0,18.681,0ZM3.4,17.832H1.7v-1.7H3.4Zm0-4.246H1.7v-1.7H3.4Zm0-5.095H1.7v-1.7H3.4Zm0-4.246H1.7v-1.7H3.4ZM15.284,16.983H5.095V11.039h10.19Zm0-7.642H5.095V3.4h10.19Zm3.4,8.491h-1.7v-1.7h1.7Zm0-4.246h-1.7v-1.7h1.7Zm0-5.095h-1.7v-1.7h1.7Zm0-4.246h-1.7v-1.7h1.7Z" fill="#cecfd0" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="chat-emoji" xmlns="http://www.w3.org/2000/svg" width="20.379" height="20.379" viewBox="0 0 20.379 20.379">
+			<path id="Path_306" data-name="Path 306" d="M10.19,0a10.19,10.19,0,1,0,10.19,10.19A10.22,10.22,0,0,0,10.19,0ZM6.368,6.793a1.274,1.274,0,0,1,0,2.547,1.274,1.274,0,0,1,0-2.547ZM15.03,14.18a6.732,6.732,0,0,1-4.84,1.953A6.732,6.732,0,0,1,5.35,14.18a.841.841,0,0,1,1.189-1.189,5.206,5.206,0,0,0,3.651,1.444,5.206,5.206,0,0,0,3.651-1.444A.841.841,0,0,1,15.03,14.18ZM14.011,9.34a1.274,1.274,0,1,1,1.274-1.274A1.306,1.306,0,0,1,14.011,9.34Z" fill="#cecfd0" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="sync_alt" width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+			<title>
+				sync
+			</title>
+			<desc>
+				Created with sketchtool.
+			</desc>
+			<g id="web-app" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+				<g id="sync" fill="#249f61">
+					<path d="M6.8762659,15.1237341 C7.93014755,16.8486822 9.83062143,18 12,18 C14.6124377,18 16.8349158,16.3303847 17.6585886,14 L19.747965,14 C18.8598794,17.4504544 15.7276789,20 12,20 C9.28005374,20 6.87714422,18.6426044 5.43172915,16.5682708 L3,19 L3,13 L9,13 L6.8762659,15.1237341 Z M17.1245693,8.87543068 C16.0703077,7.15094618 14.1695981,6 12,6 C9.3868762,6 7.16381436,7.66961525 6.33992521,10 L4.25,10 C5.13831884,6.54954557 8.27134208,4 12,4 C14.7202162,4 17.123416,5.35695218 18.5692874,7.43071264 L21,5 L21,11 L15,11 L17.1245693,8.87543068 Z" id="Shape">
+					</path>
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="check_alt" width="24px" height="24px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path d="M9.172 18.657a1 1 0 0 1-.707-.293l-5.657-5.657a1 1 0 0 1 1.414-1.414l4.95 4.95L19.778 5.636a1 1 0 0 1 1.414 1.414L9.879 18.364a1 1 0 0 1-.707.293z" />
+		</svg>
+	</defs>
+	<defs>
+		<svg id="dot-three" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="5" height="22" viewBox="0 0 5 22">
+			<defs>
+				<clipPath id="clip-path">
+					<rect width="5" height="22" fill="none" />
+				</clipPath>
+			</defs>
+			<g id="Repeat_Grid_75" data-name="Repeat Grid 75" clip-path="url(#clip-path)">
+				<g transform="translate(-1821 -260)">
+					<rect id="Rectangle_2282" data-name="Rectangle 2282" width="5" height="5" rx="2.5" transform="translate(1821 260)" fill="#b8bac1" />
+				</g>
+				<g transform="translate(-1821 -252)">
+					<rect id="Rectangle_2282-2" data-name="Rectangle 2282" width="5" height="5" rx="2.5" transform="translate(1821 260)" fill="#b8bac1" />
+				</g>
+				<g transform="translate(-1821 -244)">
+					<rect id="Rectangle_2282-3" data-name="Rectangle 2282" width="5" height="5" rx="2.5" transform="translate(1821 260)" fill="#b8bac1" />
+				</g>
+			</g>
+		</svg>
+	</defs>
+	<defs>
+		<svg id="polygon_alt" xmlns="http://www.w3.org/2000/svg" width="15.467" height="14.5" viewBox="0 0 15.467 14.5">
+			<path id="Polygon_1" data-name="Polygon 1" d="M7.733,0l7.733,5.539L12.513,14.5H2.954L0,5.539Z" />
+		</svg>
+	</defs>
+</svg>

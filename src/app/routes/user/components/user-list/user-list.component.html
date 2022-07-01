@@ -1,0 +1,100 @@
+<div class="app-content content-account">
+  <div class="app-title">
+    <h1 class="title">អ្នកគ្រប់គ្រង</h1>
+    <button mat-raised-button color="primary" class="create-btn" [routerLink]="['add-new']">
+      <mat-icon svgIcon="add_new"></mat-icon>
+      បង្កើតថ្មី
+    </button>
+  </div>
+
+  <app-filter-without-create-new (queryEvent)="onSearch($event)"></app-filter-without-create-new>
+  <div id="table">
+    <div class="progress-table">
+      <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+    </div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+      <ng-container matColumnDef="ID">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ល.រ</th>
+        <td mat-cell *matCellDef="let element, let i=index">
+          <span class="mobile-label">ល.រ:</span>
+          {{params.page === 1 ? (i + 1) : i + 1 + (params.limit * (params.page - 1))}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef class="col-header-name"> ឈ្មោះ </th>
+        <td mat-cell *matCellDef="let element" class="col-image-name">
+          <span class="mobile-label">ឈ្មោះ:</span>
+          <div class="thumbnail-list">
+            <div [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(' + 'assets/imgs/lecturer.svg' +')' }" class="profile-picture"></div>
+            <span>{{element.first_name}} {{element.last_name}}</span>
+        </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ភេទ</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">ភេទ:</span>
+          {{ element.gender }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="dob">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃកំណើត</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">ថ្ងៃកំណើត:</span>
+          {{ element.dob | date: 'dd' }}
+          {{ element.dob | date: 'MM' | khmerMonth }}
+          {{ element.dob | date: 'yyyy' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>អុីម៊ែល</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">អុីម៊ែល:</span>
+          {{ element.email }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ស្ថានភាព</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">ស្ថានភាព:</span>
+          <span class="status" [ngClass]="element.status.name_en | lowercase">{{element.status.name}}</span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ព័ត៌មានលម្អិត</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">ព័ត៌មានលម្អិត</span>
+          <div class="action">
+            <button mat-stroked-button class="btn-sm" [routerLink]="['detail/' + element._id]"
+              #tooltip="matTooltip" matTooltip="View" matTooltipPosition="right">
+              <mat-icon svgIcon="visibility"></mat-icon>
+            </button>
+          </div>
+        </td>
+      </ng-container>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="12">
+          <div class="empty grid p-32  content-center">
+            <app-empty *ngIf="!isLoading; else loading"></app-empty>
+            <ng-template #loading>
+              <strong align="center">កំពុងផ្ទុក...</strong>
+            </ng-template>
+          </div>
+        </td>
+      </tr>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </div>
+  <app-pagination [total]="total" [limit]="params.limit" [page]="params.page" [surroundButton]="6"
+    (changed)="goTo($event)">
+  </app-pagination>
+</div>

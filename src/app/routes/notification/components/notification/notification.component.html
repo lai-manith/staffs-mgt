@@ -1,0 +1,65 @@
+<button mat-icon-button class="button-border alert" [matMenuTriggerFor]="notification"
+  #notificationTrigger="matMenuTrigger" (menuOpened)="menuOpened()">
+  <mat-icon [matBadge]="dataSource.unreadCount > 0 ? dataSource.unreadCount : ''" matBadgeColor="accent" matBadgeSize="small"
+    svgIcon="notification"></mat-icon>
+</button>
+<mat-menu #notification="matMenu" xPosition="before" backdropClass="notification">
+  <mat-nav-list class="noti-content" (click)="$event.stopPropagation();">
+    <section class="header pb-8">
+      <h1>Notifications</h1>
+      <button *ngIf="dataSource.cachedNotifications.length > 0" mat-button (click)="markAllAsRead()">
+        Mark as read all
+      </button>
+    </section>
+
+    <cdk-virtual-scroll-viewport itemSize="60" class="notification-box" [minBufferPx]="800" [maxBufferPx]="900"
+      [ngClass]="dataSource.cachedNotifications.length < 1 ? 'no-data' : ''">
+      <mat-list-item *cdkVirtualFor="let data of dataSource; index as i" class="noti-text">
+        <div class="profile" (click)="notificationTrigger.closeMenu() ;goToNotificationSource(data)">
+          <div [style.background-image]="'url('+ ((data?.staff?.profile | staticFile) || imgDefault) + ')'"
+            class="profile-picture mr-6">
+          </div>
+        </div>
+        <div class="action">
+          <div class="detail" [ngClass]="data.read === 0 ? '' : 'read'"
+            (click)="notificationTrigger.closeMenu(); goToNotificationSource(data)">
+            <div class="text">
+              <span class="message_custom" [innerHtml]="data.message"></span>
+            </div>
+            <div class="date">{{data.create_at | dateToTimeAgo}}</div>
+          </div>
+
+          <button *ngIf="data.read === 0" [matMenuTriggerFor]="button" #buttonTrigger="matMenuTrigger" mat-icon-button
+            class="button-border alert unread-dot">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+
+          <mat-menu #button="matMenu">
+            <div class="nested-actions" (click)="$event.stopPropagation();">
+              <button mat-menu-item (click)="onMarkRead(data._id)">
+                <mat-icon>mark_chat_read</mat-icon>
+                <span>Mark as read</span>
+              </button>
+              <button mat-menu-item (click)="onDelete(data._id, 1)">
+                <mat-icon svgIcon="trash_can"></mat-icon>
+                <span>Delete</span>
+              </button>
+            </div>
+          </mat-menu>
+
+          <button (click)="onDelete(data._id, 2)" *ngIf="data.read === 1" mat-icon-button
+            class="button-border alert unread-dot">
+            <mat-icon svgIcon="trash_can"></mat-icon>
+          </button>
+
+        </div>
+      </mat-list-item>
+
+      <div class="loading-container" *ngIf="dataSource.isLoading">
+        <mat-spinner [diameter]="30"></mat-spinner>
+      </div>
+
+      <app-empty *ngIf="dataSource.cachedNotifications.length < 1"></app-empty>
+    </cdk-virtual-scroll-viewport>
+  </mat-nav-list>
+</mat-menu>

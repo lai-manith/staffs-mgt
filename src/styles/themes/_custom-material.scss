@@ -1,0 +1,182 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+
+$mat-custom-primary: (
+  50: #dcf9d8,
+  100: #a4f39f,
+  200: #86d582,
+  300: #69b767,
+  400: #4c994c,
+  500: #4f9573,
+  600: #00754d,
+  700: #006c60,
+  800: #006068,
+  900: #2f4858,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff
+  )
+);
+
+$mat-custom-accent: (
+  50: #dcf9d8,
+  100: #a4f39f,
+  200: #86d582,
+  300: #69b767,
+  400: #4c994c,
+  500: #ff9a1e,
+  600: #00754d,
+  700: #006c60,
+  800: #006068,
+  900: #2f4858,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff
+  )
+);
+
+$mat-custom-warn: (
+  50: #dcf9d8,
+  100: #a4f39f,
+  200: #86d582,
+  300: #69b767,
+  400: #4c994c,
+  500: #ff5d5d,
+  600: #00754d,
+  700: #006c60,
+  800: #006068,
+  900: #2f4858,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff
+  )
+);
+
+$mat-custom-print: (
+  50: #dcf9d8,
+  100: #a4f39f,
+  200: #86d582,
+  300: #69b767,
+  400: #4c994c,
+  500: #3371ab,
+  600: #00754d,
+  700: #006c60,
+  800: #006068,
+  900: #2f4858,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff
+  )
+);
+
+$primary: mat.define-palette($mat-custom-primary);
+$accent: mat.define-palette($mat-custom-accent);
+
+// The warn palette is optional (defaults to red).
+$warn: mat.define-palette($mat-custom-warn);
+
+// added print color
+$print: mat.define-palette($mat-custom-print);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$custom-typography: mat.define-typography-config(
+  $font-family: 'Open Sans, Khmer, system ui',
+  $display-4: mat.define-typography-level(112px, 112px, 300, $letter-spacing: -0.05em),
+  $display-3: mat.define-typography-level(56px, 56px, 400, $letter-spacing: -0.02em),
+  $display-2: mat.define-typography-level(45px, 48px, 400, $letter-spacing: -0.005em),
+  $display-1: mat.define-typography-level(34px, 40px, 400),
+  $headline: mat.define-typography-level(24px, 32px, 600),
+  $subheading-2: mat.define-typography-level(18px, 24px, 700, Nunito, normal),
+  $subheading-1: mat.define-typography-level(14px, 20px, 700, Nunito, normal)
+);
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn,
+      print: $print
+    ),
+    typography: $custom-typography
+  )
+);
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.core($custom-typography);
+@include mat.all-component-themes($theme);
+/* added mat print */
+.mat-flat-button.mat-print,
+.mat-raised-button.mat-print,
+.mat-fab.mat-print,
+.mat-mini-fab.mat-print {
+  background-color: #3371ab;
+  color: white;
+}
+
+.mat-button.mat-print,
+.mat-icon-button.mat-print,
+.mat-stroked-button.mat-print {
+  color: #3371ab;
+}
+.mat-tooltip {
+  font-size: 12.75px;
+}
+.mat-icon svg {
+  padding: 1px;
+}
+.loading-spinner {
+  &.mat-spinner {
+    display: inline-block;
+  }
+  &#{&}--white {
+    &.mat-spinner circle {
+      stroke: white;
+    }
+  }
+}

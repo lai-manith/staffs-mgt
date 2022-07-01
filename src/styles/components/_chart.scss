@@ -1,0 +1,18 @@
+.chart-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  background-color: white;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 1rem;
+}
+.doughnut-chart {
+  max-width: 250px;
+  margin: auto;
+}
+.line-chart {
+  width: 100%;
+  margin-top: auto;
+}
