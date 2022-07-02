@@ -1,22 +1,58 @@
 <div class="home">
   <h1 class="title">ផ្ទាំងគ្រប់គ្រង</h1>
+  <div class="grid gap-16 col-lg-4 mb-16">
+    <mat-card class="mat-elevation-z0 p-32">
+      <div class="stat-detail">
+        <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="student icon" />
+        <div>
+          <h1>{{salarySummary?.salary_per_year}}</h1>
+          <p>ចំណាយប្រចាំឆ្នាំ</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="mat-elevation-z0 p-32">
+      <div class="stat-detail">
+        <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="lecturer icon" />
+        <div>
+          <h1>{{salarySummary?.salary_per_month}}</h1>
+          <p>ចំណាយប្រចាំខែ</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="mat-elevation-z0 p-32">
+      <div class="stat-detail">
+        <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="earning icon" />
+        <div>
+          <h1>{{salarySummary?.max_salary}}</h1>
+          <p>ប្រាក់ខែច្រើនបំផុត</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="mat-elevation-z0 p-32">
+      <div class="stat-detail">
+        <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="faculty icon" />
+        <div>
+          <h1>{{salarySummary?.min_salary}}</h1>
+          <p>ប្រាក់ខែតិចបំផុត</p>
+        </div>
+      </div>
+    </mat-card>
+  </div>
   <div class="grid col-lg-12 col-sm-1 col-md-1 col-xs-1 gap-16">
     <div class="chart-container col-span-lg-8">
       <div class="title-and-more">
         <mat-card-header>
-          <mat-card-title> <h2>ស្ថិតិបុគ្គលិកថ្មី</h2></mat-card-title>
+          <mat-card-title> <h2>ស្ថិតិបុគ្គលិកតាមតំណែង</h2></mat-card-title>
         </mat-card-header>
       </div>
-      <app-line-chart
-        class="line-chart"
-        [lineChartDataset]="lineChartDataset"
-        [lineChartLabel]="lineChartLabel"
-      ></app-line-chart>
+      <app-bar-chart [labels]="labels" [datasets]="datasets" [indexAxis]="indexAxis" [datasetLabel]="datasetLabel"
+      [legend]="false">
+  </app-bar-chart>
     </div>
     <div class="chart-container col-span-lg-4 ">
       <div class="title-and-more ">
         <mat-card-header>
-          <mat-card-title><h2>បុគ្គលិកតាមភេទ</h2></mat-card-title>
+          <mat-card-title><h2>ស្ថិតិបុគ្គលិកតាមភេទ</h2></mat-card-title>
         </mat-card-header>
       </div>
       <app-doughnut-chart *ngIf="dougnutChartDataset && doughnutChartLabels"

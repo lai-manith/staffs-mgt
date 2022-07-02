@@ -16,10 +16,18 @@
       <td mat-cell *matCellDef="let element" class="col-image-name">
         <span class="mobile-label">ឈ្មោះ:</span>
         <div class="thumbnail-list">
-          <div [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' : '/assets/imgs/profile-default.svg' }" class="profile-picture"></div>
+          <div [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' :  'url(/assets/imgs/profile-default.svg)' }" class="profile-picture"></div>
           <span>{{element.first_name}} {{element.last_name}}</span>
       </div>
 
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="staff_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>លេខសម្គាល់បុគ្គលិក</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">លេខសម្គាល់បុគ្គលិក:</span>
+        <span>{{ element.staff_id }}</span>
       </td>
     </ng-container>
 
@@ -75,12 +83,24 @@
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ព័ត៌មានលម្អិត</th>
       <td mat-cell *matCellDef="let element">
         <span class="mobile-label">ព័ត៌មានលម្អិត</span>
-        <div class="action">
-          <button mat-stroked-button class="btn-sm" [routerLink]="['detail/' + element._id]"
-            #tooltip="matTooltip" matTooltip="View" matTooltipPosition="right">
-            <mat-icon svgIcon="visibility"></mat-icon>
-          </button>
-        </div>
+        <button mat-stroked-button color="primary" [matMenuTriggerFor]="menu" class="btn-sm" #tooltip="matTooltip"
+          matTooltip="More" matTooltipPosition="right">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" xPosition="before">
+          <a [routerLink]="['/staff/staff-active/detail/' + element._id]" class="menu-item">
+            <button mat-menu-item>
+              <mat-icon svgIcon="visibility"></mat-icon>
+              <span>មើលព័ត៌មានលម្អិត</span>
+            </button>
+          </a>
+          <a [routerLink]="['/staff/staff-active/manage-salary', element._id]" class="menu-item">
+            <button mat-menu-item>
+              <mat-icon>currency_exchange</mat-icon>
+              <span>គ្រប់គ្រងប្រាក់ខែ</span>
+            </button>
+          </a>
+        </mat-menu>
       </td>
     </ng-container>
 

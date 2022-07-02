@@ -1,5 +1,8 @@
 @use '../variables';
 .home {
+  app-bar-chart {
+    width: 100%;
+  }
   .student-chart {
     height: 409px;
     display: flex;

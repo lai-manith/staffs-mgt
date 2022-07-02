@@ -99,7 +99,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ប្រាក់ខែចាស់</th>
           <td mat-cell *matCellDef="let element">
             <span class="mobile-label">ប្រាក់ខែចាស់:</span>
-            <span>{{ '$ ' + element.current_salary }}</span>
+            <span>{{ element.current_salary }}</span>
           </td>
         </ng-container>
 
@@ -107,7 +107,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>ប្រាក់ខែថ្មី</th>
           <td mat-cell *matCellDef="let element">
             <span class="mobile-label">ប្រាក់ខែថ្មី:</span>
-            <span>{{ '$ ' + element.last_salary }}</span>
+            <span>{{ element.last_salary }}</span>
           </td>
         </ng-container>
 

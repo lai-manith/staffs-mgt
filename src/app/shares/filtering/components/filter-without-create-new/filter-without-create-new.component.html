@@ -3,14 +3,13 @@
   <div class="filter-box">
     <button mat-stroked-button [matMenuTriggerFor]="menu" class="bg-white rounded-md py-2" *ngIf="!hideFilter">
       <mat-icon [matBadge]="filterSet.size || null" svgIcon="filter" matPrefix class="filter-icon"></mat-icon>
-      <span class="px-8">Filters</span>
+      <span class="px-8">ស្រង់តាម</span>
       <mat-icon matSuffix>expand_more</mat-icon>
     </button>
     <mat-menu #menu class="menu-filter-panel">
       <div class="menu-filter-header">
-        <b>Filters</b>
-        <span *ngIf="filterSet.size" (click)="reset(); $event.stopPropagation()" class="menu-filter-panel__clear">Clear
-          all</span>
+        <b>ស្រង់តាម</b>
+        <span *ngIf="filterSet.size" (click)="reset(); $event.stopPropagation()" class="menu-filter-panel__clear">លុបចេញ​ទាំងអស់</span>
       </div>
       <div class="grid gap-x-16 col-md-2 col-lg-2 col-xl-2" (click)="$event.stopPropagation()" (keyup)="null">
         <div *ngFor="let option of filters;" class="mt-8">

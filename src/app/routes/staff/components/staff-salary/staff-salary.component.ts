@@ -77,6 +77,16 @@ export class StaffSalaryComponent implements OnInit {
       .getMany(this.params)
       .pipe(
         map(map => {
+          map.list.forEach(element => {
+            element.last_salary = element.last_salary.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }) as any;
+            element.current_salary = element.current_salary.toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+            }) as any;
+          });
           return map;
         })
       )

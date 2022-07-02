@@ -19,6 +19,7 @@ export class FacultyListComponent {
   displayedColumns: string[] = [
     'ID',
     'name',
+    'staff_id',
     'age',
     'gender',
     'position',
@@ -26,7 +27,6 @@ export class FacultyListComponent {
     'contact_expiry_date',
     '_id'
   ];
-  imgDefault: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
   dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);
   total: number;
   params = {
@@ -62,7 +62,6 @@ export class FacultyListComponent {
         map(map => {
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
-            data.profile = data.profile || this.imgDefault;
           }
           return map;
         })
@@ -80,11 +79,6 @@ export class FacultyListComponent {
             isError: true
           })
       );
-  }
-
-
-  onCreate() {
-    this.router.navigate(['create-new'], {relativeTo: this.route});
   }
 
 

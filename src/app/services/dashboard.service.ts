@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { DashboardGender } from '../models/dashboard';
+import { StaffByGender, StaffByPosition, SalarySummary } from '../models/dashboard';
 import { BaseDatatable } from '../models/datatables/base.datatable';
 import { Staff } from '../models/staff';
 import { User } from '../models/user';
@@ -9,16 +9,24 @@ import { BaseCrudService } from './base-crud.service';
 @Injectable({
   providedIn: 'root'
 })
-export class DashboardService extends BaseCrudService<DashboardGender> {
+export class DashboardService extends BaseCrudService<StaffByGender> {
   public staffId: string | undefined;
   constructor(injector: Injector) {
     super(injector);
     this.path = '/report';
   }
 
-  getGender(): Observable<DashboardGender> {
-    return this.requestService.getJSON(this.path + '/gender');
+  getGender(): Observable<StaffByGender> {
+    return this.requestService.getJSON<StaffByGender>(this.path + '/gender');
   }
+
+  getStaffByPosition(): Observable<BaseDatatable<StaffByPosition>> {
+    return this.requestService.getJSON<BaseDatatable<StaffByPosition>>(this.path + '/staff_by_position');
+  };
+
+  getSalarySummary(): Observable<SalarySummary> {
+    return this.requestService.getJSON<SalarySummary>(this.path + '/salary');
+  };
 
   getNearlyExpiredStaff(data: {
     [key: string]: any;

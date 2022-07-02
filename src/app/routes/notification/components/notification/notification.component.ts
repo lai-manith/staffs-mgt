@@ -46,7 +46,7 @@ export class NotificationComponent {
   dataSource: NotificationDataSourceService;
   @Input() routeId: number;
   @ViewChild('buttonTrigger') button: MatMenuTrigger;
-  imgDefault: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
+  imgDefault: string = 'assets/imgs/profile-default.svg';
 
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.

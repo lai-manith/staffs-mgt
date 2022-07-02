@@ -6,4 +6,5 @@ export interface ManageSalary {
     status?: any;
     staff?: Staff;
     last_salary: number;
+    current_salary: number;
 }

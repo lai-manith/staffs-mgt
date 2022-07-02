@@ -50,6 +50,10 @@ export class StaffEditingComponent implements OnInit {
       map(data => {
         this.isActive = data.status;
         data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+        data.salary = data.salary.toLocaleString('en-US', {
+          style: 'currency',
+          currency: 'USD',
+        }) as any;
         data.status =
           data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
         return data;

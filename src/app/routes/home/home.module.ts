@@ -24,6 +24,7 @@ import { EmptyModule } from 'src/app/shares/empty/empty.module';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { StaticMonthModule } from 'src/app/shares/static-month/static-month.module';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [HomeComponent, FacultyListComponent],
@@ -49,7 +50,7 @@ import { StaticFileModule } from 'src/app/shares/static-file/static-file.module'
     EmptyModule,
     MatProgressBarModule,
     StaticMonthModule,
-    StaticFileModule
+    StaticFileModule, MatMenuModule
   ]
 })
 export class HomeModule {

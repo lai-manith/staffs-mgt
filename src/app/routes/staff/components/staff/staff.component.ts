@@ -24,6 +24,7 @@ export class StaffComponent implements OnInit {
   displayedColumns: string[] = [
     'ID',
     'name',
+    'staff_id',
     'age',
     'gender',
     'position',

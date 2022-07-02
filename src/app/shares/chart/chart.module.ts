@@ -6,12 +6,13 @@ import { DoughnutChartComponent } from './components/doughnut-chart/doughnut-cha
 import { OverlappedDoughnut } from './overlapped-doughnut';
 import { Chart } from 'chart.js';
 import { HoveringLine } from './hovering-line';
+import { BarChartComponent } from './components/bar-chart/bar-chart.component';
 
 Chart.register(OverlappedDoughnut, HoveringLine);
 
 @NgModule({
-  declarations: [LineChartComponent, DoughnutChartComponent],
+  declarations: [LineChartComponent, DoughnutChartComponent, BarChartComponent],
   imports: [CommonModule, NgChartsModule],
-  exports: [LineChartComponent, DoughnutChartComponent]
+  exports: [LineChartComponent, DoughnutChartComponent, BarChartComponent]
 })
 export class ChartModule {}

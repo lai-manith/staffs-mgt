@@ -23,6 +23,15 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="staff_id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>លេខសម្គាល់បុគ្គលិក
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">លេខសម្គាល់បុគ្គលិក:</span>
+        <span>{{ element.staff_id }}</span>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="age">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>អាយុ</th>
       <td mat-cell *matCellDef="let element">
