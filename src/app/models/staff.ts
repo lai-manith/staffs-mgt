@@ -15,7 +15,7 @@ export interface Staff {
   profile?: string;
   position: Position;
   hire_date: Date;
-  contact_expiry_date: Date;
+  contract_expiry_date: Date;
   date_of_birth: Date;
   salary: number;
   status: any;
@@ -24,6 +24,8 @@ export interface Staff {
   attach_files: string;
   file_name: string;
   nationality?: Nationality;
+  ethnicity?: Nationality;
+  contract_duration?: string;
 
   is_check?: boolean;
 }

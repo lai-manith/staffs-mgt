@@ -67,14 +67,14 @@
       </td>
     </ng-container>
 
-    <ng-container matColumnDef="contact_expiry_date">
+    <ng-container matColumnDef="contract_expiry_date">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃផុតកុងត្រា</th>
       <td mat-cell *matCellDef="let element">
         <span class="mobile-label">ថ្ងៃផុតកុងត្រា:</span>
         <span>
-          {{ element.contact_expiry_date | date: 'dd' }}
-          {{ element.contact_expiry_date | date: 'MM' | khmerMonth }}
-          {{ element.contact_expiry_date | date: 'yyyy' }}
+          {{ element.contract_expiry_date | date: 'dd' }}
+          {{ element.contract_expiry_date | date: 'MM' | khmerMonth }}
+          {{ element.contract_expiry_date | date: 'yyyy' }}
         </span>
       </td>
     </ng-container>

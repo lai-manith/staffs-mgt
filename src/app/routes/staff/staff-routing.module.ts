@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guards/auth.guard';
+import { StaffContractComponent } from './components/staff-contract/staff-contract.component';
 import { StaffCreatingComponent } from './components/staff-creating/staff-creating.component';
 import { StaffEditingComponent } from './components/staff-editing/staff-editing.component';
 import { StaffListComponent } from './components/staff-list/staff-list.component';
@@ -31,6 +32,11 @@ const routes: Routes = [
         path: 'manage-salary/:id',
         canActivate: [AuthGuard],
         component: StaffSalaryComponent
+      },
+      {
+        path: 'manage-contact/:id',
+        canActivate: [AuthGuard],
+        component: StaffContractComponent
       },
       {
         path: 'create',

@@ -73,7 +73,7 @@ export class StaffCreatingComponent implements OnInit {
           profile: image,
           position: res.position?._id,
           hire_date: res.hire_date,
-          contact_expiry_date: res.contact_expiry_date,
+          contract_expiry_date: res.contract_expiry_date,
           date_of_birth: res.date_of_birth,
           status: res.status,
           attach_files: res.attach_files,
@@ -122,9 +122,9 @@ export class StaffCreatingComponent implements OnInit {
         this.isCVClick = false;
 
         //TODO: Expired Contact
-        if (this.onFormatDate(this.form.controls['contact_expiry_date'].value) < this.onFormatDate(new Date())) {
-          this.form.controls['contact_expiry_date'].markAsTouched();
-          this.form.get('contact_expiry_date').setErrors({
+        if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) < this.onFormatDate(new Date())) {
+          this.form.controls['contract_expiry_date'].markAsTouched();
+          this.form.get('contract_expiry_date').setErrors({
             isExpired: true
           });
         }
@@ -177,8 +177,8 @@ export class StaffCreatingComponent implements OnInit {
 
   onSubmitUpdate() {
     //TODO: Expired Contact
-    if (this.onFormatDate(this.form.controls['contact_expiry_date'].value) < this.onFormatDate(new Date())) {
-      this.form.get('contact_expiry_date').setErrors({
+    if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) < this.onFormatDate(new Date())) {
+      this.form.get('contract_expiry_date').setErrors({
         isExpired: true
       });
     }
@@ -242,9 +242,9 @@ export class StaffCreatingComponent implements OnInit {
       file_name: [null],
       position: [null, Validators.required],
       hire_date: [null, Validators.required],
-      contact_expiry_date: [null, Validators.required],
       date_of_birth: [null, Validators.required],
       salary: this._id ? [null] : [null, Validators.required],
+      contract_expiry_date: this._id ? [null] : [null, Validators.required],
     });
 
     this.imgUrl = '';
@@ -253,7 +253,7 @@ export class StaffCreatingComponent implements OnInit {
 
   onExpiredContact(event) {
     if (this.onFormatDate(event.target.value) < this.onFormatDate(new Date())) {
-      this.form.get('contact_expiry_date').setErrors({
+      this.form.get('contract_expiry_date').setErrors({
         isExpired: true
       });
     }

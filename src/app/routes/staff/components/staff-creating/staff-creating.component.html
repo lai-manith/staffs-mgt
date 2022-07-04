@@ -146,23 +146,6 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div>
-              <label>ថ្ងៃផុតកុងត្រា</label>
-              <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="picker2" formControlName="contact_expiry_date" (click)="picker2.open()"
-                  placeholder="*" (dateChange)="onExpiredContact($event)">
-                <mat-datepicker-toggle matSuffix [for]="picker2">
-                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker startView="multi-year" #picker2></mat-datepicker>
-                <mat-error *ngIf="form.get('contact_expiry_date').errors?.required">
-                  ទាមទារ
-                </mat-error>
-                <mat-error *ngIf="form.get('contact_expiry_date').errors?.isExpired">
-                  ថ្ងៃកុងត្រាបានផុតកំណត់
-                </mat-error>
-              </mat-form-field>
-            </div>
           </div>
         </div>
         <div class="place-of-birth">

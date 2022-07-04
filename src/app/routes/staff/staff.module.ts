@@ -34,6 +34,8 @@ import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pip
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { StaffSalaryComponent } from './components/staff-salary/staff-salary.component';
 import { StaffSalaryDialogComponent } from './components/staff-salary-dialog/staff-salary-dialog.component';
+import { StaffContractComponent } from './components/staff-contract/staff-contract.component';
+import { StaffContractDialogComponent } from './components/staff-contract-dialog/staff-contract-dialog.component';
 
 
 @NgModule({
@@ -44,6 +46,8 @@ import { StaffSalaryDialogComponent } from './components/staff-salary-dialog/sta
     StaffListComponent,
     StaffSalaryComponent,
     StaffSalaryDialogComponent,
+    StaffContractComponent,
+    StaffContractDialogComponent,
   ],
   imports: [
     CommonModule,

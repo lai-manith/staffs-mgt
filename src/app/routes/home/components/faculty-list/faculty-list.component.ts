@@ -24,7 +24,7 @@ export class FacultyListComponent {
     'gender',
     'position',
     'hire_date',
-    'contact_expiry_date',
+    'contract_expiry_date',
     '_id'
   ];
   dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);
