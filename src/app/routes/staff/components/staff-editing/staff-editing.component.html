@@ -74,6 +74,10 @@
             <div class="value">{{staff?.nationality?.nationality}}</div>
           </div>
           <div>
+            <label>ជនជាតិ</label>
+            <div class="value">{{staff?.ethnicity?.nationality}}</div>
+          </div>
+          <div>
             <label>អុីម៊ែល</label>
             <div class="value">{{staff?.email || '—/—'}}</div>
           </div>
@@ -101,6 +105,12 @@
               {{ staff?.contract_expiry_date | date: 'dd' }}
               {{ staff?.contract_expiry_date | date: 'MM' | khmerMonth }}
               {{ staff?.contract_expiry_date | date: 'yyyy' }}
+            </div>
+          </div>
+          <div>
+            <label>រយៈពេលផុតកុងត្រា</label>
+            <div class="value">
+              {{ staff?.contract_duration | duration}}
             </div>
           </div>
           <div>

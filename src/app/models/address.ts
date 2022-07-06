@@ -38,3 +38,10 @@ export interface Nationality {
     nationality?: string;
     name?: string;
 }
+
+export interface Ethnicity {
+    _id?: number;
+    ethnicity_en?: string;
+    ethnicity?: string;
+    name?: string;
+}

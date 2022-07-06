@@ -20,7 +20,7 @@ import { StaffSalaryDialogComponent } from '../staff-salary-dialog/staff-salary-
 })
 export class StaffContractComponent implements OnInit {
 
-  displayedColumns: string[] = ['ID', 'current_expired_contract', 'new_expired_contract', 'duration', 'createAt', 'status', 'action'];
+  displayedColumns: string[] = ['ID', 'hire_date', 'current_expired_contract', 'new_expired_contract', 'current_duration', 'duration', 'duration_total', 'createAt', 'action'];
   dataSource: MatTableDataSource<ManageContract> = new MatTableDataSource([]);
   total: number;
   params = {

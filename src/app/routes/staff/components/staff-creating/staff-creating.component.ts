@@ -46,7 +46,7 @@ export class StaffCreatingComponent implements OnInit {
     private dialog: MatDialog,
     private addressService: AddressService,
     private staticFilePipe: StaticFilePipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onFormInit();
@@ -78,10 +78,12 @@ export class StaffCreatingComponent implements OnInit {
           status: res.status,
           attach_files: res.attach_files,
           file_name: res.file_name,
-          nationality: res.nationality._id
+          nationality: res.nationality._id,
+          ethnicity: res.ethnicity._id
         });
 
         this.nationality = [res.nationality];
+        this.ethnicity = [res.ethnicity];
 
         this.imgUrl = image;
         if (res.place_of_birth) {
@@ -151,7 +153,7 @@ export class StaffCreatingComponent implements OnInit {
     if (this.form.invalid) return;
     this.isLoading = true;
     let DATA = null;
-    DATA = {...this.form.value};
+    DATA = { ...this.form.value };
     DATA.address = JSON.stringify(DATA.address);
     DATA.place_of_birth = JSON.stringify(DATA.place_of_birth);
 
@@ -185,7 +187,7 @@ export class StaffCreatingComponent implements OnInit {
     if (this.form.invalid) return;
     this.isLoading = true;
     let DATA = null;
-    DATA = {...this.form.value};
+    DATA = { ...this.form.value };
 
     //TODO: correct data to submit
     DATA.address = JSON.stringify(DATA.address);
@@ -222,6 +224,7 @@ export class StaffCreatingComponent implements OnInit {
       phone: [null, Validators.required],
       email: [null, [Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       nationality: ['', Validators.required],
+      ethnicity: ['', Validators.required],
       address: this.fb.group({
         city_provinces: ['', Validators.required],
         districts: ['', Validators.required],
@@ -312,6 +315,7 @@ export class StaffCreatingComponent implements OnInit {
 
   cityProvinces: CityProvinces[];
   nationality: Nationality[];
+  ethnicity: Nationality[];
   birthDistricts: Districts[];
   birthCommunes: Communes[];
   birthVillages: Villages[];
@@ -335,6 +339,7 @@ export class StaffCreatingComponent implements OnInit {
   getNationality() {
     this.addressService.getNationality().subscribe(res => {
       if (res) {
+        this.ethnicity = res['list'];
         this.nationality = res['list'];
       }
     });

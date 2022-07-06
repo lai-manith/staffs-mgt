@@ -46,30 +46,37 @@ export class StaffEditingComponent implements OnInit {
 
   onLoad() {
     this.staffService.getById(this.route.snapshot.params.id)
-    .pipe(
-      map(data => {
-        this.isActive = data.status;
-        data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
-        data.salary = data.salary.toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-        }) as any;
-        data.status =
-          data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
-        return data;
-      })
-    )
-    .subscribe(
-      res => {
-        this.staff = res;
-      },
-      err =>
-        this.snackBarService.onShowSnackbar({
-          message: err.message ?? err,
-          component: SnackbarComponent,
-          isError: true
+      .pipe(
+        map(data => { 
+          this.isActive = data.status;
+          data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+          data.salary = data.salary.toLocaleString('en-US', {
+            style: 'currency',
+            currency: 'USD',
+          }) as any;
+          data.status =
+            data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
+          return data;
         })
-    );
+      )
+      .subscribe(
+        res => {
+          this.staff = res;
+        },
+        err =>
+          this.snackBarService.onShowSnackbar({
+            message: err.message ?? err,
+            component: SnackbarComponent,
+            isError: true
+          })
+      );
+  }
+
+  formatContactDuration(value: string): string {
+    for (let i = 0; i < value.length; i++) {
+      console.log(value[i])
+    }
+    return value;
   }
 
   onDelete() {
@@ -100,12 +107,12 @@ export class StaffEditingComponent implements OnInit {
 
   accountStatus: boolean;
   onSetStatusAccount(status) {
-    this.dialogService.onShowDialog({title: 'បញ្ឈប់បុគ្គលិក', message: "តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?", icon: 'assets/icons/warning.svg'})
-    .afterClosed().subscribe(res => {
-      if(res === "confirm") {
-        this.onConfirmStatusSubmit(status)
-      }
-    })
+    this.dialogService.onShowDialog({ title: 'បញ្ឈប់បុគ្គលិក', message: "តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?", icon: 'assets/icons/warning.svg' })
+      .afterClosed().subscribe(res => {
+        if (res === "confirm") {
+          this.onConfirmStatusSubmit(status)
+        }
+      })
   }
 
   onConfirmStatusSubmit(status: boolean) {
@@ -143,7 +150,7 @@ export class StaffEditingComponent implements OnInit {
 
         {
           text: this.staff.first_name + ' ' + this.staff.last_name,
-          style: ['sectionHeader', 'color', {fontSize: 15}],
+          style: ['sectionHeader', 'color', { fontSize: 15 }],
         },
         {
           columns: [
@@ -153,7 +160,7 @@ export class StaffEditingComponent implements OnInit {
               { text: 'E-mail' },
             ],
             [
-              { text: ':  ST 6A, Sangkat Prek Leap, Khan Chroy Chongva, Phnom Penh.', margin: [-150, 0, 0, 0]},
+              { text: ':  ST 6A, Sangkat Prek Leap, Khan Chroy Chongva, Phnom Penh.', margin: [-150, 0, 0, 0] },
               {
                 text: ':  ' + this.staff.phone, margin: [-150, 0, 0, 0]
               },
@@ -184,7 +191,7 @@ export class StaffEditingComponent implements OnInit {
               { text: 'Apply For' },
             ],
             [
-              { text: ':  ' + this.staff.gender, margin: [-150, 0, 0, 0]},
+              { text: ':  ' + this.staff.gender, margin: [-150, 0, 0, 0] },
               {
                 text: ':  ' + this.staff.date_of_birth, margin: [-150, 0, 0, 0]
               },
@@ -219,7 +226,7 @@ export class StaffEditingComponent implements OnInit {
           columns: [
             [
               { text: '2018 - 2020' },
-              { text: ' '},
+              { text: ' ' },
               { text: '2017 - 2018' },
             ],
             [
