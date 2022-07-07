@@ -15,6 +15,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
 import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
 import { map } from 'rxjs';
+import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -38,6 +39,7 @@ export class StaffEditingComponent implements OnInit {
     private readonly staffService: StaffService,
     private dialog: MatDialog,
     private fb: FormBuilder,
+    private statisFilePipe: StaticFilePipe
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class StaffEditingComponent implements OnInit {
   onLoad() {
     this.staffService.getById(this.route.snapshot.params.id)
       .pipe(
-        map(data => { 
+        map(data => {
           this.isActive = data.status;
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
           data.salary = data.salary.toLocaleString('en-US', {
@@ -138,12 +140,40 @@ export class StaffEditingComponent implements OnInit {
     );
   }
 
-  onPrint() {
-    let pdfTitle: string = "CURRICULUM VITAE";
+  toDataURL(url, callback) {
+    let xhRequest = new XMLHttpRequest();
+    xhRequest.onload = function () {
+      let reader = new FileReader();
+      reader.onloadend = function () {
+        callback(reader.result);
+      }
+      reader.readAsDataURL(xhRequest.response);
+    };
+    xhRequest.open('GET', url);
+    xhRequest.responseType = 'blob';
+    xhRequest.send();
+  }
 
+
+  onPrint() {
+    let image;
+    this.toDataURL('https://staffmgt.s3.ap-southeast-1.amazonaws.com/1657199774489.png', function (dataUrl) {
+      image = dataUrl;
+    });
+    setTimeout(() => {
+      console.log(image)
+      this.print(image)
+    }, 1000);
+  }
+
+  print(image) {
+    let pdfTitle: string = "CURRICULUM VITAE";
     const DATA = {
       pageSize: 'A4',
       content: [
+        {
+          image: image,
+        },
         {
           text: pdfTitle, style: ['header', 'alignCenter', 'color']
         },
