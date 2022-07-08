@@ -10,6 +10,7 @@ import { ImageCroppedEvent } from 'src/app/shares/image-cropper/interfaces';
 export class ImageUploaderComponent implements OnInit {
   isSuccessful: boolean = false;
   imageUrl: string | ArrayBuffer;
+  fileName: string;
 
   @Input() uploadProgress: number;
   @Input() file: File;
@@ -17,9 +18,9 @@ export class ImageUploaderComponent implements OnInit {
   @Output() uploadFileEvent = new EventEmitter();
   @Output() fileEvent = new EventEmitter();
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
     if (changes.uploadProgress?.currentValue as number) {
@@ -37,6 +38,7 @@ export class ImageUploaderComponent implements OnInit {
   }
 
   fileChange(files: FileList) {
+    this.fileName = files[0].name;
     if (files.length) {
       const file = files[0];
       const supportImage = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -73,8 +75,11 @@ export class ImageUploaderComponent implements OnInit {
   }
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
-    this.uploadFileEvent.emit(event);
-    console.log(event);
+
+    const imageName = this.fileName;
+    const imageBlob = this.dataURItoBlob(event.base64);
+    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
+    this.uploadFileEvent.emit(imageFile);
   }
   imageLoaded() {
     // show cropper
@@ -85,4 +90,15 @@ export class ImageUploaderComponent implements OnInit {
   loadImageFailed() {
     // show message
   }
+  dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: 'image/jpg'
+    });
+  }
+
 }

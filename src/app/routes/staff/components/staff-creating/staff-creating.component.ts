@@ -192,7 +192,7 @@ export class StaffCreatingComponent implements OnInit {
     //TODO: correct data to submit
     DATA.address = JSON.stringify(DATA.address);
     DATA.place_of_birth = JSON.stringify(DATA.place_of_birth);
-    DATA.profile = this.imgFile instanceof File ? this.imgFile : DATA.profile;
+    // DATA.profile = this.imgFile instanceof File ? this.imgFile : DATA.profile;
     this.staffService.updateFile(this._id, DATA).subscribe(
       res => {
         this.isLoading = false;
@@ -288,6 +288,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   fileChange(event: any) {
+    console.log(event)
     if (event != null) {
       this.form.patchValue({
         profile: event
