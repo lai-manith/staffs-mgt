@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChange } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from 'src/app/shares/confirm-dialog/components/confirm-dialog/confirm-dialog.component';
+import { ImageCroppedEvent } from 'src/app/shares/image-cropper/interfaces';
 @Component({
   selector: 'app-image-uploader',
   templateUrl: './image-uploader.component.html',
@@ -14,8 +15,9 @@ export class ImageUploaderComponent implements OnInit {
   @Input() file: File;
   @Input() onSubmit: boolean;
   @Output() uploadFileEvent = new EventEmitter();
+  @Output() fileEvent = new EventEmitter();
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {}
 
   ngOnInit(): void {}
 
@@ -30,7 +32,7 @@ export class ImageUploaderComponent implements OnInit {
     }
 
     if (changes.file?.currentValue) {
-      this.imageUrl = changes.file.currentValue
+      this.imageUrl = changes.file.currentValue;
     }
   }
 
@@ -49,8 +51,8 @@ export class ImageUploaderComponent implements OnInit {
         let data = {
           icon: 'assets/imgs/document-unknown.svg',
           title: 'Unsupported File Type',
-          message: 'Support file type: PNG, JPG, JPEG',
-        }
+          message: 'Support file type: PNG, JPG, JPEG'
+        };
         this.dialog.open(ConfirmDialogComponent, {
           width: '420px',
           data
@@ -62,5 +64,25 @@ export class ImageUploaderComponent implements OnInit {
   removeFile() {
     this.file = null;
     this.uploadFileEvent.emit(null);
+  }
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+    this.uploadFileEvent.emit(event);
+    console.log(event);
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
 }

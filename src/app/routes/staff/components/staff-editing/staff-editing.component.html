@@ -55,7 +55,7 @@
           </div>
           <div>
             <label>អាយុ</label>
-            <div class="value">{{staff?.age}}</div>
+            <div class="value">{{staff?.age + 'ឆ្នាំ'}}</div>
           </div>
           <div>
             <label>ភេទ</label>
@@ -151,7 +151,7 @@
         <div align="center">
             <div id="imge-base64" [style.background-image]="staff?.profile
             ? 'url('+ (staff?.profile | staticFile) +')'
-            : 'url('+ imgDefault +')'" class="lecturer-profile"></div>
+            : 'url(assets/imgs/profile-default.svg'" class="lecturer-profile"></div>
         </div>
       </section>
       <section class="box mb-16">

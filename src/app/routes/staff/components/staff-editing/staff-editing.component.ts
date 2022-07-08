@@ -16,6 +16,8 @@ import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.j
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
 import { map } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
+import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
+import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -29,6 +31,7 @@ export class StaffEditingComponent implements OnInit {
   staff: Staff;
   _id: string = this.route.snapshot.params.id;
   isActive: boolean = null;
+  static imgBase64: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,22 +42,39 @@ export class StaffEditingComponent implements OnInit {
     private readonly staffService: StaffService,
     private dialog: MatDialog,
     private fb: FormBuilder,
-    private statisFilePipe: StaticFilePipe
-  ) { }
+    private staticFilePipe: StaticFilePipe,
+    private durationPipe: DurationPipe,
+    private monthPipe: MonthPipe
+  ) {}
 
   ngOnInit(): void {
     this.onLoad();
   }
 
+  onConvertImgToBase64(): void {
+    if (this.staff.profile) {
+      this.dataURI(this.staticFilePipe.transform(this.staff.profile), function (dataUrl) {
+        StaffEditingComponent.imgBase64 = dataUrl;
+      });
+    } else {
+      this.getBase64Image('assets/imgs/profile-default.png')
+        .then(result => {
+          StaffEditingComponent.imgBase64 = result as string
+        })
+        .catch(err => console.error(err));
+    }
+  }
+
   onLoad() {
-    this.staffService.getById(this.route.snapshot.params.id)
+    this.staffService
+      .getById(this.route.snapshot.params.id)
       .pipe(
         map(data => {
           this.isActive = data.status;
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
           data.salary = data.salary.toLocaleString('en-US', {
             style: 'currency',
-            currency: 'USD',
+            currency: 'USD'
           }) as any;
           data.status =
             data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
@@ -64,6 +84,7 @@ export class StaffEditingComponent implements OnInit {
       .subscribe(
         res => {
           this.staff = res;
+          this.onConvertImgToBase64();
         },
         err =>
           this.snackBarService.onShowSnackbar({
@@ -76,7 +97,7 @@ export class StaffEditingComponent implements OnInit {
 
   formatContactDuration(value: string): string {
     for (let i = 0; i < value.length; i++) {
-      console.log(value[i])
+      console.log(value[i]);
     }
     return value;
   }
@@ -109,12 +130,18 @@ export class StaffEditingComponent implements OnInit {
 
   accountStatus: boolean;
   onSetStatusAccount(status) {
-    this.dialogService.onShowDialog({ title: 'បញ្ឈប់បុគ្គលិក', message: "តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?", icon: 'assets/icons/warning.svg' })
-      .afterClosed().subscribe(res => {
-        if (res === "confirm") {
-          this.onConfirmStatusSubmit(status)
-        }
+    this.dialogService
+      .onShowDialog({
+        title: 'បញ្ឈប់បុគ្គលិក',
+        message: 'តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?',
+        icon: 'assets/icons/warning.svg'
       })
+      .afterClosed()
+      .subscribe(res => {
+        if (res === 'confirm') {
+          this.onConfirmStatusSubmit(status);
+        }
+      });
   }
 
   onConfirmStatusSubmit(status: boolean) {
@@ -140,13 +167,34 @@ export class StaffEditingComponent implements OnInit {
     );
   }
 
-  toDataURL(url, callback) {
+  async getBase64Image(imageUrl) {
+    var res = await fetch(imageUrl);
+    var blob = await res.blob();
+
+    return new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.addEventListener(
+        'load',
+        function () {
+          resolve(reader.result);
+        },
+        false
+      );
+
+      reader.onerror = () => {
+        return reject(this);
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  dataURI(url, callback) {
     let xhRequest = new XMLHttpRequest();
     xhRequest.onload = function () {
       let reader = new FileReader();
       reader.onloadend = function () {
         callback(reader.result);
-      }
+      };
       reader.readAsDataURL(xhRequest.response);
     };
     xhRequest.open('GET', url);
@@ -154,48 +202,54 @@ export class StaffEditingComponent implements OnInit {
     xhRequest.send();
   }
 
-
-  onPrint() {
-    let image;
-    this.toDataURL('https://staffmgt.s3.ap-southeast-1.amazonaws.com/1657199774489.png', function (dataUrl) {
-      image = dataUrl;
-    });
-    setTimeout(() => {
-      console.log(image)
-      this.print(image)
-    }, 1000);
+  khmerMonth(date: Date) {
+    const newDate =
+      new Date(date).getDay() +
+      ' ' +
+      this.monthPipe.transform(new Date(date).getMonth().toString()) +
+      ' ' +
+      new Date(date).getFullYear();
+    return newDate;
   }
 
-  print(image) {
-    let pdfTitle: string = "CURRICULUM VITAE";
+  onPrint() {
+    console.log(StaffEditingComponent.imgBase64);
+    let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',
       content: [
         {
-          image: image,
-        },
-        {
-          text: pdfTitle, style: ['header', 'alignCenter', 'color']
+          columns: [
+            {
+              text: pdfTitle,
+              style: ['header', 'alignCenter', 'color'],
+              margin: [100, 0, 0, 0]
+            },
+            {
+              image: StaffEditingComponent.imgBase64,
+              width: 100,
+              height: 100,
+              alignment: 'right'
+            },
+          ]
         },
 
         {
-          text: this.staff.first_name + ' ' + this.staff.last_name,
-          style: ['sectionHeader', 'color', { fontSize: 15 }],
+          text: (this.staff.first_name + ' ' + this.staff.last_name).toUpperCase(),
+          style: ['sectionHeader', 'color']
         },
         {
           columns: [
+            [{ text: 'ទីកន្លែងបច្ចុប្បន្ន' }, { text: 'លេខទូរស័ព្ទ' }, { text: 'អុីម៊ែល' }],
             [
-              { text: 'Address' },
-              { text: 'Phone' },
-              { text: 'E-mail' },
-            ],
-            [
-              { text: ':  ST 6A, Sangkat Prek Leap, Khan Chroy Chongva, Phnom Penh.', margin: [-150, 0, 0, 0] },
+              { text: ':  ' + this.staff.address.villages.address, margin: [-150, 0, 0, 0] },
               {
-                text: ':  ' + this.staff.phone, margin: [-150, 0, 0, 0]
+                text: ':  ' + this.staff.phone,
+                margin: [-150, 0, 0, 0]
               },
               {
-                text: ':  ' + this.staff.email, margin: [-150, 0, 0, 0]
+                text: ':  ' + (this.staff.email || ''),
+                margin: [-150, 0, 0, 0]
               }
             ]
           ]
@@ -206,65 +260,37 @@ export class StaffEditingComponent implements OnInit {
         },
 
         {
-          text: '1. PERSONAL DATA',
-          style: ['sectionHeader', 'color', 'border'],
+          text: '1. ព័ត៌មានផ្ទាល់ខ្លួន',
+          style: ['sectionHeader', 'color', 'border']
         },
         {
           columns: [
             [
-              { text: 'Sex' },
-              { text: 'Date of Birth' },
-              { text: 'Place of Birth' },
-              { text: 'Nationality' },
-              { text: 'Marital Status' },
-              { text: 'Health Situation' },
-              { text: 'Apply For' },
+              { text: 'ភេទ' },
+              { text:  'អាយុ' },
+              { text: 'ថ្ងៃកំណើត' },
+              { text: 'ទីកន្លែងកំណើត' },
+              { text: 'សញ្ជាតិ' },
+              { text: 'ជនជាតិ' }
             ],
             [
               { text: ':  ' + this.staff.gender, margin: [-150, 0, 0, 0] },
+              { text: ':  ' + this.staff.age + 'ឆ្នាំ', margin: [-150, 0, 0, 0] },
               {
-                text: ':  ' + this.staff.date_of_birth, margin: [-150, 0, 0, 0]
+                text: ':  ' + this.khmerMonth(this.staff.date_of_birth),
+                margin: [-150, 0, 0, 0]
               },
               {
-                text: ':  ' + this.staff.place_of_birth.city_provinces, margin: [-150, 0, 0, 0]
+                text: ':  ' + this.staff.place_of_birth.villages.address,
+                margin: [-150, 0, 0, 0]
               },
               {
-                text: ':  Khmer', margin: [-150, 0, 0, 0]
+                text: ':  ' + this.staff.nationality.nationality,
+                margin: [-150, 0, 0, 0]
               },
               {
-                text: ':  Single', margin: [-150, 0, 0, 0]
-              },
-              {
-                text: ':  Excellent', margin: [-150, 0, 0, 0]
-              },
-              {
-                text: ':  ' + this.staff.position.title, margin: [-150, 0, 0, 0]
-              },
-            ]
-          ]
-        },
-
-        {
-          text: '\n'
-        },
-
-        {
-          text: '2. ACADEMIC BACKGROUND',
-          style: ['sectionHeader', 'color', 'border'],
-        },
-        {
-          columns: [
-            [
-              { text: '2018 - 2020' },
-              { text: ' ' },
-              { text: '2017 - 2018' },
-            ],
-            [
-              {
-                text: ':  The Fourth Year for Bachelor Degree of Information Technology at Asia Euro University (AEU) Gold Building.', margin: [-150, 0, 0, 0]
-              },
-              {
-                text: ':  Foundation Year of Information Technology at AEU.', margin: [-150, 0, 0, 0]
+                text: ':  ' + this.staff.ethnicity.nationality,
+                margin: [-150, 0, 0, 0]
               }
             ]
           ]
@@ -274,7 +300,54 @@ export class StaffEditingComponent implements OnInit {
           text: '\n'
         },
 
+        {
+          text: '2. ព័ត៌មានក្នុងក្រុមហ៊ុន',
+          style: ['sectionHeader', 'color', 'border']
+        },
+        {
+          columns: [
+            [
+              { text: 'លេខសម្គាល់បុគ្គលិក' },
+              { text: 'តួនាទី' },
+              { text: 'ប្រាក់ខែ' },
+              { text: 'ថ្ងៃចូលធ្វើការ' },
+              { text: 'ថ្ងៃផុតកុងត្រា' },
+              { text: 'រយៈពេលផុតកុងត្រា' },
+              { text: 'ស្ថានភាព' }
+            ],
+            [
+              { text: ':  ' + this.staff.staff_id, margin: [-150, 0, 0, 0] },
+              {
+                text: ':  ' + this.staff.position.title,
+                margin: [-150, 0, 0, 0]
+              },
+              {
+                text: ':  ' + this.staff.salary,
+                margin: [-150, 0, 0, 0]
+              },
+              {
+                text: ':  ' + this.khmerMonth(this.staff.hire_date),
+                margin: [-150, 0, 0, 0]
+              },
+              {
+                text: ':  ' + this.khmerMonth(this.staff.contract_expiry_date),
+                margin: [-150, 0, 0, 0]
+              },
+              {
+                text: ':  ' + this.durationPipe.transform(this.staff.contract_duration),
+                margin: [-150, 0, 0, 0]
+              },
+              {
+                text: ':  ' + this.staff.salary,
+                margin: [-150, 0, 0, 0]
+              }
+            ]
+          ]
+        },
 
+        {
+          text: '\n'
+        }
       ],
       defaultStyle: {
         font: 'Battambang',
@@ -288,7 +361,7 @@ export class StaffEditingComponent implements OnInit {
         },
         subheader: {
           fontSize: 16,
-          bold: true,
+          bold: true
         },
         tableHeader: {
           bold: true,
@@ -302,7 +375,7 @@ export class StaffEditingComponent implements OnInit {
           margin: [-15, 0, 0, 0]
         },
         tableGrading: {
-          color: '#424242',
+          color: '#424242'
         },
         sectionHeader: {
           bold: true,
@@ -310,7 +383,7 @@ export class StaffEditingComponent implements OnInit {
           margin: [0, 0, 0, 5]
         },
         border: {
-          decoration: 'underline',
+          decoration: 'underline'
         },
         color: {
           color: '#203864'

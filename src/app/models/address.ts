@@ -30,6 +30,7 @@ export interface Villages {
     _id?: number;
     name: string;
     communes: number;
+    address?: string;
 }
 
 export interface Nationality {

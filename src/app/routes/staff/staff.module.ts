@@ -36,6 +36,9 @@ import { StaffSalaryComponent } from './components/staff-salary/staff-salary.com
 import { StaffSalaryDialogComponent } from './components/staff-salary-dialog/staff-salary-dialog.component';
 import { StaffContractComponent } from './components/staff-contract/staff-contract.component';
 import { StaffContractDialogComponent } from './components/staff-contract-dialog/staff-contract-dialog.component';
+import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
+import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
+import { ImageCropperModule } from 'src/app/shares/image-cropper/image-cropper.module';
 
 
 @NgModule({
@@ -77,7 +80,8 @@ import { StaffContractDialogComponent } from './components/staff-contract-dialog
     NameModule,
     StaticFileModule,
     MatProgressSpinnerModule,
+    ImageCropperModule,
   ],
-  providers: [StaticFilePipe]
+  providers: [StaticFilePipe, DurationPipe, MonthPipe]
 })
 export class StaffModule { }

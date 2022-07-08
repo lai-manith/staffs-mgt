@@ -7,6 +7,7 @@ import { ImageUploaderComponent } from './components/image-uploader/image-upload
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DropZoneModule } from '../drop-zone/drop-zone.module';
+import { ImageCropperModule } from '../image-cropper/image-cropper.module';
 
 
 
@@ -22,6 +23,7 @@ import { DropZoneModule } from '../drop-zone/drop-zone.module';
     MatButtonModule,
     MatProgressBarModule,
     DropZoneModule,
+    ImageCropperModule
   ],
   exports: [
     FileUploaderComponent,
