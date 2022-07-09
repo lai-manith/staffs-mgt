@@ -132,8 +132,8 @@ export class StaffEditingComponent implements OnInit {
   onSetStatusAccount(status) {
     this.dialogService
       .onShowDialog({
-        title: 'បញ្ឈប់បុគ្គលិក',
-        message: 'តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?',
+        title: status ? 'បញ្ឈប់បុគ្គលិក' : 'អនុញ្ញាតឲ្យបុគ្គលិកបន្ដធ្វើការ',
+        message: status ? 'តើអ្នកពិតជាចង់បញ្ឈប់បុគ្គលិកនេះមែនទេ?' : 'តើអ្នកពិតជាចង់ឲ្យបុគ្គលិកនេះបន្ដធ្វើការមែនទេ?',
         icon: 'assets/icons/warning.svg'
       })
       .afterClosed()
