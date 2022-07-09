@@ -11,6 +11,7 @@ export class ImageUploaderComponent implements OnInit {
   isSuccessful: boolean = false;
   imageUrl: string | ArrayBuffer;
   fileName: string;
+  isFile: boolean = false;
 
   @Input() uploadProgress: number;
   @Input() file: File;
@@ -33,8 +34,16 @@ export class ImageUploaderComponent implements OnInit {
     }
 
     if (changes.file?.currentValue) {
-      this.imageUrl = changes.file.currentValue;
+      if (changes.file?.currentValue instanceof File) {
+        const fr = new FileReader();
+        fr.readAsDataURL(changes.file?.currentValue);
+        fr.onload = () => {
+          this.imageUrl = fr.result;
+        };
+      } else this.imageUrl = changes.file.currentValue;
     }
+
+    this.isFile = this.file instanceof File ?? false;
   }
 
   fileChange(files: FileList) {
@@ -74,8 +83,6 @@ export class ImageUploaderComponent implements OnInit {
     this.imageChangedEvent = event;
   }
   imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
-
     const imageName = this.fileName;
     const imageBlob = this.dataURItoBlob(event.base64);
     const imageFile = new File([imageBlob], imageName, { type: 'image/png' });

@@ -288,7 +288,6 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   fileChange(event: any) {
-    console.log(event)
     if (event != null) {
       this.form.patchValue({
         profile: event

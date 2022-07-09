@@ -45,7 +45,7 @@ export class StaffEditingComponent implements OnInit {
     private staticFilePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
     private monthPipe: MonthPipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onLoad();
@@ -213,25 +213,17 @@ export class StaffEditingComponent implements OnInit {
   }
 
   onPrint() {
-    console.log(StaffEditingComponent.imgBase64);
     let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',
       content: [
         {
-          columns: [
-            {
-              text: pdfTitle,
-              style: ['header', 'alignCenter', 'color'],
-              margin: [100, 0, 0, 0]
-            },
-            {
-              image: StaffEditingComponent.imgBase64,
-              width: 100,
-              height: 100,
-              alignment: 'right'
-            },
-          ]
+          text: pdfTitle,
+          style: ['header', 'alignCenter', 'color'],
+        },
+        {
+          image: StaffEditingComponent.imgBase64,
+          absolutePosition: { x: 470, y: 35 }
         },
 
         {
@@ -267,7 +259,7 @@ export class StaffEditingComponent implements OnInit {
           columns: [
             [
               { text: 'ភេទ' },
-              { text:  'អាយុ' },
+              { text: 'អាយុ' },
               { text: 'ថ្ងៃកំណើត' },
               { text: 'ទីកន្លែងកំណើត' },
               { text: 'សញ្ជាតិ' },
@@ -338,7 +330,7 @@ export class StaffEditingComponent implements OnInit {
                 margin: [-150, 0, 0, 0]
               },
               {
-                text: ':  ' + this.staff.salary,
+                text: ':  ' + this.staff.status.name,
                 margin: [-150, 0, 0, 0]
               }
             ]
