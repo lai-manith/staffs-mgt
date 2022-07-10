@@ -35,13 +35,15 @@ export class StaffContractDialogComponent implements OnInit {
   onFormControl() {
     this.form = this.fb.group({
       contract_expiry_date: [null],
+      hire_date: [null],
       new_expired_contract: [null, Validators.required]
     });
   }
 
   onLoad() {
     this.form.patchValue({
-      contract_expiry_date: formatDate(this.data?.contract_expiry_date, 'dd-MM-yyyy', 'en-US')
+      contract_expiry_date: formatDate(this.data?.contract_expiry_date, 'dd-MM-yyyy', 'en-US'),
+      hire_date: formatDate(this.data?.hire_date, 'dd-MM-yyyy', 'en-US')
     });
   }
 

@@ -1,0 +1,26 @@
+@use '../variables' as var;
+
+$width: 78;
+$height: 62;
+
+.setting-content {
+    a {
+        text-decoration: none;
+    }
+    .card-container {
+        .mat-card {
+            display: flex;
+            align-items: center;
+            box-shadow: var.$card-shadow;
+            font-size: 15px;
+        }
+        .svg-of-card {
+            width: $width * 1px;
+            min-width: $width * 1px;
+            height: $height * 1px;
+            min-height: $height * 1px;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    }
+}

@@ -25,9 +25,9 @@
           <mat-icon matPrefix>mail</mat-icon>
           {{isVerified ? 'ប្ដូរ' : (isVerified === false ? 'ភ្ជាប់' : '')}}
         </button>
-        <button mat-flat-button *ngIf="isSelf == false" (click)="onSetStatusAccount(false)" color="warn">
-          <mat-icon>person_off</mat-icon>
-          បិទគណនី
+        <button mat-flat-button *ngIf="isSelf === false" (click)="onSetStatusAccount(!userLoad?.status)" [color]="userLoad?.status ? 'warn' : 'print'">
+          <mat-icon>{{userLoad?.status ? 'person_off' : 'person_add'}}</mat-icon>
+          {{userLoad?.status ? 'បិទគណនី' : 'បើកគណនី'}}
         </button>
       </div>
     </div>
@@ -38,7 +38,7 @@
         <div class="profile-with-name mb-16">
           <img class="lecturer-profile" [src]="(userLoad?.profile | staticFile) || 'assets/imgs/profile-default.svg'" alt="profile picture">
           <div class="grid gap-4 ml-16">
-            <div class="value name mb-8">{{!userLoad ? '—/—' : userLoad?.first_name + '' + userLoad?.last_name}}</div>
+            <div class="value name mb-8">{{userLoad | fullName}}</div>
             <div>តំណែង: អ្នកគ្រប់គ្រង</div>
           </div>
         </div>
@@ -74,6 +74,14 @@
             <div>
               <label>លេខទូរស័ព្ទ</label>
               <div class="value">{{userLoad?.phone}}</div>
+            </div>
+            <div>
+              <label>ឈ្មោះគណនី</label>
+              <div class="value">{{userLoad?.username}}</div>
+            </div>
+            <div>
+              <label>ស្ថានភាព</label>
+              <div [ngStyle]="{'color': userLoad?.status ? 'green' : 'red'}" class="value">{{userLoad?.status ? 'សកម្ម' : 'អសកម្ម'}}</div>
             </div>
           </div>
         </div>
@@ -274,9 +282,9 @@
 <ng-template #ConfirmUpdateDialog>
   <mat-dialog-content>
     <form focusInvalidInput [formGroup]="confirmUpdateForm" class="box request-account-status">
-      <div class="box-header">
+      <h4 class="box-header">
         ការបញ្ជាក់ពាក្យសម្ងាត់
-      </div>
+      </h4>
       <div class="horizontal"></div>
       <div class="form-group">
         <div class="row">
@@ -286,7 +294,7 @@
           </div>
         </div>
         <div class="row">
-          <label>ពាក្យសម្ងាត់អ្នកស្នើសុំ : </label>
+          <label>ពាក្យសម្ងាត់ម្ចាស់គណនី : </label>
           <div class="col-sm-8">
             <mat-form-field appearance="outline">
               <input type="password" #requester_password matInput formControlName="requester_password"

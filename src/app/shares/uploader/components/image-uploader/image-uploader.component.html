@@ -15,10 +15,10 @@
         ស្វែករក
       </strong>
     </div>
-    <input type="file" #pickThumbnail (change)="fileChange(pickThumbnail.files); fileChangeEvent($event)"
+    <input type="file" #pickThumbnail (change)="fileChange(pickThumbnail.files);"
       accept=".png, .jpg, .jpeg" hidden>
 
-    <image-cropper *ngIf="file && isFile" [resizeToWidth]="105" [resizeToHeight]="120" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3/4"
+    <image-cropper [ngStyle]="{'width': '25%', 'margin': 'auto'}" *ngIf="file && isFile" [resizeToWidth]="105" [resizeToHeight]="120" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3/4"
       format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
       (loadImageFailed)="loadImageFailed()"></image-cropper>
   </div>

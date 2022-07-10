@@ -67,7 +67,7 @@ export class UserCreatingComponent implements OnInit {
           message: 'add',
           component: SnackbarComponent
         });
-        this.router.navigate(['/setting/detail/' + res._id]);
+        this.router.navigate(['/setting/manage-user/detail/' + res._id]);
       },
       err => {
         this.isLoading = false;

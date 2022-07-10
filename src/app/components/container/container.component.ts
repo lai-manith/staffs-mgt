@@ -109,6 +109,7 @@ export class ContainerComponent implements OnInit {
             this.account = data;
             this.profileService.staffId = data._id;
             this.userDataService.changeUserData(data);
+            localStorage.setItem('account', JSON.stringify(data));
             this.initSidenav();
           },
             err => {

@@ -48,6 +48,7 @@ export class ImageUploaderComponent implements OnInit {
 
   fileChange(files: FileList) {
     this.fileName = files[0].name;
+    this.imageChangedEvent = files;
     if (files.length) {
       const file = files[0];
       const supportImage = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -79,9 +80,6 @@ export class ImageUploaderComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-  fileChangeEvent(event: any): void {
-    this.imageChangedEvent = event;
-  }
   imageCropped(event: ImageCroppedEvent) {
     const imageName = this.fileName;
     const imageBlob = this.dataURItoBlob(event.base64);

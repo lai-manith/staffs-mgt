@@ -37,7 +37,7 @@ export class UserDetailComponent implements OnInit {
   @ViewChild('ConfirmUpdateDialog') ConfirmUpdateDialog: TemplateRef<any>;
   @ViewChild('ConfirmStatus') ConfirmStatus: TemplateRef<any>;
   isActive: boolean;
-  imgCloseAccount: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1639122412/image/coronavirus-border-closure-animate_tarbtg.svg';
+  imgCloseAccount: string = 'assets/icons/password.svg';
   imgOpenAccount: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1639122413/image/mobile-login-animate_gv5ma2.svg';
   isSelf: boolean;
   userLoad: User;
@@ -61,6 +61,12 @@ export class UserDetailComponent implements OnInit {
 
   onLoad() {
     this.userService.getOne(this._id)
+    .pipe(
+      map(data => {
+        data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+        return data;
+      })
+    )
     .subscribe(
       res => {
         const image = this.staticFilePipe.transform(res.profile) as string;
@@ -80,6 +86,7 @@ export class UserDetailComponent implements OnInit {
       res => {
         if(res._id === this._id)
           this.isSelf = true;
+        else this.isSelf = false;
       }, err => this.snackbarService.onShowSnackbar({message: err.error.message ?? err.message, isError: true, component: SnackbarComponent})
     )
   }
@@ -160,8 +167,8 @@ export class UserDetailComponent implements OnInit {
         let message = this.accountStatus ? 'គណនីត្រូវបានបើកជាបណ្ដោះអាសន្ន' : 'គណនីត្រូវបានបិទជាបណ្ដោះអាសន្ន'
         this.snackbarService.onShowSnackbar({message: message, component: SnackbarComponent});
         this.isActive = this.accountStatus;
+        this.onLoad();
         this.dialog.closeAll();
-        this.form.disable();
       },
       err => {
         let message = err.error.message ?? err.message;

@@ -6,7 +6,7 @@ import { User } from 'src/app/models/user';
   name: 'fullName'
 })
 export class FullNamePipe implements PipeTransform {
-  transform(user: Staff): string {
+  transform(user: Staff | User): string {
     let names = [];
     if (user === undefined) return '';
 

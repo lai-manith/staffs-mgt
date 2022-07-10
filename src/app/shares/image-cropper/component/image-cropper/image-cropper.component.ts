@@ -32,10 +32,10 @@ export class ImageCropperComponent implements OnChanges {
   @ViewChild('sourceImage', {static: true}) sourceImage: ElementRef;
 
   @Input()
-  set imageChangedEvent(event: any) {
+  set imageChangedEvent(files: any) {
       this.initCropper();
-      if (event && event.target && event.target.files && event.target.files.length > 0) {
-          this.loadImageFile(event.target.files[0]);
+      if (files && files.length > 0) {
+          this.loadImageFile(files[0]);
       }
   }
 

@@ -343,7 +343,7 @@ export class StaffEditingComponent implements OnInit {
       ],
       defaultStyle: {
         font: 'Battambang',
-        fontSize: 11
+        fontSize: 12
       },
       styles: {
         header: {

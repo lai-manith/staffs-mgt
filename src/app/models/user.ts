@@ -25,6 +25,7 @@ export interface User {
     dob?: string;
     status?: any;
     verified?: boolean;
+    username?: string;
 }
 
 export interface CheckDuplicated {

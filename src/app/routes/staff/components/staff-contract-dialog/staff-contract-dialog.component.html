@@ -7,13 +7,19 @@
       <form id="form" [formGroup]="form" autocomplete="off">
         <div class="mat-elevation-z0 grid gap-x-16 col-lg-2 col-xl-2">
           <div>
-            <label class="required" for="">	ថ្ងៃផុតកុងត្រាចាស់</label>
+            <label for="">	ថ្ងៃចូលធ្វើការ </label>
+            <mat-form-field appearance="outline">
+              <input matInput formControlName="hire_date" readonly>
+            </mat-form-field>
+          </div>
+          <div>
+            <label for="">	ថ្ងៃផុតកុងត្រាចាស់ </label>
             <mat-form-field appearance="outline">
               <input matInput formControlName="contract_expiry_date" readonly>
             </mat-form-field>
           </div>
           <div>
-            <label class="required" for="">	ថ្ងៃផុតកុងត្រាថ្មី</label>
+            <label for="">	ថ្ងៃផុតកុងត្រាថ្មី </label>
             <mat-form-field appearance="outline">
               <input matInput [matDatepicker]="picker" formControlName="new_expired_contract" (click)="picker.open()"
                 placeholder="*" readonly>
