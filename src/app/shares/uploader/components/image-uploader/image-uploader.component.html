@@ -6,7 +6,7 @@
     </div>
     <div *ngIf="file" class="file-content">
       <mat-icon class="clear-btn" (click)="removeFile()">clear</mat-icon>
-      <div [style.background-image]="'url('+imageUrl+')'" class="content-thumbnail file" #img></div>
+      <div [style.background-image]="'url('+ (imageUrl || 'assets/icons/thumbnail.svg') +')'" class="content-thumbnail file"></div>
     </div>
     <div>{{file?.name}}</div>
     <div class="mt-16" *ngIf="!file">
@@ -18,7 +18,7 @@
     <input type="file" #pickThumbnail (change)="fileChange(pickThumbnail.files);"
       accept=".png, .jpg, .jpeg" hidden>
 
-    <image-cropper [ngStyle]="{'width': '25%', 'margin': 'auto'}" *ngIf="file && isFile" [resizeToWidth]="105" [resizeToHeight]="120" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="3/4"
+    <image-cropper [ngStyle]="{'width': '15em', 'margin': 'auto'}" *ngIf="file && isFile" [resizeToWidth]="resizeToWidth" [resizeToHeight]="resizeToHeight" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="aspectRatio"
       format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
       (loadImageFailed)="loadImageFailed()"></image-cropper>
   </div>

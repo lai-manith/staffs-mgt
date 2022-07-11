@@ -70,8 +70,8 @@
               <mat-radio-group color="primary"
                 [ngClass]="{'invalid': ngForm.submitted &amp;&amp; form.get('gender').invalid}"
                 formControlName="gender">
-                <mat-radio-button value="male">Male</mat-radio-button>
-                <mat-radio-button value="female">Female</mat-radio-button>
+                <mat-radio-button value="male">ប្រុស</mat-radio-button>
+                <mat-radio-button value="female">ស្រី</mat-radio-button>
               </mat-radio-group>
             </div>
             <div>
@@ -339,11 +339,11 @@
     <div class="group-btn group-action">
       <button mat-raised-button type="button" routerLink="../">
         <mat-icon>highlight_off</mat-icon>
-        Cancel
+        បោះបង់
       </button>
       <button mat-raised-button color="primary" class="button-submit">
         <mat-icon>save</mat-icon>
-        <span>Submit</span>
+        <span>រក្សាទុក</span>
         <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
       </button>
     </div>

@@ -78,7 +78,9 @@
           <div class="header-label">រួបភាព</div>
           <div class="mb-16">
             <label>ប្រភេទរូបភាព: JPEG, PNG and JPG</label>
-            <app-image-uploader [uploadProgress]="uploadProgress"  [file]="form.value.profile" (uploadFileEvent)="fileChange($event)"></app-image-uploader>
+            <app-image-uploader [uploadProgress]="uploadProgress" [file]="form.value.profile"
+              (uploadFileEvent)="fileChange($event)" [aspectRatio]="1/1" [resizeToWidth]="100" [resizeToHeight]="100">
+            </app-image-uploader>
           </div>
         </div>
         <div class="grid gap-x-16 col-1">
@@ -113,9 +115,9 @@
                 ទាមទារ
               </mat-error>
               <mat-error
-              *ngIf="form.get('password').errors?.minlength && !form.get('confirm_password').errors?.required">
-              ពាក្យសម្ងាត់ត្រូវបញ្ចុលយ៉ាងតិច៨តួ
-            </mat-error>
+                *ngIf="form.get('password').errors?.minlength && !form.get('confirm_password').errors?.required">
+                ពាក្យសម្ងាត់ត្រូវបញ្ចុលយ៉ាងតិច៨តួ
+              </mat-error>
               <mat-error *ngIf="form.get('password').errors?.minlength && !form.get('password').errors?.required">
                 ពាក្យសម្ងាត់ត្រូវបញ្ចុលយ៉ាងតិច៨តួ
               </mat-error>

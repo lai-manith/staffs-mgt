@@ -25,8 +25,8 @@ export class SettingComponent implements OnInit {
   ngOnInit(): void {
     this.account = JSON.parse(localStorage.getItem('account'));
     this.settings = [
-      { svgIcon: 'my-profile.svg', title: `My Profile`, route: 'manage-user/detail/' + this.account._id },
-      { svgIcon: 'manage-user.svg', title: `Manage User`, route: 'manage-user' }
+      { svgIcon: 'my-profile.svg', title: `ព័ត៌មានរបស់ខ្ញុំ`, route: 'manage-user/detail/' + this.account._id },
+      { svgIcon: 'manage-user.svg', title: `អ្នកគ្រប់គ្រង`, route: 'manage-user' }
     ];
   }
 

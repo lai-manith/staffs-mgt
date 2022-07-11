@@ -18,10 +18,13 @@ export class ImageUploaderComponent implements OnInit {
   @Input() onSubmit: boolean;
   @Output() uploadFileEvent = new EventEmitter();
   @Output() fileEvent = new EventEmitter();
+  @Input() aspectRatio: number = 3 / 4;
+  @Input() resizeToWidth: number = 105;
+  @Input() resizeToHeight: number = 120;
 
-  constructor(private dialog: MatDialog) { }
+  constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
     if (changes.uploadProgress?.currentValue as number) {
@@ -105,5 +108,4 @@ export class ImageUploaderComponent implements OnInit {
       type: 'image/jpg'
     });
   }
-
 }
