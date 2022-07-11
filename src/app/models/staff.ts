@@ -26,6 +26,7 @@ export interface Staff {
   nationality?: Nationality;
   ethnicity?: Nationality;
   contract_duration?: string;
+  id_card: number;
 
   is_check?: boolean;
 }

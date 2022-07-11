@@ -27,6 +27,15 @@
               </mat-form-field>
             </div>
             <div>
+              <label>លេខអត្តសញ្ញាណប័ណ្ណ</label>
+              <mat-form-field appearance="outline">
+                <input matInput formControlName="id_card" placeholder="*">
+                <mat-error *ngIf="form.get('staff_id').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
               <label>នាមត្រកូល</label>
               <mat-form-field appearance="outline">
                 <input matInput formControlName="first_name" placeholder="*">

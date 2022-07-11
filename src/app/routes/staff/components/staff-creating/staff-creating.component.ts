@@ -79,7 +79,8 @@ export class StaffCreatingComponent implements OnInit {
           attach_files: res.attach_files,
           file_name: res.file_name,
           nationality: res.nationality._id,
-          ethnicity: res.ethnicity._id
+          ethnicity: res.ethnicity._id,
+          id_card: res.id_card
         });
 
         this.nationality = [res.nationality];
@@ -243,6 +244,7 @@ export class StaffCreatingComponent implements OnInit {
       attach_files: [null],
       file_name: [null],
       position: [null, Validators.required],
+      id_card: [null, Validators.required],
       hire_date: [null, Validators.required],
       date_of_birth: [null, Validators.required],
       salary: this._id ? [null] : [null, Validators.required],
