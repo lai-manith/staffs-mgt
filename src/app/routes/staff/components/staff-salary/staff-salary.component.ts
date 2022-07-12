@@ -20,7 +20,7 @@ import { StaffSalaryDialogComponent } from '../staff-salary-dialog/staff-salary-
   styleUrls: ['./staff-salary.component.scss']
 })
 export class StaffSalaryComponent implements OnInit {
-  displayedColumns: string[] = ['ID', 'name', 'current_salary', 'last_salary', 'createAt', 'status', 'action'];
+  displayedColumns: string[] = ['ID', 'current_salary', 'last_salary', 'createAt', 'status', 'action'];
   dataSource: MatTableDataSource<ManageSalary> = new MatTableDataSource([]);
   total: number;
   params = {

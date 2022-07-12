@@ -63,10 +63,10 @@ export class StaffContractDialogComponent implements OnInit {
         this.dialogRef.close(this.form.value);
       },
       err => {
-        
+
         this.isLoading = false;
         this.snackbarService.onShowSnackbar({
-          message: err.error.message === 'Invalid date of new contract' ? 'ថ្ងៃផុតកុងត្រាថ្មីត្រូវតែធំជាថ្ងៃចូលធ្វើការ' : err.error.message,
+          message: err.error.message === 'Invalid date of new contract' ? 'ថ្ងៃផុតកុងត្រាថ្មីមិនត្រឹមត្រូវ' : err.error.message,
           component: SnackbarComponent,
           isError: true
         })

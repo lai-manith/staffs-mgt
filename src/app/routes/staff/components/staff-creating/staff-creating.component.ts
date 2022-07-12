@@ -123,14 +123,6 @@ export class StaffCreatingComponent implements OnInit {
         this.isCDClick = false;
         this.isCCClick = false;
         this.isCVClick = false;
-
-        //TODO: Expired Contact
-        if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) < this.onFormatDate(new Date())) {
-          this.form.controls['contract_expiry_date'].markAsTouched();
-          this.form.get('contract_expiry_date').setErrors({
-            isExpired: true
-          });
-        }
       },
       err =>
         this.snackBarService.onShowSnackbar({
@@ -179,12 +171,6 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   onSubmitUpdate() {
-    //TODO: Expired Contact
-    if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) < this.onFormatDate(new Date())) {
-      this.form.get('contract_expiry_date').setErrors({
-        isExpired: true
-      });
-    }
     if (this.form.invalid) return;
     this.isLoading = true;
     let DATA = null;
