@@ -45,7 +45,7 @@ export class FileUploaderComponent implements OnInit {
         let data = {
           icon: 'assets/imgs/document-unknown.svg',
           title: 'Unsupported File Type',
-          message: 'Support file type: PDF, DOCX',
+          message: 'Support file type: PDF, DOC, DOCX',
         }
         this.dialog.open(ConfirmDialogComponent, {
           width: '420px',

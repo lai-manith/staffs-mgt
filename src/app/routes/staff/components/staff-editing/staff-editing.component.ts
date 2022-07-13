@@ -204,7 +204,7 @@ export class StaffEditingComponent implements OnInit {
 
   khmerMonth(date: Date) {
     const newDate =
-      new Date(date).getDay() +
+      new Date(date).getDate() +
       ' ' +
       this.monthPipe.transform(new Date(date).getMonth().toString()) +
       ' ' +
@@ -213,6 +213,7 @@ export class StaffEditingComponent implements OnInit {
   }
 
   onPrint() {
+    console.log(this.staff);
     let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',

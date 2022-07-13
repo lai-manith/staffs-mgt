@@ -2,11 +2,11 @@
   <mat-progress-bar class="my-4" *ngIf="uploadProgress && !isSuccessful" [value]="uploadProgress"></mat-progress-bar>
   <div appDropZone (fileDropped)="fileChange($event)" [class.content-required]="onSubmit && !file"
     class="upload-card bg-grey rounded-md border-dashed border p-16 mt-4">
-    <div *ngIf="!file" [style.background-image]="'url(assets/icons/thumbnail.svg)'" class="content-thumbnail">
+    <div *ngIf="!file" [style.background-image]="'url(assets/imgs/add-image.svg)'" class="content-thumbnail">
     </div>
     <div *ngIf="file" class="file-content">
       <mat-icon class="clear-btn" (click)="removeFile()">clear</mat-icon>
-      <div [style.background-image]="'url('+ (imageUrl || 'assets/icons/thumbnail.svg') +')'" class="content-thumbnail file"></div>
+      <div [style.background-image]="'url('+ (imageUrl || 'assets/imgs/add-image.svg') +')'" class="content-thumbnail file"></div>
     </div>
     <div>{{file?.name}}</div>
     <div class="mt-16" *ngIf="!file">
