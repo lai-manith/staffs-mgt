@@ -32,6 +32,7 @@ export class StaffCreatingComponent implements OnInit {
   url: string = this.router.url.replace('/create', '');
   uploadProgress: number = 0;
   isLoading: boolean = false;
+  isExpired: boolean = false;
 
   constructor(
     private cd: ChangeDetectorRef,
@@ -123,6 +124,10 @@ export class StaffCreatingComponent implements OnInit {
         this.isCDClick = false;
         this.isCCClick = false;
         this.isCVClick = false;
+
+        if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) <= this.onFormatDate(new Date())) {
+          this.isExpired = true;
+        }
       },
       err =>
         this.snackBarService.onShowSnackbar({

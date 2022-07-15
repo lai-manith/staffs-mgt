@@ -9,6 +9,16 @@
       <div class="mr-16"></div>
       <h1 class="title">{{_id ? 'ព័ត៌មានបុគ្គលិក' : 'បញ្ជីបុគ្គលិក'}}</h1>
     </div>
+    <div class="group-btn" *ngIf="isExpired">
+      <button mat-raised-button type="button" routerLink="../">
+        <mat-icon>highlight_off</mat-icon>
+        បោះបង់
+      </button>
+      <button mat-flat-button color="primary" [routerLink]="['/staff/staff-active/manage-contact/', _id]">
+        <mat-icon svgIcon="print"></mat-icon>
+        បន្ដកុងត្រា
+      </button>
+    </div>
   </div>
 
   <form [formGroup]="form" #ngForm="ngForm" (ngSubmit)="onSubmit()" class="creation-form" autocomplete="off">
@@ -345,7 +355,7 @@
         </div>
       </div>
     </div>
-    <div class="group-btn group-action">
+    <div class="group-btn group-action" *ngIf="!isExpired">
       <button mat-raised-button type="button" routerLink="../">
         <mat-icon>highlight_off</mat-icon>
         បោះបង់
