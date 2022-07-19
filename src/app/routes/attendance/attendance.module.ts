@@ -1,0 +1,35 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+import { AttendanceRoutingModule } from './attendance-routing.module';
+import { AttendanceComponent } from './components/attendance/attendance.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatInputModule } from '@angular/material/input';
+import { NameModule } from 'src/app/shares/name/name.module';
+import { FormsModule } from '@angular/forms';
+
+
+@NgModule({
+  declarations: [
+    AttendanceComponent
+  ],
+  imports: [
+    CommonModule,
+    AttendanceRoutingModule,
+    MatButtonModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatDatepickerModule,
+    MatButtonToggleModule,
+    MatInputModule,
+    NameModule,
+    FormsModule
+  ]
+})
+export class AttendanceModule { }

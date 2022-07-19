@@ -72,6 +72,14 @@ export class ContainerComponent implements OnInit {
         child: []
       },
       {
+        title: 'សម្រង់វត្តមាន',
+        route: 'attendance',
+        icon: '',
+        svgIcon: 'attendance',
+        permissions: [],
+        child: []
+      },
+      {
         title: 'ប្រតិទិនឈប់សម្រាក',
         route: '/calendar',
         icon: '',
