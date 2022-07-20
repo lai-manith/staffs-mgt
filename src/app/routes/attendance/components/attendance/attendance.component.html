@@ -1,71 +1,25 @@
 
 <div class="app-content">
     <div class="attendance-staff-content">
+
         <div class="app-title">
-            <div class="header">
-                <div class="title-and-btn">
-                    <h2>ស្រង់វត្តមានបុគ្គលិក</h2>
-                </div>
-                <div class="right-side-button">
-                    <button mat-button class="custom-btn print-btn" [routerLink]="['/staff/attendance/history']">
-                        <mat-icon>
-                            <img style="padding-bottom: 5px;" src="/assets/imgs/edit-white-icon.svg" alt="icon.svg">
-                        </mat-icon>
-                        វត្តមានបុគ្គលិកលំអិត
-                    </button>
-                </div>
+            <h1 class="title">ស្រង់វត្តមានបុគ្គលិក</h1>
+            <button mat-raised-button color="primary" class="create-btn" [routerLink]="['history']">
+              <mat-icon svgIcon="add_new"></mat-icon>
+              វត្តមានបុគ្គលិកលំអិត
+            </button>
+          </div>
+
+        <h2>
+            វត្តមានបុគ្គលិកសម្រាប់ថ្ងៃ៖
+        </h2>
+        <mat-card class="mat-elevation-z0 filter-card with-create grid gap-16 col-md-3 bg-grey mb-16 border">
+            <div class="search-box">
+              <div class="filter-search">
+                <app-datepicker (dateChange)="dateChange($event)"></app-datepicker>
+              </div>
             </div>
-        </div>
-
-        <div class="container">
-            <div class="box">
-                <div class="space-2"></div>
-                <div class="row">
-                    <div class="col-sm-8">
-                        <div class="attendant-title-group">
-                            <div class="title">
-                                វត្តមានបុគ្គលិកសម្រាប់ថ្ងៃ ៖
-                            </div>
-                            <div class="attendant-date">
-                                <button class="prev" (click)="onPrevDate()">
-                                    <mat-icon>arrow_back</mat-icon>
-                                </button>
-                                <div class="date" (click)="picker.open()">
-                                    {{ attendantDate | date: 'EE, dd MMM yyyy' }}
-                                    <input matInput [min]="filterStartDate" [max]="filterEndDate" class="hidden" [(ngModel)]="attendantDate" [matDatepicker]="picker" (ngModelChange)="onAttendanceDateChange()">
-                                    <mat-datepicker [startAt]="attendantDate" #picker></mat-datepicker>
-                                </div>
-                                <button class="next" (click)="onNextDate()">
-                                    <mat-icon>arrow_forward</mat-icon>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- <div class="col-sm-4">
-                        <div class="form-group" style="white-space: nowrap;">
-                            <div class="row">
-                                <label class="col-sm-4 col-form-label">ឈ្មោះថ្នាក់ : </label>
-                                <label class="col-sm-8 col-form-label">{{ attendance?.classes?.name }}</label>
-                            </div>
-                            <div class="row">
-                                <label for="" class="col-sm-4 col-form-label">ឆ្នាំសិក្សា : </label>
-                                <label class="col-sm-8 col-form-label">{{ attendance?.classes?.academic_years?.name }}</label>
-                            </div>
-
-                            <div class="row">
-                                <label class="col-sm-4 col-form-label">គ្រូបន្ទុកថ្នាក់ : </label>
-                                <label class="col-sm-8 col-form-label">{{ attendance?.classes?.homeroom_teachers | teacherFullName }}</label>
-                            </div>
-                        </div>
-                    </div> -->
-
-                </div>
-            </div>
-
-        </div>
-
-        <div class="space-2"></div>
-
+          </mat-card> 
 
         <div class="table-sticky no-shadow">
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-custom table-staff">
@@ -106,7 +60,7 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             <div class="action" *ngIf="element._id != 'all'">
                                 <mat-button-toggle-group aria-label="Absent" [value]="getAbsentSubject(element._id, c.shiftType)">
                                     <mat-button-toggle mat-fab class="present" value=1 (click)="onAbsentChange(1, element._id, c.shiftType)">
@@ -123,36 +77,25 @@
                         </div>
                     </td>
                 </ng-container>
-
+            
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="12">មិនមានទិន្នន័យ</td>
                 </tr>
-
+            
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
             </table>
         </div>
 
-        <div class="space-2"></div>
-
-        <div class="container">
-            <div style="display: flex; flex-wrap: wrap;">
-                <button class="save-button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isCanSave">
-                    រក្សាទុក
-                </button>
-
-                <div *ngIf="!isSaved && !isCompleted" class="save-status">
-                    វត្តមានបុគ្គលិកសម្រាប់ <b>ថ្ងៃនេះ</b> មិនទាន់បានរក្សាទុកនៅឡើយ!
-                </div>
-            </div>
-
-        </div>
-
+        <div class="group-btn group-action mt-25" align="right">
+            <button mat-raised-button color="primary" class="button-submit" (click)="onSubmit()">
+              <mat-icon>save</mat-icon>
+              <span>រក្សាទុក</span>
+              <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
+            </button>
+          </div>
     </div>
-
-
-
 </div>
 
 

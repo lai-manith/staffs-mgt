@@ -1,0 +1,25 @@
+@use '../variables' as *;
+
+.datepicker-arrow#datepicker-arrow {
+  display: flex;
+  align-items: center;
+  border: 1px solid $border-grey;
+  border-radius: 10px;
+  input {
+    cursor: pointer;
+  }
+  button {
+    border: none;
+  }
+  .mat-form-field-appearance-outline {
+    .mat-form-field-outline {
+      color: transparent;
+      background-color: #fff;
+    }
+    .mat-form-field-flex {
+      width: 120px;
+      min-width: 120px;
+      padding: 0;
+    }
+  }
+}

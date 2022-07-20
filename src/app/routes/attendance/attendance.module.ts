@@ -12,6 +12,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatInputModule } from '@angular/material/input';
 import { NameModule } from 'src/app/shares/name/name.module';
 import { FormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
+import { DatepickerArrowModule } from 'src/app/shares/datepicker-arrow/datepicker-arrow.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -29,7 +32,10 @@ import { FormsModule } from '@angular/forms';
     MatButtonToggleModule,
     MatInputModule,
     NameModule,
-    FormsModule
+    FormsModule,
+    MatCardModule,
+    DatepickerArrowModule,
+    MatProgressSpinnerModule
   ]
 })
 export class AttendanceModule { }

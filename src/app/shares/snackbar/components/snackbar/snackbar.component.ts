@@ -9,7 +9,7 @@ import { MatSnackBarRef, MAT_SNACK_BAR_DATA, MAT_SNACK_BAR_DEFAULT_OPTIONS } fro
 export class SnackbarComponent implements OnInit {
   status: number;
   alertMessage: string = '';
-  addMessage: string = 'ទិន្នន័យបានបង្កើតដោយជោគជ័យ';
+  addMessage: string = 'ទិន្នន័យបានរក្សាទុកដោយជោគជ័យ';
   editMessage: string = 'ទិន្នន័យបានកែប្រែដោយជោគជ័យ';
   deleteMessage: string = 'ទិន្នន័យបានលុបដោយជោគជ័យ';
   disableMessage: string = 'ទិន្នន័យបានបិទដោយជោគជ័យ';

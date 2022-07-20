@@ -4,7 +4,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Attendance, AttendanceCreateModel, AttendanceList } from 'src/app/models/staff-attendance';
+import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffAttendanceService } from 'src/app/services/staff-attendance.service';
+import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
 @Component({
   selector: 'app-attendance',
@@ -16,16 +18,12 @@ export class AttendanceComponent implements OnInit {
   constructor(
     private attendanceService: StaffAttendanceService,
     @Inject(LOCALE_ID) private locale: string,
-    private snackBar: MatSnackBar
+    private snackbarService: SnackbarService
   ) { }
-
-  onMessage(message: string){
-    this.snackBar.open(message, 'បិទ')._dismissAfter(3000);
-  }
 
   ngOnInit(): void {
     this.attendantDate = new Date();
-    this.attendantDate.setHours(0,0,0);
+    this.attendantDate.setHours(0, 0, 0);
     this.attendanceCreate = {
       date: formatDate(this.attendantDate, 'MM-dd-yyyy', this.locale),
       list: []
@@ -34,7 +32,7 @@ export class AttendanceComponent implements OnInit {
     this.getAttendance();
   }
 
-  trackByIndex = function(i) { return i; }
+  trackByIndex = function (i) { return i; }
 
   dataSource: any;
   displayedColumns = [];
@@ -57,28 +55,20 @@ export class AttendanceComponent implements OnInit {
   ];
 
   isCompleted: boolean = false;
-
   isSaved: boolean = true;
   isCanSave: boolean = false;
-
   attendance: Attendance[];
-
-  classId: string;
-
   attendantDate: Date;
-
-  inc: number = 0;
-
   attendanceCreate: AttendanceCreateModel;
-
   filterStartDate: Date;
   filterEndDate: Date;
+  isLoading: boolean = false;
 
   @ViewChild(MatSort) sort: MatSort;
 
-  getAttendance(){
+  getAttendance() {
     let today = new Date();
-    today.setHours(0,0,0);
+    today.setHours(0, 0, 0);
     this.isCanSave = false;
 
     let tempDate: string;
@@ -89,94 +79,101 @@ export class AttendanceComponent implements OnInit {
     };
 
     this.attendance = [];
-
     this.isSaved = true;
     this.dataSource = [];
     this.attendanceService.getMany({ date: tempDate }).subscribe(
       (res) => {
-        if(res){
-          this.attendance = res.list;
-          if(this.attendantDate <= today){
-            this.isCanSave = true;
-          }
-          else{
-            this.isCanSave = false;
-          }
+        this.attendance = res.list;
+        if (this.attendantDate <= today) {
+          this.isCanSave = true;
+        }
+        else {
+          this.isCanSave = false;
+        }
 
-          if(this.attendance.length > 0){
-            this.attendance.forEach(staff => {
-              staff.attendances.forEach(atten => {
-                let temp: AttendanceList = {
-                  staff: staff._id,
-                  shift_type: atten.shift_type,
-                  attendance_type: atten.attendance_type
-                };
-                this.attendanceCreate.list.push(temp);
-              });
+        if (this.attendance.length > 0) {
+          this.attendance.forEach(staff => {
+            staff.attendances.forEach(atten => {
+              let temp: AttendanceList = {
+                staff: staff._id,
+                shift_type: atten.shift_type,
+                attendance_type: atten.attendance_type
+              };
+              this.attendanceCreate.list.push(temp);
             });
+          });
 
-            let temp = {
-              _id: 'all',
-              name: '',
-              first_name: '',
-              last_name: ''
-            };
-            this.attendance.unshift(temp);
-            this.dataSource = new MatTableDataSource(this.attendance);
-          }
+          let temp = {
+            _id: 'all',
+            name: '',
+            first_name: '',
+            last_name: ''
+          };
+          this.attendance.unshift(temp);
+          this.dataSource = new MatTableDataSource(this.attendance);
         }
       },
-      (err) => {
-        this.onMessage('ការទាញយកវត្តមានបរាជ័យ');
-      }
+      err =>
+        this.snackbarService.onShowSnackbar({
+          message: err.message ?? err.error.message,
+          component: SnackbarComponent,
+          isError: true
+        })
     );
   }
 
-  onSubmit(){
+  onSubmit() {
+    this.isLoading = true;
     const data = {
       date: this.attendanceCreate.date,
       list: this.attendanceCreate.list.filter(e => e.staff != 'all')
     };
-    this.attendanceService.createAttendance(data).subscribe((res) => {
-      if(res){
-        this.onMessage('ការរក្សាទុកវត្តមានជោគជ័យ');
-        this.isSaved = true;
-      }
-      else{
-        this.onMessage('ការរក្សាទុកវត្តមានបរាជ័យ');
-      }
-    });
+    this.attendanceService.createAttendance(data).subscribe(
+      (res) => {
+        this.isLoading = false;
+        this.snackbarService.onShowSnackbar({
+          message: 'add',
+          component: SnackbarComponent,
+        })
+        this.getAttendance();
+      }, err =>
+      this.snackbarService.onShowSnackbar({
+        message: err.message ?? err.error.message,
+        component: SnackbarComponent,
+        isError: true
+      }));
   }
 
-  onAttendanceDateChange(){
+  dateChange(value: Date) {
+    this.attendantDate = value;
     this.getAttendance();
   }
 
-  onPrevDate(){
+  onPrevDate() {
     this.attendantDate = new Date(this.attendantDate.setDate(this.attendantDate.getDate() - 1));
     this.getAttendance();
   }
 
-  onNextDate(){
+  onNextDate() {
     this.attendantDate = new Date(this.attendantDate.setDate(this.attendantDate.getDate() + 1));
     this.getAttendance();
   }
 
-  onAbsentChange(value: number, staffId: string, shiftType: number){
+  onAbsentChange(value: number, staffId: string, shiftType: number) {
     this.isSaved = false;
-    if(staffId == 'all'){
+    if (staffId == 'all') {
       let b: boolean = false;
-      if(this.attendanceCreate){
-        if(this.attendanceCreate.list){
-          for(let i = 0; i < this.attendanceCreate.list.length; i++){
-            if(this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType){
+      if (this.attendanceCreate) {
+        if (this.attendanceCreate.list) {
+          for (let i = 0; i < this.attendanceCreate.list.length; i++) {
+            if (this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType) {
               b = true;
-              if(this.attendanceCreate.list[i].attendance_type == value){
+              if (this.attendanceCreate.list[i].attendance_type == value) {
                 //Remove all
                 this.attendanceCreate.list = this.attendanceCreate.list.filter(e => e.shift_type != shiftType);
                 return;
               }
-              else{
+              else {
                 //Update attendance type
                 this.attendanceCreate.list[i].attendance_type = value;
               }
@@ -185,7 +182,7 @@ export class AttendanceComponent implements OnInit {
           }
         }
 
-        if(!b){
+        if (!b) {
           let temp: AttendanceList = {
             staff: staffId,
             shift_type: shiftType,
@@ -196,14 +193,14 @@ export class AttendanceComponent implements OnInit {
 
         this.attendance.forEach(staff => {
           let t: boolean = false;
-          for(let i = 0; i < this.attendanceCreate.list.length; i++){
-            if(this.attendanceCreate.list[i].staff == staff._id && this.attendanceCreate.list[i].shift_type == shiftType){
+          for (let i = 0; i < this.attendanceCreate.list.length; i++) {
+            if (this.attendanceCreate.list[i].staff == staff._id && this.attendanceCreate.list[i].shift_type == shiftType) {
               t = true;
               this.attendanceCreate.list[i].attendance_type = value;
               break;
             }
           }
-          if(!t){
+          if (!t) {
             //No element in list
             //Push new student to list
             let temp: AttendanceList = {
@@ -216,26 +213,26 @@ export class AttendanceComponent implements OnInit {
         });
       }
     }
-    else{
+    else {
       //Remove studentId 'all' from list
-      for(let i = 0; i < this.attendanceCreate.list.length; i++){
-        if(this.attendanceCreate.list[i].staff == 'all' && this.attendanceCreate.list[i].shift_type == shiftType){
+      for (let i = 0; i < this.attendanceCreate.list.length; i++) {
+        if (this.attendanceCreate.list[i].staff == 'all' && this.attendanceCreate.list[i].shift_type == shiftType) {
           this.attendanceCreate.list.splice(i, 1);
           break;
         }
       }
 
       let b: boolean = false;
-      if(this.attendanceCreate){
-        if(this.attendanceCreate.list){
-          for(let i = 0; i < this.attendanceCreate.list.length; i++){
-            if(this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType){
+      if (this.attendanceCreate) {
+        if (this.attendanceCreate.list) {
+          for (let i = 0; i < this.attendanceCreate.list.length; i++) {
+            if (this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType) {
               b = true;
-              if(this.attendanceCreate.list[i].attendance_type == value){
+              if (this.attendanceCreate.list[i].attendance_type == value) {
                 //Remove
                 this.attendanceCreate.list.splice(i, 1);
               }
-              else{
+              else {
                 //Update attendance type
                 this.attendanceCreate.list[i].attendance_type = value;
               }
@@ -244,7 +241,7 @@ export class AttendanceComponent implements OnInit {
           }
         }
 
-        if(!b){
+        if (!b) {
           let temp: AttendanceList = {
             staff: staffId,
             shift_type: shiftType,
@@ -257,12 +254,12 @@ export class AttendanceComponent implements OnInit {
 
   }
 
-  getAbsentSubject(staffId: string, shiftType: number): string{
+  getAbsentSubject(staffId: string, shiftType: number): string {
     let type: number = 0;
-    if(this.attendanceCreate){
-      if(this.attendanceCreate.list.length > 0){
-        for(let i = 0; i < this.attendanceCreate.list.length; i++){
-          if(this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType){
+    if (this.attendanceCreate) {
+      if (this.attendanceCreate.list.length > 0) {
+        for (let i = 0; i < this.attendanceCreate.list.length; i++) {
+          if (this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType) {
             type = this.attendanceCreate.list[i].attendance_type;
             return type.toString();
           }
