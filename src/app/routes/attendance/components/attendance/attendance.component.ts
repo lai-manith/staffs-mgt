@@ -27,7 +27,7 @@ export class AttendanceComponent implements OnInit {
     this.attendantDate = new Date();
     this.attendantDate.setHours(0,0,0);
     this.attendanceCreate = {
-      date: formatDate(this.attendantDate, 'yyyy-MM-dd', this.locale),
+      date: formatDate(this.attendantDate, 'MM-dd-yyyy', this.locale),
       list: []
     }
     this.displayedColumns = this.shiftColumns.map(c => c.columnDef);
@@ -82,9 +82,9 @@ export class AttendanceComponent implements OnInit {
     this.isCanSave = false;
 
     let tempDate: string;
-    tempDate = formatDate(this.attendantDate, 'yyyy-MM-dd', this.locale);
+    tempDate = formatDate(this.attendantDate, 'MM-dd-yyyy', this.locale);
     this.attendanceCreate = {
-      date: formatDate(this.attendantDate, 'yyyy-MM-dd', this.locale),
+      date: formatDate(this.attendantDate, 'MM-dd-yyyy', this.locale),
       list: []
     };
 
@@ -122,17 +122,7 @@ export class AttendanceComponent implements OnInit {
               last_name: ''
             };
             this.attendance.unshift(temp);
-            //New .///////
             this.dataSource = new MatTableDataSource(this.attendance);
-            ////////
-            // this.dataSource.sortingDataAccessor = (item, property) => {
-            //   switch(property) {
-            //     case 'name': return item.first_name + ' ' + item.last_name;
-            //     case 'role': return item.roles.role_name;
-            //     default: return item[property];
-            //   }
-            // };
-            // this.dataSource.sort = this.sort;
           }
         }
       },
@@ -163,16 +153,12 @@ export class AttendanceComponent implements OnInit {
   }
 
   onPrevDate(){
-    this.inc--;
-    this.attendantDate.setDate(this.attendantDate.getDate() - 1);
-    this.attendantDate = new Date(this.attendantDate.getFullYear(), this.attendantDate.getMonth(), this.attendantDate.getDate());
+    this.attendantDate = new Date(this.attendantDate.setDate(this.attendantDate.getDate() - 1));
     this.getAttendance();
   }
 
   onNextDate(){
-    this.inc++;
-    this.attendantDate.setDate(this.attendantDate.getDate() + 1);
-    this.attendantDate = new Date(this.attendantDate.getFullYear(), this.attendantDate.getMonth(), this.attendantDate.getDate());
+    this.attendantDate = new Date(this.attendantDate.setDate(this.attendantDate.getDate() + 1));
     this.getAttendance();
   }
 
@@ -198,7 +184,7 @@ export class AttendanceComponent implements OnInit {
             }
           }
         }
-  
+
         if(!b){
           let temp: AttendanceList = {
             staff: staffId,
@@ -257,7 +243,7 @@ export class AttendanceComponent implements OnInit {
             }
           }
         }
-  
+
         if(!b){
           let temp: AttendanceList = {
             staff: staffId,
@@ -268,7 +254,7 @@ export class AttendanceComponent implements OnInit {
         }
       }
     }
-    
+
   }
 
   getAbsentSubject(staffId: string, shiftType: number): string{
@@ -284,40 +270,5 @@ export class AttendanceComponent implements OnInit {
       }
     }
     return type.toString();
-  }
-
-  sortData(sort: Sort): void {
-    const data: Array<Attendance> = this.dataSource.data.slice();
-    if (!sort.active || sort.direction === '') {
-        this.dataSource.data = data;
-        return;
-    }
-
-    this.dataSource.data = data.sort((a, b) => {
-      if(a._id == 'all' || b._id == 'all'){
-         return 1
-      }
-      else{
-        let isAsc: boolean = sort.direction === 'asc';
-        switch (sort.active) {
-            case 'name': return this.compare((a.first_name + ' ' + a.last_name).toLowerCase(), (b.first_name + ' ' + b.last_name).toLowerCase(), isAsc, );
-            // case 'column1': return this.compare(a.col1.toLowerCase(), b.col1.toLowerCase(), isAsc);
-            //  case 'column2': return this.compare(a.col2.toLowerCase(), b.col2.toLowerCase(), isAsc);
-            //   case 'column3': return this.compare(a.col3.toLowerCase(), b.col3.toLowerCase(), isAsc);
-            default: return 0;
-        }
-      }
-    });
-    this.dataSource = new MatTableDataSource<Attendance>(this.dataSource.data);
-  }
-
-  compare(a: any, b: any, isAsc: boolean): number {
-    if (a < b) {
-        return -1 * (isAsc ? 1 : -1);
-    } else if (a > b) {
-        return 1 * (isAsc ? 1 : -1);
-    } else {
-        return 0 * (isAsc ? 1 : -1);
-    }
   }
 }

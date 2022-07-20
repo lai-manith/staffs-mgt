@@ -9,7 +9,7 @@
                 <div class="right-side-button">
                     <button mat-button class="custom-btn print-btn" [routerLink]="['/staff/attendance/history']">
                         <mat-icon>
-                            <img style="padding-bottom: 5px;" src="../../../../../assets/imgs/edit-white-icon.svg" alt="icon.svg">
+                            <img style="padding-bottom: 5px;" src="/assets/imgs/edit-white-icon.svg" alt="icon.svg">
                         </mat-icon>
                         វត្តមានបុគ្គលិកលំអិត
                     </button>
@@ -51,17 +51,17 @@
                                 <label for="" class="col-sm-4 col-form-label">ឆ្នាំសិក្សា : </label>
                                 <label class="col-sm-8 col-form-label">{{ attendance?.classes?.academic_years?.name }}</label>
                             </div>
-                            
+
                             <div class="row">
                                 <label class="col-sm-4 col-form-label">គ្រូបន្ទុកថ្នាក់ : </label>
                                 <label class="col-sm-8 col-form-label">{{ attendance?.classes?.homeroom_teachers | teacherFullName }}</label>
                             </div>
                         </div>
                     </div> -->
-                    
+
                 </div>
             </div>
-                
+
         </div>
 
         <div class="space-2"></div>
@@ -106,7 +106,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="action" *ngIf="element._id != 'all'">
                                 <mat-button-toggle-group aria-label="Absent" [value]="getAbsentSubject(element._id, c.shiftType)">
                                     <mat-button-toggle mat-fab class="present" value=1 (click)="onAbsentChange(1, element._id, c.shiftType)">
@@ -123,11 +123,11 @@
                         </div>
                     </td>
                 </ng-container>
-            
+
                 <tr class="mat-row" *matNoDataRow>
                     <td class="mat-cell" colspan="12">មិនមានទិន្នន័យ</td>
                 </tr>
-            
+
                 <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
@@ -139,19 +139,19 @@
         <div class="container">
             <div style="display: flex; flex-wrap: wrap;">
                 <button class="save-button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!isCanSave">
-                    រក្សាទុក 
+                    រក្សាទុក
                 </button>
-    
+
                 <div *ngIf="!isSaved && !isCompleted" class="save-status">
                     វត្តមានបុគ្គលិកសម្រាប់ <b>ថ្ងៃនេះ</b> មិនទាន់បានរក្សាទុកនៅឡើយ!
                 </div>
             </div>
-            
+
         </div>
 
     </div>
 
-    
+
 
 </div>
 
