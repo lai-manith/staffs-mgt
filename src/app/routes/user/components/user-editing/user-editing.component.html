@@ -17,9 +17,9 @@
         </button>
         <button [disabled]="form.invalid" type="submit" form="form" mat-flat-button color="primary"
           (click)="onUpdate()">
-          <mat-icon>save</mat-icon>
+          <mat-icon *ngIf="!isLoading">save</mat-icon>
+          <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
           រក្សាទុក
-          <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
         </button>
       </div>
     </div>

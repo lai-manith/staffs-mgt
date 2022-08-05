@@ -125,7 +125,7 @@ export class StaffCreatingComponent implements OnInit {
         this.isCCClick = false;
         this.isCVClick = false;
 
-        if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) === this.onFormatDate(new Date())) {
+        if (this.onFormatDate(this.form.controls['contract_expiry_date'].value) <= this.onFormatDate(new Date())) {
           this.isExpired = true;
         }
       },

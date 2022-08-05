@@ -142,12 +142,12 @@
     <div class="group-btn group-action">
       <button mat-raised-button type="button" routerLink="../">
         <mat-icon>highlight_off</mat-icon>
-        Cancel
+        បោះបង់
       </button>
       <button mat-raised-button color="primary">
-        <mat-icon>save</mat-icon>
-        Submit
-        <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
+        <mat-icon *ngIf="!isLoading">save</mat-icon>
+        <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
+        រក្សាទុក
       </button>
     </div>
   </form>

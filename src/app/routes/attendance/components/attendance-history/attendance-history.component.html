@@ -1,0 +1,167 @@
+<div class="app-content staff-attendance">
+  <div class="app-title">
+    <div class="head-left">
+      <a [routerLink]="['../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">បញ្ជីវត្តមាន</h1>
+    </div>
+  </div>
+
+  <!-- staff attendance content -->
+  <div class="detail-form">
+    <div>
+      <div label="General Information">
+        <div class="header-label">អវត្តមានសរុប</div>
+        <div class="grid gap-16 col-sm-2 col-md-3 col-lg-3">
+          <div>
+            <label>វត្តមាន</label>
+            <div class="value">{{ attendanceTotal?.present || 0 }}</div>
+          </div>
+          <div>
+            <label>អវត្តមាន</label>
+            <div class="value">{{ attendanceTotal?.absent || 0 }}</div>
+          </div>
+          <div>
+            <label>ច្បាប់</label>
+            <div class="value">{{ attendanceTotal?.permit || 0 }}</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-16">
+    <mat-card class="mat-elevation-z0 filter-card with-create grid gap-16 col-md-3 bg-grey mb-16 border">
+      <div class="search-box">
+        <div class="filter-search">
+          <mat-form-field appearance="outline" (click)="picker.open()" class="mr-12">
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date" [formControl]="start_date">
+              <input matEndDate placeholder="End date" [formControl]="end_date"
+                (dateChange)="onDateChange($event.value)">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker">
+              <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+            </mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-card>
+
+    <div id="table">
+      <div class="progress-table">
+        <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+      </div>
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z0">
+        <ng-container matColumnDef="ID">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ល.រ</th>
+          <td mat-cell *matCellDef="let element, let i=index">
+            <span class="mobile-label">ល.រ:</span>
+            <span>{{params.page === 1 ? (i + 1) : i + 1 + (params.limit * (params.page - 1))}}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef class="col-header-name"> ឈ្មោះ </th>
+          <td mat-cell *matCellDef="let element" class="col-image-name">
+            <span class="mobile-label">ឈ្មោះ:</span>
+            <div class="thumbnail-list">
+              <div
+                [ngStyle]="{ 'background-image': element?.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+                class="profile-picture"></div>
+              <span>{{element | fullName}}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="staff_id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>អត្តលេខ
+          </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">អត្តលេខ:</span>
+            <span>{{ element?.staff_id }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="gender">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ភេទ</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ភេទ:</span>
+            <span>{{ element?.gender | titlecase }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>តំណែង</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">តំណែង:</span>
+            <span>{{ element?.position?.title }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="present">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>វត្តមាន</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">វត្តមាន:</span>
+            <span>
+              {{ element?.present }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="absent">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>អវត្តមាន</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">អវត្តមាន:</span>
+            <span>
+              {{ element?.absent }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="permission">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ច្បាប់</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ច្បាប់:</span>
+            <span>
+              {{ element?.permit }}
+            </span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ព័ត៌មានលម្អិត</th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ព័ត៌មានលម្អិត</span>
+            <div class="action">
+              <button (click)="onView(element)" mat-stroked-button class="btn-sm" #tooltip="matTooltip" matTooltip="View"
+                matTooltipPosition="right">
+                <mat-icon svgIcon="visibility"></mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">
+            <div class="empty grid p-32  content-center">
+              <app-empty *ngIf="!isLoading; else loading"></app-empty>
+              <ng-template #loading>
+                <strong align="center">កំពុងផ្ទុក...</strong>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+  </div>
+</div>

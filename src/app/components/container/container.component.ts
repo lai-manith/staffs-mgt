@@ -59,7 +59,7 @@ export class ContainerComponent implements OnInit {
         title: 'ប្រភេទតំណែង',
         route: '/position',
         icon: '',
-        svgIcon: 'admission',
+        svgIcon: 'position',
         child: [],
         permissions: []
       },
@@ -83,7 +83,7 @@ export class ContainerComponent implements OnInit {
         title: 'ប្រតិទិនឈប់សម្រាក',
         route: '/calendar',
         icon: '',
-        svgIcon: 'my_teaching',
+        svgIcon: 'calendar',
         permissions: [],
         child: []
       },

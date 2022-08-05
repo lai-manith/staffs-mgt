@@ -15,7 +15,7 @@
         បោះបង់
       </button>
       <button mat-flat-button color="primary" [routerLink]="['/staff/staff-active/manage-contact/', _id]">
-        <mat-icon svgIcon="print"></mat-icon>
+        <mat-icon svgIcon="edit"></mat-icon>
         បន្ដកុងត្រា
       </button>
     </div>
@@ -28,7 +28,7 @@
           <div class="header-label">ព័ត៌មានទូទៅ</div>
           <div class="grid gap-x-16 col-sm-2">
             <div *ngIf="_id">
-              <label>លេខសម្គាល់បុគ្គលិក</label>
+              <label>អត្តលេខ</label>
               <mat-form-field appearance="outline">
                 <input readonly matInput formControlName="staff_id" placeholder="*">
                 <mat-error *ngIf="form.get('staff_id').errors?.required">
@@ -145,6 +145,8 @@
                 </mat-error>
               </mat-form-field>
             </div>
+
+
             <div>
               <label>លេខទូរស័ព្ទ</label>
               <mat-form-field appearance="outline">
@@ -361,9 +363,9 @@
         បោះបង់
       </button>
       <button mat-raised-button color="primary" class="button-submit">
-        <mat-icon>save</mat-icon>
-        <span>រក្សាទុក</span>
+        <mat-icon *ngIf="!isLoading">save</mat-icon>
         <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
+        រក្សាទុក
       </button>
     </div>
   </form>

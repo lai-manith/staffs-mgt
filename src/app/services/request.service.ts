@@ -50,7 +50,9 @@ export class RequestService {
     const url = this.getUrl(path);
     this.clean(request.data);
     if (request.is_loading) {
-      this.loadingService.setLoading(true);
+      setTimeout(() => {
+        this.loadingService.setLoading(true);
+      }, 1);
     }
 
     const headers = this.getAuthHeader();

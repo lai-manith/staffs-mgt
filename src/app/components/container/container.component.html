@@ -13,7 +13,7 @@
             *ngIf="m.child.length <= 0 " [routerLink]="m.route" [routerLinkActive]="m.route ? 'active' : ''"
             [routerLinkActiveOptions]="{exact:false}">
             <span class="menu-item-title" *ngIf="isExpanded">{{ m.title }}</span>
-            <mat-icon mat-list-icon *ngIf="m.svgIcon !== '' " [svgIcon]="m.svgIcon" color="primary"
+            <mat-icon mat-list-icon *ngIf="m.svgIcon !== '' " [svgIcon]="m.svgIcon"
               [class.svg-active]="m.route && route.url.includes(m.route)"></mat-icon>
           </mat-list-item>
           <mat-expansion-panel *ngIf="m.child.length > 0" class="expansion-panel "

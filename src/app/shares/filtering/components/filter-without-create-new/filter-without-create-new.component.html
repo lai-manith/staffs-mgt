@@ -1,7 +1,7 @@
 <mat-card class="mat-elevation-z0 filter-card without-create grid gap-16 col-sm-2 bg-grey mb-16 border">
 
   <div class="filter-box">
-    <button mat-stroked-button [matMenuTriggerFor]="menu" class="bg-white rounded-md py-2" *ngIf="!hideFilter">
+    <button mat-stroked-button [matMenuTriggerFor]="menu" class="bg-white rounded-md py-2" *ngIf="hide !== 'filter'">
       <mat-icon [matBadge]="filterSet.size || null" svgIcon="filter" matPrefix class="filter-icon"></mat-icon>
       <span class="px-8">ស្រង់តាម</span>
       <mat-icon matSuffix>expand_more</mat-icon>
@@ -29,7 +29,7 @@
     </mat-menu>
   </div>
 
-  <div class="search-box">
+  <div class="search-box" *ngIf="hide !== 'search'">
     <mat-form-field appearance="outline">
       <input matInput type="text" #searchQuery (keyup)="search(searchQuery.value)" placeholder="search...">
       <mat-icon svgIcon="search" matPrefix></mat-icon>

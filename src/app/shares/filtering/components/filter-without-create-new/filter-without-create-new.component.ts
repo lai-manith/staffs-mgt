@@ -8,11 +8,10 @@ import { Filter, Option, OptionParam } from 'src/app/models/filter';
   styleUrls: ['./filter-without-create-new.component.scss']
 })
 export class FilterWithoutCreateNewComponent {
-  @Input() hasFilter?: boolean = true;
   @Input() filters: Filter[] = [];
   previousFilters : number[] = [];
   @Input() title: string = '';
-  @Input() hideFilter: boolean = false;
+  @Input() hide: string = null;
   @Output() queryEvent = new EventEmitter<string>();
   @Output() queryFilter = new EventEmitter<any>();
   filterSet = new Set();

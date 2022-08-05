@@ -33,9 +33,9 @@
       បោះបង់
     </button>
     <button class="button-submit" form="form" mat-raised-button color="primary" type="submit" (click)="onSubmit()">
-      <mat-icon>check_circle_outline</mat-icon>
+      <mat-icon *ngIf="!isLoading">check_circle_outline</mat-icon>
+      <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
       យល់ព្រម
-      <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
     </button>
   </mat-dialog-actions>
 </div>

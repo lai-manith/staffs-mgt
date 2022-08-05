@@ -1,2 +1,10 @@
 <router-outlet></router-outlet>
-<div *ngIf="loadingService.isLoading$ | async" class="app-loading"></div>
+<!-- *ngIf="loadingService.isLoading$ | async" -->
+<div class="app-loading" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <div class="loader">
+      <div class="loader loader-inner">
+      </div>
+    </div>
+  </div>
+</div>

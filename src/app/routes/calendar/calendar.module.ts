@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { MatIcon, MatIconModule } from '@angular/material/icon';
+import { MatIcon, MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { CalendarDatePipe } from 'src/app/shares/calendar-date/pipes/calendar-date.pipe';
 import { MatButtonModule } from '@angular/material/button';
 import { StaticMonthModule } from 'src/app/shares/static-month/static-month.module';
@@ -27,6 +27,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { EmptyModule } from 'src/app/shares/empty/empty.module';
 import { NameModule } from 'src/app/shares/name/name.module';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -62,4 +63,13 @@ import { StaticFileModule } from 'src/app/shares/static-file/static-file.module'
     StaticFileModule
   ]
 })
-export class CalendarModule { }
+export class CalendarModule {
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/action-icon-set.svg')
+    );
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/course-icon-set.svg')
+    );
+  }
+}

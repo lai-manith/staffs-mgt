@@ -264,7 +264,8 @@ export class StaffEditingComponent implements OnInit {
               { text: 'ថ្ងៃកំណើត' },
               { text: 'ទីកន្លែងកំណើត' },
               { text: 'សញ្ជាតិ' },
-              { text: 'ជនជាតិ' }
+              { text: 'ជនជាតិ' },
+              { text: 'លេខអត្តសញ្ញាណប័ណ្ណ' }
             ],
             [
               { text: ':  ' + this.staff.gender, margin: [-150, 0, 0, 0] },
@@ -284,7 +285,11 @@ export class StaffEditingComponent implements OnInit {
               {
                 text: ':  ' + this.staff.ethnicity.nationality,
                 margin: [-150, 0, 0, 0]
-              }
+              },
+              {
+                text: ':  ' + this.staff.id_card,
+                margin: [-150, 0, 0, 0]
+              },
             ]
           ]
         },
@@ -300,7 +305,7 @@ export class StaffEditingComponent implements OnInit {
         {
           columns: [
             [
-              { text: 'លេខសម្គាល់បុគ្គលិក' },
+              { text: 'អត្តលេខ' },
               { text: 'តួនាទី' },
               { text: 'ប្រាក់ខែ' },
               { text: 'ថ្ងៃចូលធ្វើការ' },

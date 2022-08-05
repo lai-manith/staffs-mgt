@@ -7,7 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
@@ -39,6 +39,7 @@ import { StaffContractDialogComponent } from './components/staff-contract-dialog
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 import { ImageCropperModule } from 'src/app/shares/image-cropper/image-cropper.module';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -84,4 +85,13 @@ import { ImageCropperModule } from 'src/app/shares/image-cropper/image-cropper.m
   ],
   providers: [StaticFilePipe, DurationPipe, MonthPipe]
 })
-export class StaffModule { }
+export class StaffModule {
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/action-icon-set.svg')
+    );
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/course-icon-set.svg')
+    );
+  }
+}

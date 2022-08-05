@@ -5,16 +5,24 @@
   align-items: center;
   border: 1px solid $border-grey;
   border-radius: 10px;
+  background-color: #fff;
   input {
     cursor: pointer;
   }
   button {
     border: none;
   }
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
   .mat-form-field-appearance-outline {
     .mat-form-field-outline {
       color: transparent;
       background-color: #fff;
+
+      .mat-form-field-outline-start, .mat-form-field-outline-end {
+        background-color: #fff;
+      }
     }
     .mat-form-field-flex {
       width: 120px;

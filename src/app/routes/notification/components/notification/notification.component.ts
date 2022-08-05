@@ -23,6 +23,7 @@ import { NotificationDataSourceService } from 'src/app/services/notification-dat
 import { MatDialog } from '@angular/material/dialog';
 import { User } from 'src/app/models/user';
 import { UserDataService } from 'src/app/services/user-data.service';
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-notification',
   templateUrl: './notification.component.html',
@@ -80,7 +81,7 @@ export class NotificationComponent {
   }
 
   navigateTo(data: Notification) {
-    this.router.navigate(['calendar']);
+    this.router.navigate(['calendar/' + formatDate(data.create_at, 'MM-dd-yy', 'en-US')]);
   }
 
   markAllAsRead() {

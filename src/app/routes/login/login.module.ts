@@ -6,11 +6,12 @@ import { LoginComponent } from './components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 @NgModule({
@@ -28,4 +29,13 @@ import { NgOtpInputModule } from 'ng-otp-input';
     NgOtpInputModule,
   ]
 })
-export class LoginModule { }
+export class LoginModule {
+  constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/action-icon-set.svg')
+    );
+    this.matIconRegistry.addSvgIconSet(
+      this.domSanitizer.bypassSecurityTrustResourceUrl('assets/icons/course-icon-set.svg')
+    );
+  }
+}

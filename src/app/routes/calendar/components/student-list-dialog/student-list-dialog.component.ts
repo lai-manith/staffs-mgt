@@ -84,7 +84,7 @@ export class StudentListDialogComponent implements OnInit {
       selectedIndex: 0,
       labelFunc: 'ភេទ',
       paramKey: 'gender',
-      matIcon: 'person',
+      matIcon: 'transgender',
     },
   ];
 

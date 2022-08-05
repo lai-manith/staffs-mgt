@@ -19,8 +19,8 @@ export class ImageUploaderComponent implements OnInit {
   @Output() uploadFileEvent = new EventEmitter();
   @Output() fileEvent = new EventEmitter();
   @Input() aspectRatio: number = 3 / 4;
-  @Input() resizeToWidth: number = 105;
-  @Input() resizeToHeight: number = 120;
+  @Input() resizeToWidth: number = 90;
+  @Input() resizeToHeight: number = 125;
 
   constructor(private dialog: MatDialog) {}
 

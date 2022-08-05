@@ -8,10 +8,13 @@ import { LoadingService } from 'src/app/services/loading.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'studio';
+  title = 'admin';
   isLoading = false;
   loadingTimeout: any;
-  constructor(private router: Router, public loadingService: LoadingService) {
+  constructor(
+    private router: Router,
+    public loadingService: LoadingService,
+  ) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {
         this.loadingService.forceStop();

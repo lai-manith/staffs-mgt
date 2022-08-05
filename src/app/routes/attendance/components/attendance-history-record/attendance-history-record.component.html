@@ -1,0 +1,81 @@
+<mat-dialog-content class="app-content">
+  <div class="attendance-dialog">
+    <div class="app-title">
+      <h1 class="title">
+        <span class="name mr-12">{{ 'វត្តមានរបស់' + ' ' + (data.payload | fullName)}}</span>
+      </h1>
+      <div class="group-btn">
+        <button [ngStyle]="{'background-color': 'transparent'}"> </button>
+      </div>
+    </div>
+
+    <app-filter-without-create-new [filters]="filters" (queryFilter)="setParams($event)" [hide]="'search'"></app-filter-without-create-new>
+    <div id="table">
+      <div class="progress-table">
+        <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+      </div>
+      <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z0">
+
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> ល.រ </th>
+          <td mat-cell *matCellDef="let element; let i = index">
+            <span class="mobile-label">ល.រ:</span>
+            {{params.page === 1 ? (i + 1) : i + 1 + (params.limit * (params.page - 1))}}
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> ថ្ងៃ </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ថ្ងៃ:</span>
+            {{ element.createAt | date: 'dd' }}
+            {{ element.createAt | date: 'MM' | khmerMonth }}
+            {{ element.createAt | date: 'yyyy' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="shift">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> វេន </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">វេន:</span>
+            {{element.shift_type | attendanceTranslate}}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef> ប្រភេទវត្តមាន </th>
+          <td mat-cell *matCellDef="let element">
+            <span class="mobile-label">ប្រភេទវត្តមាន:</span>
+            <div class="label" [ngClass]="element.attendance_type | lowercase">
+              <span></span>
+              {{element.attendance_type | attendanceTranslate}}
+            </div>
+          </td>
+        </ng-container>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="12">
+            <div class="empty grid p-32  content-center">
+              <app-empty *ngIf="!isLoading; else loading"></app-empty>
+              <ng-template #loading>
+                <strong align="center">កំពុងផ្ទុក...</strong>
+              </ng-template>
+            </div>
+          </td>
+        </tr>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+    <app-pagination [total]="total" [limit]="params.limit" [page]="params.page" [surroundButton]="6"
+      (changed)="goTo($event)">
+    </app-pagination>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close color="primary">
+    Done
+  </button>
+</mat-dialog-actions>

@@ -78,10 +78,8 @@ export class AttendanceComponent implements OnInit {
       list: []
     };
 
-    this.attendance = [];
     this.isSaved = true;
-    this.dataSource = [];
-    this.attendanceService.getMany({ date: tempDate }).subscribe(
+    this.attendanceService.getAttendance({ date: tempDate }).subscribe(
       (res) => {
         this.attendance = res.list;
         if (this.attendantDate <= today) {
