@@ -70,7 +70,7 @@ export class UserEditingComponent implements OnInit {
             dob: res?.dob,
             profile: this.staticFilePipe.transform(res.profile) as string,
             first_name: res.first_name,
-            last_name: res.last_name
+            last_name: res.last_name,
           });
         },
         err => {

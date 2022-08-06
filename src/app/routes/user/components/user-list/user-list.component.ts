@@ -16,7 +16,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
 })
 export class UserListComponent implements OnInit {
 
-  displayedColumns: string[] = ['ID', 'name', 'dob', 'gender', 'email', 'status', '_id'];
+  displayedColumns: string[] = ['ID', 'name', 'username', 'dob', 'gender', 'email', 'status', '_id'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource([]);
   total: number;
   params = {

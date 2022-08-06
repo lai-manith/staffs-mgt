@@ -90,7 +90,7 @@ export class CalendarComponent implements OnInit {
     gender: null,
     position: null
   };
-  date: string = this.route.snapshot.params.date;
+  date: Date;
 
   constructor(
     private staffService: StaffService,
@@ -101,10 +101,12 @@ export class CalendarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.generateCalendarDays(this.monthIndex);
+    this.generateCalendarDays(new Date());
 
-    this.route.params.subscribe((params) => {
-      this.generateCalendarDays(this.monthIndex);
+    this.route.params.subscribe(params => {
+      if (Object.keys(params).length > 0) {
+        this.generateCalendarDays(new Date(params.date));
+      }
     });
   }
 
@@ -185,7 +187,7 @@ export class CalendarComponent implements OnInit {
     this.calendarService.delete(id).subscribe(
       res => {
         this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });
-        this.generateCalendarDays(this.monthIndex);
+        this.generateCalendarDays(new Date(this.date));
         this.onCardHover(null);
       },
       err =>
@@ -226,13 +228,14 @@ export class CalendarComponent implements OnInit {
     });
   }
 
-  generateCalendarDays(monthIndex: number): void {
+  generateCalendarDays(date: Date): void {
+
     //* we reset our calendar
     this.calendar = [];
 
-    console.log(this.date);
     //* we set the date
-    let day: Date = this.date ? new Date(this.date) : new Date(new Date().setMonth(new Date().getMonth() + monthIndex));
+    let day: Date = new Date(date);
+    this.date = date;
     this.activeMonth = day.getMonth();
 
     //* set the display month for UI
@@ -270,18 +273,16 @@ export class CalendarComponent implements OnInit {
   }
 
   increaseMonth() {
-    this.monthIndex++;
-    this.generateCalendarDays(this.monthIndex);
+    this.generateCalendarDays(new Date(new Date(this.date).setMonth(new Date(this.date).getMonth() + 1)));
   }
 
   decreaseMonth() {
-    this.monthIndex--;
-    this.generateCalendarDays(this.monthIndex);
+    this.generateCalendarDays(new Date(new Date(this.date).setMonth(new Date(this.date).getMonth() - 1)));
   }
 
   setCurrentMonth() {
     this.monthIndex = 0;
-    this.generateCalendarDays(this.monthIndex);
+    this.generateCalendarDays(new Date());
   }
 
   onSetEvent(date: CalendarDay) {
