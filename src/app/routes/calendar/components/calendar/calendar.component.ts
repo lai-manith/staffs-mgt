@@ -1,4 +1,5 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -97,8 +98,9 @@ export class CalendarComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly calendarService: CalendarService,
     private dialog: MatDialog,
-    private route: ActivatedRoute
-  ) {}
+    private route: ActivatedRoute,
+    private overlayContainer: OverlayContainer
+  ) { }
 
   ngOnInit(): void {
     this.generateCalendarDays(new Date());
@@ -287,5 +289,33 @@ export class CalendarComponent implements OnInit {
 
   onSetEvent(date: CalendarDay) {
     this.isDate = false;
+  }
+
+  isHoverCard: boolean = false;
+  @ViewChild('showProfile') matMenu: MatMenuTrigger;
+  onHover(data) {
+    this.isHoverCard = true;
+    setTimeout(() => {
+      if (this.isHoverCard) {
+        this.matMenu.openMenu();
+
+        //*enable to click outside
+        this.overlayContainer
+          .getContainerElement()
+          .classList.add('disable-backdrop-click');
+      }
+    }, 500);
+  }
+
+  onLeave(data) {
+    this.isHoverCard = false;
+    setTimeout(() => {
+      if (!this.isHoverCard) {
+        this.matMenu.closeMenu();
+        this.overlayContainer
+          .getContainerElement()
+          .classList.remove('disable-backdrop-click');
+      }
+    }, 500);
   }
 }

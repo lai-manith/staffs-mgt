@@ -15,6 +15,7 @@ import { NotificationRoutingModule } from './notification-routing.module';
 import { EmptyModule } from 'src/app/shares/empty/empty.module';
 import { DomSanitizer } from '@angular/platform-browser';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { StaticFileModule } from 'src/app/shares/static-file/static-file.module'
     MatBadgeModule,
     DateTimeModule,
     EmptyModule,
-    StaticFileModule
+    StaticFileModule,
+    MatTooltipModule
   ],
   exports: [NotificationComponent]
 })

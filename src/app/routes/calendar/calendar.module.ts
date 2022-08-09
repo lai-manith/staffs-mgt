@@ -28,6 +28,7 @@ import { EmptyModule } from 'src/app/shares/empty/empty.module';
 import { NameModule } from 'src/app/shares/name/name.module';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ProfileHoverModule } from 'src/app/shares/profile-hover/profile-hover.module';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { DomSanitizer } from '@angular/platform-browser';
     MatProgressBarModule,
     EmptyModule,
     NameModule,
-    StaticFileModule
+    StaticFileModule,
+    ProfileHoverModule
   ]
 })
 export class CalendarModule {

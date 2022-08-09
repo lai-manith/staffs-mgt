@@ -1,10 +1,20 @@
 <div class="app-content content-account">
-  <div class="app-title">
-    <h1 class="title">អ្នកគ្រប់គ្រង</h1>
-    <button mat-raised-button color="primary" class="create-btn" [routerLink]="['add-new']">
-      <mat-icon svgIcon="add_new"></mat-icon>
-      បង្កើតថ្មី
-    </button>
+  <div class="app-title grid gap-16 col-sm-2">
+    <div class="head-left">
+      <a [routerLink]="['../../']" mat-icon-button>
+        <mat-icon>
+          keyboard_arrow_left
+        </mat-icon>
+      </a>
+      <div class="mr-16"></div>
+      <h1 class="title">ការកំណត់</h1>
+    </div>
+    <div class="group-btn group-action">
+      <button mat-raised-button color="primary" class="create-btn" [routerLink]="['add-new']">
+        <mat-icon svgIcon="add_new"></mat-icon>
+        បង្កើតថ្មី
+      </button>
+    </div>
   </div>
 
   <app-filter-without-create-new [hide]="'filter'" (queryEvent)="onSearch($event)"></app-filter-without-create-new>

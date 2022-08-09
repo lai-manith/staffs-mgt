@@ -1,0 +1,27 @@
+<section *ngIf="data?.staff as staff">
+  <div class="profile mb-8 p-18">
+    <div class="image">
+      <div [style.background-image]="staff?.profile
+                    ? 'url('+ (data?.staffs?.profile | staticFile) +')'
+                    : '/assets/imgs/profile-default.svg'" class="avatar-profile mb-18">
+      </div>
+      <h4 class="name">{{staff | fullName}}</h4>
+      <label class="detail mt-8">
+        <mat-icon svgIcon="person" class="mr-4"></mat-icon>{{staff?.titles?.name}}
+      </label>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="action action-self follow-action">
+    <button mat-button [routerLink]="'/chat/' + data?.staffs?._id">
+      <mat-icon svgIcon="message"></mat-icon>
+      Message
+    </button>
+    <!-- <span *ngIf="data?.staffs?._id != account._id">|</span>
+    <button *ngIf="data?.staffs?._id != account._id" (click)="onFollow()" mat-button
+      [ngClass]="data.follow == 1 ? 'followed' : 'follow'">
+      <mat-icon svgIcon="heart-red"></mat-icon>
+      Follow
+    </button> -->
+  </div>
+</section>

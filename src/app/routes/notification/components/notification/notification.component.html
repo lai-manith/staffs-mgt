@@ -6,9 +6,9 @@
 <mat-menu #notification="matMenu" xPosition="before" backdropClass="notification">
   <mat-nav-list class="noti-content" (click)="$event.stopPropagation();">
     <section class="header pb-8">
-      <h1>Notifications</h1>
+      <h1>សេចក្ដីជូនដំណឹង</h1>
       <button *ngIf="dataSource.cachedNotifications.length > 0" mat-button (click)="markAllAsRead()">
-        Mark as read all
+        សម្គាល់ថាបានអានទាំងអស់
       </button>
     </section>
 
@@ -30,7 +30,7 @@
           </div>
 
           <button *ngIf="data.read === 0" [matMenuTriggerFor]="button" #buttonTrigger="matMenuTrigger" mat-icon-button
-            class="button-border alert unread-dot">
+            class="button-border alert unread-dot" #tooltip="matTooltip" matTooltip="មានច្រើនទៀត" matTooltipPosition="right">
             <mat-icon>more_horiz</mat-icon>
           </button>
 
@@ -38,11 +38,11 @@
             <div class="nested-actions" (click)="$event.stopPropagation();">
               <button mat-menu-item (click)="onMarkRead(data._id)">
                 <mat-icon>mark_chat_read</mat-icon>
-                <span>Mark as read</span>
+                <span>សម្គាល់ថាបានអាន</span>
               </button>
               <button mat-menu-item (click)="onDelete(data._id, 1)">
                 <mat-icon svgIcon="trash_can"></mat-icon>
-                <span>Delete</span>
+                <span>លុប</span>
               </button>
             </div>
           </mat-menu>

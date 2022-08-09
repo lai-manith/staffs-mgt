@@ -1,0 +1,72 @@
+@use '../variables'as *;
+
+.mat-menu-panel.hover-profile {
+  width: 250px;
+  height: 242px;
+  position: relative;
+  box-shadow: 0 0 5px $mercury-color;
+  border-radius: 15px;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    border-top: 78px solid $line-break-color;
+    width: 100%;
+    position: absolute;
+    top: 0;
+  }
+
+  .mat-menu-content {
+    padding: 0;
+
+    .profile {
+      position: relative;
+      z-index: 2;
+
+      .image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .avatar-profile {
+          width: 87px;
+          height: 87px;
+        }
+
+        .detail {
+          text-align: center;
+          display: -webkit-box;
+          -webkit-line-clamp: 1;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        h4 {
+          margin-bottom: 0;
+          cursor: pointer;
+        }
+      }
+    }
+
+    .action {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: $waterloo-color;
+
+      button {
+        width: 50%;
+        padding-top: 8px;
+        padding-bottom: 8px;
+      }
+    }
+
+    .action-self {
+      button {
+        width: 100%;
+      }
+    }
+  }
+}
