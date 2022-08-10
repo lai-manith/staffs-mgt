@@ -2,7 +2,7 @@
 
 .mat-menu-panel.hover-profile {
   width: 250px;
-  height: 242px;
+  height: 255px;
   position: relative;
   box-shadow: 0 0 5px $mercury-color;
   border-radius: 15px;
@@ -22,12 +22,16 @@
     .profile {
       position: relative;
       z-index: 2;
+      width: 100%;
 
       .image {
+        width: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
+
+        .name {}
 
         .avatar-profile {
           width: 87px;
@@ -41,6 +45,10 @@
           -webkit-box-orient: vertical;
           overflow: hidden;
           text-overflow: ellipsis;
+
+          mat-icon {
+            transform: translateY(4px);
+          }
         }
 
         h4 {
@@ -66,6 +74,18 @@
     .action-self {
       button {
         width: 100%;
+      }
+    }
+  }
+}
+
+.follow-action {
+  .mat-warn {
+    mat-icon {
+      svg {
+        path {
+          fill: $danger-color;
+        }
       }
     }
   }

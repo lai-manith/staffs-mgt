@@ -5,6 +5,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { StaffDayOff } from 'src/app/models/calendar';
 import { Staff } from 'src/app/models/staff';
 import { CalendarService } from 'src/app/services/calendar.service';
@@ -118,6 +119,14 @@ export class CalendarComponent implements OnInit {
         start_date: this.formateDateString(this.calendar[0].date),
         end_date: this.formateDateString(this.calendar[this.calendar.length - 1].date)
       })
+      .pipe(
+        map(map => {
+          for (let data of map.list) {
+            data.staff.gender = data.staff.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+          }
+          return map;
+        })
+      )
       .subscribe(
         res => {
           res.list.forEach(element => {
@@ -186,7 +195,8 @@ export class CalendarComponent implements OnInit {
   // }
 
   onDeleteDayOff(id: string) {
-    this.calendarService.delete(id).subscribe(
+    this.calendarService.delete(id)
+    .subscribe(
       res => {
         this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });
         this.generateCalendarDays(new Date(this.date));

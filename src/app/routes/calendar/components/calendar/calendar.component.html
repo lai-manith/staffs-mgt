@@ -59,7 +59,7 @@
 
                       <!--* Add Profile Hover -->
                       <mat-menu #menu="matMenu" [hasBackdrop]="false" class="hover-profile">
-                        <app-profile-hover (mouseover)="isHoverCard = true " (mouseleave)="onLeave(e.staff);"
+                        <app-profile-hover (mouseover)="isHoverCard = true " (deleteEvent)="onDeleteDayOff($event)" (mouseleave)="onLeave(e.staff);"
                           (click)="$event.stopPropagation();" [data]="e"></app-profile-hover>
                       </mat-menu>
                     </span>

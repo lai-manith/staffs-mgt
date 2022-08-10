@@ -33,7 +33,7 @@
 
             <div class="box search-box ">
                 <mat-form-field appearance="outline">
-                    <input matInput #searchQuery (keyup)="search(searchQuery.value)" placeholder="search...">
+                    <input matInput #searchQuery (keyup)="search(searchQuery.value)" placeholder="ស្វែងរក...">
                     <mat-icon svgIcon="search" matPrefix></mat-icon>
                     <button *ngIf="searchQuery.value" mat-icon-button matSuffix
                         (click)="searchQuery.value = ''; clear()">

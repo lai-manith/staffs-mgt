@@ -9,9 +9,15 @@ import { User } from 'src/app/models/user';
 export class ProfileHoverComponent implements OnInit {
   @Input() data: any;
   account: User;
+  @Output() deleteEvent = new EventEmitter();
+
   constructor() {}
 
   ngOnInit(): void {
     this.account = JSON.parse(localStorage.getItem('account'));
+  }
+
+  onDeleteDayOff(id: string): void {
+    this.deleteEvent.emit(id);
   }
 }
