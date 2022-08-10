@@ -1,5 +1,4 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { OverlayContainer } from '@angular/cdk/overlay';
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +11,6 @@ import { CalendarService } from 'src/app/services/calendar.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
-import { AddingDayOffComponent } from '../adding-day-off/adding-day-off.component';
 import { StudentListDialogComponent } from '../student-list-dialog/student-list-dialog.component';
 
 export class CalendarDay {
@@ -100,8 +98,7 @@ export class CalendarComponent implements OnInit {
     private readonly calendarService: CalendarService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
-    private overlayContainer: OverlayContainer
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.generateCalendarDays(new Date());
@@ -195,8 +192,7 @@ export class CalendarComponent implements OnInit {
   // }
 
   onDeleteDayOff(id: string) {
-    this.calendarService.delete(id)
-    .subscribe(
+    this.calendarService.delete(id).subscribe(
       res => {
         this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });
         this.generateCalendarDays(new Date(this.date));
@@ -241,7 +237,6 @@ export class CalendarComponent implements OnInit {
   }
 
   generateCalendarDays(date: Date): void {
-
     //* we reset our calendar
     this.calendar = [];
 
@@ -299,33 +294,5 @@ export class CalendarComponent implements OnInit {
 
   onSetEvent(date: CalendarDay) {
     this.isDate = false;
-  }
-
-  isHoverCard: boolean = false;
-  @ViewChild('showProfile') matMenu: MatMenuTrigger;
-  onHover(data) {
-    this.isHoverCard = true;
-    setTimeout(() => {
-      if (this.isHoverCard) {
-        this.matMenu.openMenu();
-
-        //*enable to click outside
-        this.overlayContainer
-          .getContainerElement()
-          .classList.add('disable-backdrop-click');
-      }
-    }, 500);
-  }
-
-  onLeave(data) {
-    this.isHoverCard = false;
-    setTimeout(() => {
-      if (!this.isHoverCard) {
-        this.matMenu.closeMenu();
-        this.overlayContainer
-          .getContainerElement()
-          .classList.remove('disable-backdrop-click');
-      }
-    }, 500);
   }
 }

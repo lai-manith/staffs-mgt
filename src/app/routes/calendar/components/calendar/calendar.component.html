@@ -42,7 +42,8 @@
               <button mat-button class="calendar-day-header">
                 <div class="date-holyday">
                   <section class="number" [ngClass]="c.isHoliday?'is-holiday':''">{{c.date.getDate()}}</section>
-                  <div *ngIf="c.dateString === dateString && c.isActiveMonth" class="add-dayoff alert">
+                  <div *ngIf="c.dateString === dateString && c.isActiveMonth"
+                    class="add-dayoff alert">
                     <div @flyInOut>
                       <button color="primary" mat-icon-button (click)="onAddDayOff(c.date)">
                         <mat-icon>add_circle</mat-icon>
@@ -54,13 +55,17 @@
                 <div class="event-content">
                   <div class="holiday-sign">
                     <span class="info-alert" *ngFor="let e of c.day_off">
-                      <span [matMenuTriggerFor]="menu" #showProfile="matMenuTrigger" (click)="isHoverCard = false" (mouseover)="onHover(e.staff);" (mouseleave)="onLeave(e.staff)"
+                      <span [matMenuTriggerFor]="menu"
                         class="name">{{e.staff.first_name + ' ' + e.staff.last_name}}</span>
-
-                      <!--* Add Profile Hover -->
-                      <mat-menu #menu="matMenu" [hasBackdrop]="false" class="hover-profile">
-                        <app-profile-hover (mouseover)="isHoverCard = true " (deleteEvent)="onDeleteDayOff($event)" (mouseleave)="onLeave(e.staff);"
-                          (click)="$event.stopPropagation();" [data]="e"></app-profile-hover>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item [routerLink]="'/staff/staff-active/detail/' + e.staff._id">
+                          <mat-icon color="primary">visibility</mat-icon>
+                          <span>ព័ត៌មានលំអិត</span>
+                        </button>
+                        <button mat-menu-item (click)="onDeleteDayOff(e._id)">
+                          <mat-icon color="warn">delete</mat-icon>
+                          <span>លុប</span>
+                        </button>
                       </mat-menu>
                     </span>
                   </div>
