@@ -45,7 +45,7 @@ export class StaffEditingComponent implements OnInit {
     private staticFilePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
     private monthPipe: MonthPipe
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.onLoad();
@@ -164,41 +164,55 @@ export class StaffEditingComponent implements OnInit {
   }
 
   toDataURL = async url => {
-    var res = await fetch(url);
-    var blob = await res.blob();
+    var res;
+    if (url) res = await fetch(url).catch(err => { return null });
+    if (res && url) {
+      var blob = await res.blob();
+      const result = await new Promise((resolve, reject) => {
+        var reader = new FileReader();
+        reader.addEventListener(
+          'load',
+          function () {
+            resolve(reader.result);
+          },
+          false
+        );
 
-    const result = await new Promise((resolve, reject) => {
-      var reader = new FileReader();
-      reader.addEventListener(
-        'load',
-        function () {
-          resolve(reader.result);
-        },
-        false
-      );
+        reader.onerror = () => {
+          return reject(this);
+        };
+        reader.readAsDataURL(blob);
+      });
+      return result;
+    } else {
+      var resp = await fetch('assets/imgs/profile-default.png');
+      var blobb = await resp.blob();
+      const result = await new Promise((resolve, reject) => {
+        var reader = new FileReader();
+        reader.addEventListener(
+          'load',
+          function () {
+            resolve(reader.result);
+          },
+          false
+        );
 
-      reader.onerror = () => {
-        return reject(this);
-      };
-      reader.readAsDataURL(blob);
-    });
-    return result;
+        reader.onerror = () => {
+          return reject(this);
+        };
+        reader.readAsDataURL(blobb);
+      });
+      return result;
+    }
   };
 
   onConvertImgToBase64(): void {
-    if (this.staff.profile) {
-      this.toDataURL(this.staticFilePipe.transform(this.staff.profile)).then(
-        value => (this.imgBase64 = value as string)
-      );
-    } else {
-      this.toDataURL('assets/imgs/profile-default.png').then(
-        value => (this.imgBase64 = value as string)
-      );
-    }
+    this.toDataURL(this.staticFilePipe.transform(this.staff?.profile)).then(
+      value => (this.imgBase64 = value as string)
+    );
   }
 
   onPrint(): void {
-    this.onConvertImgToBase64();
     let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',
@@ -208,7 +222,7 @@ export class StaffEditingComponent implements OnInit {
           style: ['header', 'alignCenter', 'color']
         },
         {
-          image: this.imgBase64,
+          image: this.imgBase64 || 'assets/imgs/profile-default.png',
           absolutePosition: { x: 470, y: 35 }
         },
 

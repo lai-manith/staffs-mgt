@@ -168,7 +168,7 @@
           <mat-icon class="doc mr-4" svgIcon="excel_alt"></mat-icon>
           <div *ngIf="staff?.attach_files" class="file-name">{{staff?.file_name}}</div>
           <div *ngIf="!staff?.attach_files">មិនមានឯកសារ</div>
-          <a *ngIf="staff?.attach_files" target="_blank" [href]="(staff?.attach_files | staticFile)" style="color: #757575">
+          <a matTooltip="មើល" *ngIf="staff?.attach_files" target="_blank" [href]="(staff?.attach_files | staticFile)" style="color: #757575">
             <mat-icon class="ml-8">open_in_new</mat-icon>
           </a>
         </div>
