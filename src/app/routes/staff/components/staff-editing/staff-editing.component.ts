@@ -31,7 +31,7 @@ export class StaffEditingComponent implements OnInit {
   staff: Staff;
   _id: string = this.route.snapshot.params.id;
   isActive: boolean = null;
-  static imgBase64: string;
+  imgBase64: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -45,24 +45,10 @@ export class StaffEditingComponent implements OnInit {
     private staticFilePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
     private monthPipe: MonthPipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.onLoad();
-  }
-
-  onConvertImgToBase64(): void {
-    if (this.staff.profile) {
-      this.dataURI(this.staticFilePipe.transform(this.staff.profile), function (dataUrl) {
-        StaffEditingComponent.imgBase64 = dataUrl;
-      });
-    } else {
-      this.getBase64Image('assets/imgs/profile-default.png')
-        .then(result => {
-          StaffEditingComponent.imgBase64 = result as string
-        })
-        .catch(err => console.error(err));
-    }
   }
 
   onLoad() {
@@ -167,11 +153,21 @@ export class StaffEditingComponent implements OnInit {
     );
   }
 
-  async getBase64Image(imageUrl) {
-    var res = await fetch(imageUrl);
+  khmerMonth(date: Date) {
+    const newDate =
+      new Date(date).getDate() +
+      ' ' +
+      this.monthPipe.transform(new Date(date).getMonth().toString()) +
+      ' ' +
+      new Date(date).getFullYear();
+    return newDate;
+  }
+
+  toDataURL = async url => {
+    var res = await fetch(url);
     var blob = await res.blob();
 
-    return new Promise((resolve, reject) => {
+    const result = await new Promise((resolve, reject) => {
       var reader = new FileReader();
       reader.addEventListener(
         'load',
@@ -186,44 +182,33 @@ export class StaffEditingComponent implements OnInit {
       };
       reader.readAsDataURL(blob);
     });
+    return result;
+  };
+
+  onConvertImgToBase64(): void {
+    if (this.staff.profile) {
+      this.toDataURL(this.staticFilePipe.transform(this.staff.profile)).then(
+        value => (this.imgBase64 = value as string)
+      );
+    } else {
+      this.toDataURL('assets/imgs/profile-default.png').then(
+        value => (this.imgBase64 = value as string)
+      );
+    }
   }
 
-  dataURI(url, callback) {
-    let xhRequest = new XMLHttpRequest();
-    xhRequest.onload = function () {
-      let reader = new FileReader();
-      reader.onloadend = function () {
-        callback(reader.result);
-      };
-      reader.readAsDataURL(xhRequest.response);
-    };
-    xhRequest.open('GET', url);
-    xhRequest.responseType = 'blob';
-    xhRequest.send();
-  }
-
-  khmerMonth(date: Date) {
-    const newDate =
-      new Date(date).getDate() +
-      ' ' +
-      this.monthPipe.transform(new Date(date).getMonth().toString()) +
-      ' ' +
-      new Date(date).getFullYear();
-    return newDate;
-  }
-
-  onPrint() {
-    console.log(this.staff);
+  onPrint(): void {
+    this.onConvertImgToBase64();
     let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',
       content: [
         {
           text: pdfTitle,
-          style: ['header', 'alignCenter', 'color'],
+          style: ['header', 'alignCenter', 'color']
         },
         {
-          image: StaffEditingComponent.imgBase64,
+          image: this.imgBase64,
           absolutePosition: { x: 470, y: 35 }
         },
 
@@ -289,7 +274,7 @@ export class StaffEditingComponent implements OnInit {
               {
                 text: ':  ' + this.staff.id_card,
                 margin: [-150, 0, 0, 0]
-              },
+              }
             ]
           ]
         },

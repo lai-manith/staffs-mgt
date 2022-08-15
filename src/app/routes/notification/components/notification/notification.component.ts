@@ -34,8 +34,6 @@ export class NotificationComponent {
     private notificationService: NotificationService,
     private router: Router,
     private snackbarService: SnackbarService,
-    private dialog: MatDialog,
-    private userDataService: UserDataService
   ) {}
 
   @ViewChild(CdkVirtualScrollViewport)
@@ -62,6 +60,9 @@ export class NotificationComponent {
 
   menuOpened() {
     NotificationDataSourceService.isOpen = true;
+    this.dataSource = new NotificationDataSourceService(
+      this.notificationService
+    );
     //used to prevent when remove the menu from the dom and lost data
     this.cdkVirtualScrollViewport.setRenderedContentOffset(0);
     //set  10 items to be rendered

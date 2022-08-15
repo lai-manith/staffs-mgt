@@ -25,7 +25,9 @@
       <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 table-custom table-staff">
 
         <ng-container matColumnDef="name" sticky>
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ឈ្មោះបុគ្គលិក</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header [attr.rowspan]="2">
+            <span>ឈ្មោះបុគ្គលិក</span>
+          </th>
           <td mat-cell *matCellDef="let element">
             <div class="thumbnail-list" *ngIf="element._id != 'all'">
               <div

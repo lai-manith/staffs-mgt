@@ -1,6 +1,29 @@
 @use '../variables'as *;
 
 .mat-table {
+
+  tr {
+    &.mat-row {
+      &:nth-child(odd) {
+        background-color: rgba($color-black, 0.02);
+        td {
+          &:first-child {
+            background-color: transparent;
+          }
+        }
+      }
+
+      &:first-child {
+        background-color: #fff;
+        td {
+          &:first-child {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+  }
+
   .group-picture-name {
     display: flex;
     align-items: center;
