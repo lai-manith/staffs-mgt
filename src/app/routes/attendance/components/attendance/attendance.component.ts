@@ -14,12 +14,11 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   styleUrls: ['./attendance.component.scss']
 })
 export class AttendanceComponent implements OnInit {
-
   constructor(
     private attendanceService: StaffAttendanceService,
     @Inject(LOCALE_ID) private locale: string,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.attendantDate = new Date();
@@ -27,12 +26,14 @@ export class AttendanceComponent implements OnInit {
     this.attendanceCreate = {
       date: formatDate(this.attendantDate, 'MM-dd-yyyy', this.locale),
       list: []
-    }
+    };
     this.displayedColumns = this.shiftColumns.map(c => c.columnDef);
     this.getAttendance();
   }
 
-  trackByIndex = function (i) { return i; }
+  trackByIndex = function (i) {
+    return i;
+  };
 
   dataSource: any;
   displayedColumns = [];
@@ -79,13 +80,12 @@ export class AttendanceComponent implements OnInit {
     };
 
     this.isSaved = true;
-    this.attendanceService.getAttendance({ date: tempDate }).subscribe(
-      (res) => {
+    this.attendanceService.getAttendance({ date: tempDate, limit: 0 }).subscribe(
+      res => {
         this.attendance = res.list;
         if (this.attendantDate <= today) {
           this.isCanSave = true;
-        }
-        else {
+        } else {
           this.isCanSave = false;
         }
 
@@ -127,19 +127,21 @@ export class AttendanceComponent implements OnInit {
       list: this.attendanceCreate.list.filter(e => e.staff != 'all')
     };
     this.attendanceService.createAttendance(data).subscribe(
-      (res) => {
+      res => {
         this.isLoading = false;
         this.snackbarService.onShowSnackbar({
           message: 'add',
-          component: SnackbarComponent,
-        })
+          component: SnackbarComponent
+        });
         this.getAttendance();
-      }, err =>
-      this.snackbarService.onShowSnackbar({
-        message: err.message ?? err.error.message,
-        component: SnackbarComponent,
-        isError: true
-      }));
+      },
+      err =>
+        this.snackbarService.onShowSnackbar({
+          message: err.message ?? err.error.message,
+          component: SnackbarComponent,
+          isError: true
+        })
+    );
   }
 
   dateChange(value: Date) {
@@ -164,14 +166,16 @@ export class AttendanceComponent implements OnInit {
       if (this.attendanceCreate) {
         if (this.attendanceCreate.list) {
           for (let i = 0; i < this.attendanceCreate.list.length; i++) {
-            if (this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType) {
+            if (
+              this.attendanceCreate.list[i].staff == staffId &&
+              this.attendanceCreate.list[i].shift_type == shiftType
+            ) {
               b = true;
               if (this.attendanceCreate.list[i].attendance_type == value) {
                 //Remove all
                 this.attendanceCreate.list = this.attendanceCreate.list.filter(e => e.shift_type != shiftType);
                 return;
-              }
-              else {
+              } else {
                 //Update attendance type
                 this.attendanceCreate.list[i].attendance_type = value;
               }
@@ -185,14 +189,17 @@ export class AttendanceComponent implements OnInit {
             staff: staffId,
             shift_type: shiftType,
             attendance_type: value
-          }
+          };
           this.attendanceCreate.list.push(temp);
         }
 
         this.attendance.forEach(staff => {
           let t: boolean = false;
           for (let i = 0; i < this.attendanceCreate.list.length; i++) {
-            if (this.attendanceCreate.list[i].staff == staff._id && this.attendanceCreate.list[i].shift_type == shiftType) {
+            if (
+              this.attendanceCreate.list[i].staff == staff._id &&
+              this.attendanceCreate.list[i].shift_type == shiftType
+            ) {
               t = true;
               this.attendanceCreate.list[i].attendance_type = value;
               break;
@@ -205,13 +212,12 @@ export class AttendanceComponent implements OnInit {
               staff: staff._id,
               shift_type: shiftType,
               attendance_type: value
-            }
+            };
             this.attendanceCreate.list.push(temp);
           }
         });
       }
-    }
-    else {
+    } else {
       //Remove studentId 'all' from list
       for (let i = 0; i < this.attendanceCreate.list.length; i++) {
         if (this.attendanceCreate.list[i].staff == 'all' && this.attendanceCreate.list[i].shift_type == shiftType) {
@@ -224,13 +230,15 @@ export class AttendanceComponent implements OnInit {
       if (this.attendanceCreate) {
         if (this.attendanceCreate.list) {
           for (let i = 0; i < this.attendanceCreate.list.length; i++) {
-            if (this.attendanceCreate.list[i].staff == staffId && this.attendanceCreate.list[i].shift_type == shiftType) {
+            if (
+              this.attendanceCreate.list[i].staff == staffId &&
+              this.attendanceCreate.list[i].shift_type == shiftType
+            ) {
               b = true;
               if (this.attendanceCreate.list[i].attendance_type == value) {
                 //Remove
                 this.attendanceCreate.list.splice(i, 1);
-              }
-              else {
+              } else {
                 //Update attendance type
                 this.attendanceCreate.list[i].attendance_type = value;
               }
@@ -244,12 +252,11 @@ export class AttendanceComponent implements OnInit {
             staff: staffId,
             shift_type: shiftType,
             attendance_type: value
-          }
+          };
           this.attendanceCreate.list.push(temp);
         }
       }
     }
-
   }
 
   getAbsentSubject(staffId: string, shiftType: number): string {
