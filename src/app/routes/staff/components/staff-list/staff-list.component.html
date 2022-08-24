@@ -2,22 +2,28 @@
   <section>
     <div class="app-title">
       <h1 class="title">បញ្ជីបុគ្គលិក</h1>
-      <button mat-raised-button color="primary" class="create-btn" routerLink="create">
-        <mat-icon svgIcon="add_new"></mat-icon>
-        បង្កើតថ្មី
-      </button>
+      <div class="group-btn">
+        <button mat-raised-button color="primary" (click)="export()" class="create-btn">
+          <mat-icon>file_download</mat-icon>
+          នាំចេញ
+        </button>
+        <button mat-raised-button color="primary" (click)="exportAll()" class="create-btn">
+          <mat-icon>file_download</mat-icon>
+          នាំចេញទាំងអស់
+        </button>
+      </div>
     </div>
     <mat-tab-group animationDuration="500ms" [selectedIndex]="index" (selectedIndexChange)="onIndexChange($event)">
       <mat-tab label="បុគ្គលិកទាំងអស់">
-        <app-staff *ngIf="index === 0"></app-staff>
+        <app-staff (dataEvent)="onGetData($event)" *ngIf="index === 0"></app-staff>
       </mat-tab>
 
       <mat-tab label="បុគ្គលិកកំពុងធ្វើការ">
-        <app-staff *ngIf="index === 1"></app-staff>
+        <app-staff (dataEvent)="onGetData($event)" *ngIf="index === 1"></app-staff>
       </mat-tab>
 
-    <mat-tab label="បុគ្គលិកបានឈប់">
-        <app-staff *ngIf="index === 2"></app-staff>
+      <mat-tab label="បុគ្គលិកបានឈប់">
+        <app-staff (dataEvent)="onGetData($event)" *ngIf="index === 2"></app-staff>
       </mat-tab>
     </mat-tab-group>
   </section>

@@ -65,8 +65,8 @@ export class ImageUploaderComponent implements OnInit {
       } else {
         let data = {
           icon: 'assets/imgs/document-unknown.svg',
-          title: 'Unsupported File Type',
-          message: 'Support file type: PNG, JPG, JPEG'
+          title: 'មិនមែនជាប្រភេទរូបភាព ដែលបានកំណត់',
+          message: 'ប្រភេទរូបភាព: PNG, JPG, JPEG'
         };
         this.dialog.open(ConfirmDialogComponent, {
           width: '420px',

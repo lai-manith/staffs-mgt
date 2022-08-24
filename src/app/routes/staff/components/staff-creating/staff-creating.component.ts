@@ -47,13 +47,12 @@ export class StaffCreatingComponent implements OnInit {
     private dialog: MatDialog,
     private addressService: AddressService,
     private staticFilePipe: StaticFilePipe
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.onFormInit();
     this.onGetPosition();
     this.getCityProvinces();
-
 
     if (this._id) this.onLoad();
     else this.getNationality();
@@ -170,7 +169,7 @@ export class StaffCreatingComponent implements OnInit {
           message: err.message ?? err.error.message,
           component: SnackbarComponent,
           isError: true
-        })
+        });
       }
     );
   }
@@ -201,7 +200,7 @@ export class StaffCreatingComponent implements OnInit {
           message: err.message ?? err.error.message,
           component: SnackbarComponent,
           isError: true
-        })
+        });
       }
     );
   }
@@ -239,7 +238,7 @@ export class StaffCreatingComponent implements OnInit {
       hire_date: [null, Validators.required],
       date_of_birth: [null, Validators.required],
       salary: this._id ? [null] : [null, Validators.required],
-      contract_expiry_date: this._id ? [null] : [null, Validators.required],
+      contract_expiry_date: this._id ? [null] : [null, Validators.required]
     });
 
     this.imgUrl = '';
@@ -292,17 +291,17 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   docChange(event: any) {
-    if (event != null) {
-      this.form.patchValue({
-        attach_files: event.file,
-        file_name: event.file_name
-      });
-    } else {
-      this.form.patchValue({
-        attach_files: '',
-        file_name: ''
-      });
-    }
+      if (event != null) {
+        this.form.patchValue({
+          attach_files: event.file,
+          file_name: event.file_name
+        });
+      } else {
+        this.form.patchValue({
+          attach_files: '',
+          file_name: ''
+        });
+      }
   }
 
   cityProvinces: CityProvinces[];

@@ -733,13 +733,9 @@
           color: #000;
           white-space: break-spaces;
           background-color: #fff;
-          // border-left: 1px solid #c7c7c7;
           min-width: 370px !important;
           line-height: 4.5;
-          // border-bottom: 20px solid #fafafa;
-          // &:nth-child(0) {
-          //     min-width: 70px;
-          // }
+          z-index: 1 !important;
         }
 
         th.mat-header-cell::before {

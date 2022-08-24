@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -51,36 +51,37 @@ export class StaffComponent implements OnInit {
       data: [
         {
           label: 'ទាំងអស់',
-          value: null,
-        },
+          value: null
+        }
       ],
       selectedIndex: 0,
       labelFunc: 'តំណែង',
       paramKey: 'position',
-      matIcon: 'person',
+      matIcon: 'person'
     },
     {
       data: [
         {
           label: 'ទាំងអស់',
-          value: null,
+          value: null
         },
         {
           label: 'ស្រី',
-          value: 'female',
+          value: 'female'
         },
         {
           label: 'ប្រុស',
-          value: 'male',
-        },
+          value: 'male'
+        }
       ],
       selectedIndex: 0,
       labelFunc: 'ភេទ',
       paramKey: 'gender',
-      matIcon: 'transgender',
-    },
+      matIcon: 'transgender'
+    }
   ];
   images: string[];
+  @Output() dataEvent: EventEmitter<Staff[]> = new EventEmitter();
 
   constructor(
     private dialog: MatDialog,
@@ -95,8 +96,8 @@ export class StaffComponent implements OnInit {
     this.onSetActiveFilter();
     this.onGetPosition();
 
-    if(this.router.url.includes('inactive')) this.params.status = false;
-    else if(this.router.url.includes('active')) this.params.status = true;
+    if (this.router.url.includes('inactive')) this.params.status = false;
+    else if (this.router.url.includes('active')) this.params.status = true;
   }
 
   onLoad() {
@@ -116,6 +117,7 @@ export class StaffComponent implements OnInit {
       .subscribe(
         res => {
           this.dataSource = new MatTableDataSource(res.list);
+          this.dataEvent.emit(res.list);
           this.total = res.total;
           this.setLoading(false);
         },
@@ -142,10 +144,10 @@ export class StaffComponent implements OnInit {
     };
     this.positionService.getMany(param).subscribe(
       res => {
-        res.list.forEach((element) => {
+        res.list.forEach(element => {
           this.filters[0].data.push({
             label: element.title,
-            value: element._id,
+            value: element._id
           });
         });
       },
@@ -159,7 +161,7 @@ export class StaffComponent implements OnInit {
   }
 
   onCreate() {
-    this.router.navigate(['create-new'], {relativeTo: this.route});
+    this.router.navigate(['create-new'], { relativeTo: this.route });
   }
 
   setParams(paramObj: Params): void {
@@ -189,6 +191,10 @@ export class StaffComponent implements OnInit {
       },
       err => {}
     );
+  }
+
+  onCreateNew(): void {
+    this.router.navigate(['create'], { relativeTo: this.route });
   }
 
   private setLoading(isLoading: boolean): void {

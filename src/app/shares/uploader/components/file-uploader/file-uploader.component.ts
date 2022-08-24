@@ -8,7 +8,6 @@ import { ConfirmDialogComponent } from 'src/app/shares/confirm-dialog/components
   styleUrls: ['./file-uploader.component.scss']
 })
 export class FileUploaderComponent implements OnInit {
-
   @Input() fileName: string;
   defaultImage = '/assets/icons/add-file.svg';
   hasFile = false;
@@ -16,24 +15,37 @@ export class FileUploaderComponent implements OnInit {
   @Input() file: string = '';
   @Output() uploadCVEvent = new EventEmitter<any>();
 
-  constructor(
-    private dialog: MatDialog
-  ) { }
+  constructor(private dialog: MatDialog) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: { [property: string]: SimpleChange }) {
     if (!changes.file?.currentValue) return;
     this.hasFile = true;
   }
 
-
   fileChangeEvent(files: FileList) {
-    console.log(files)
     if (files.length) {
       const file = files[0];
-      const supportImage = ['application/pdf', 'application/docx', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword'];
+      const supportImage = [
+        'application/pdf',
+        'application/docx',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        'application/msword'
+      ];
+      const bytesToMegaBytes = bytes => bytes / 1024 ** 2;
+      if (+bytesToMegaBytes(file.size).toFixed(2) > 5) {
+        let data = {
+          icon: 'assets/imgs/document-unknown.svg',
+          title: 'ទំហំឯកសារធំពេក',
+          message: 'ទំហំឯកសារធំបំផុត: 5MB'
+        };
+        this.dialog.open(ConfirmDialogComponent, {
+          width: '420px',
+          data
+        });
+      }
+
       if (supportImage.includes(file.type)) {
         this.hasFile = true;
         this.fileName = '';
@@ -44,9 +56,9 @@ export class FileUploaderComponent implements OnInit {
       } else {
         let data = {
           icon: 'assets/imgs/document-unknown.svg',
-          title: 'Unsupported File Type',
-          message: 'Support file type: PDF, DOC, DOCX',
-        }
+          title: 'មិនមែនជាប្រភេទឯកសារ ដែលបានកំណត់',
+          message: 'ប្រភេទឯកសារ: PDF, DOC, DOCX'
+        };
         this.dialog.open(ConfirmDialogComponent, {
           width: '420px',
           data
@@ -60,5 +72,4 @@ export class FileUploaderComponent implements OnInit {
     this.hasFile = false;
     this.uploadCVEvent.emit(null);
   }
-
 }

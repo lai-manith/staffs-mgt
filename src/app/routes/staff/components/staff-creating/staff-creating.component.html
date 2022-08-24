@@ -30,7 +30,7 @@
             <div *ngIf="_id">
               <label>អត្តលេខ</label>
               <mat-form-field appearance="outline">
-                <input readonly matInput formControlName="staff_id" placeholder="*">
+                <input matInput formControlName="staff_id" placeholder="*">
                 <mat-error *ngIf="form.get('staff_id').errors?.required">
                   ទាមទារ
                 </mat-error>

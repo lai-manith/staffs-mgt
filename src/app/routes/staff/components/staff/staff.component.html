@@ -1,4 +1,4 @@
-<app-filter-without-create-new [filters]="filters" (queryFilter)="setParams($event)" (queryEvent)="onSearch($event)"></app-filter-without-create-new>
+<app-filter-with-create-new [filters]="filters" (createNew)="onCreateNew()" (queryFilter)="setParams($event)" (queryEvent)="onSearch($event)"></app-filter-with-create-new>
 <div id="table">
   <div class="progress-table">
     <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
