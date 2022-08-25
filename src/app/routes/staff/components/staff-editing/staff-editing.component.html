@@ -15,7 +15,8 @@
         កែប្រែ
       </button>
       <button mat-flat-button color="print" (click)="onPrint()">
-        <mat-icon svgIcon="print"></mat-icon>
+        <mat-icon *ngIf="!isLoading" svgIcon="print"></mat-icon>
+        <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
         បោះពុម្ភ
       </button>
       <button mat-flat-button color="warn" (click)="onSetStatusAccount(isActive)">

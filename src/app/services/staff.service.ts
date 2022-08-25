@@ -26,14 +26,16 @@ export class StaffService extends BaseCrudService<Staff> {
     return this.requestService.getJSON<BaseDatatable<Staff>>(this.path, { data });
   }
 
-  getOne(
-    _id: string,
-  ): Observable<Staff> {
+  getOne(_id: string): Observable<Staff> {
     return this.requestService.getJSON<Staff>(this.path + '/' + _id);
   }
 
   getFilter(): Observable<string[]> {
     return this.requestService.getJSON<string[]>(this.path + '/filter/status');
+  }
+
+  getBase64Image(data: { profile: string }): Observable<string[]> {
+    return this.requestService.postJSON<string[]>(this.path + '/image_base64', { data });
   }
 
   postFile(data: Staff) {

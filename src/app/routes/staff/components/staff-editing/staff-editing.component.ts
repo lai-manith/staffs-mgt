@@ -35,6 +35,7 @@ export class StaffEditingComponent implements OnInit {
   _id: string = this.route.snapshot.params.id;
   isActive: boolean = null;
   imgBase64: string;
+  isLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -74,7 +75,6 @@ export class StaffEditingComponent implements OnInit {
       .subscribe(
         res => {
           this.staff = res;
-          this.onConvertImgToBase64();
         },
         err =>
           this.snackBarService.onShowSnackbar({
@@ -167,12 +167,8 @@ export class StaffEditingComponent implements OnInit {
     return newDate;
   }
 
-  toDataURL = async url => {
-    let res = await fetch(url).catch(err => {
-      return null;
-    });
-
-    if(!res) res = await fetch('assets/imgs/profile-default.png').catch(err => {
+  toDataURL = async () => {
+    let res = await fetch('assets/imgs/profile-default.png').catch(err => {
       return null;
     });
 
@@ -195,13 +191,39 @@ export class StaffEditingComponent implements OnInit {
     return result;
   };
 
-  onConvertImgToBase64(): void {
-    this.toDataURL(
-      this.staff?.profile ? this.staticFilePipe.transform(this.staff?.profile) : 'assets/imgs/profile-default.png'
-    ).then(value => (this.imgBase64 = value as string));
+  onGetBase64Image(): void {
+    this.isLoading = true;
+    this.staffService
+      .getBase64Image({
+        profile: this.staff?.profile
+          ? (this.staticFilePipe.transform(this.staff?.profile) as string)
+          : 'assets/imgs/profile-default.png'
+      })
+      .subscribe(
+        (res: any) => {
+          this.isLoading = false;
+          this.imgBase64 = res;
+          this.print();
+        },
+        err => this.onGetSrcBase64()
+      );
+  }
+
+  onGetSrcBase64(): void {
+    this.isLoading = true;
+    this.toDataURL().then(value => {
+      this.isLoading = false;
+      this.imgBase64 = value as string;
+      this.print();
+    });
   }
 
   onPrint(): void {
+    if (this.staff?.profile) this.onGetBase64Image();
+    else this.onGetSrcBase64();
+  }
+
+  print(): void {
     let pdfTitle: string = 'ប្រវត្តិរូបសង្ខេប';
     const DATA = {
       pageSize: 'A4',
