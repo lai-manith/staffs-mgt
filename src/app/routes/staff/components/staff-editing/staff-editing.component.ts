@@ -18,6 +18,9 @@ import { map } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
+import { HttpHeaders } from '@angular/common/http';
+import { LocalStorageEnum } from 'src/app/models/enums/local-storage.enum';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -44,8 +47,9 @@ export class StaffEditingComponent implements OnInit {
     private fb: FormBuilder,
     private staticFilePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
-    private monthPipe: MonthPipe
-  ) { }
+    private monthPipe: MonthPipe,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
     this.onLoad();
@@ -58,7 +62,7 @@ export class StaffEditingComponent implements OnInit {
         map(data => {
           this.isActive = data.status;
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
-          data.salary = data.salary.toLocaleString('en-US', {
+          data.salary = data.salary?.toLocaleString('en-US', {
             style: 'currency',
             currency: 'USD'
           }) as any;
@@ -164,52 +168,37 @@ export class StaffEditingComponent implements OnInit {
   }
 
   toDataURL = async url => {
-    var res;
-    if (url) res = await fetch(url).catch(err => { return null });
-    if (res && url) {
-      var blob = await res.blob();
-      const result = await new Promise((resolve, reject) => {
-        var reader = new FileReader();
-        reader.addEventListener(
-          'load',
-          function () {
-            resolve(reader.result);
-          },
-          false
-        );
+    let res = await fetch(url).catch(err => {
+      return null;
+    });
 
-        reader.onerror = () => {
-          return reject(this);
-        };
-        reader.readAsDataURL(blob);
-      });
-      return result;
-    } else {
-      var resp = await fetch('assets/imgs/profile-default.png');
-      var blobb = await resp.blob();
-      const result = await new Promise((resolve, reject) => {
-        var reader = new FileReader();
-        reader.addEventListener(
-          'load',
-          function () {
-            resolve(reader.result);
-          },
-          false
-        );
+    if(!res) res = await fetch('assets/imgs/profile-default.png').catch(err => {
+      return null;
+    });
 
-        reader.onerror = () => {
-          return reject(this);
-        };
-        reader.readAsDataURL(blobb);
-      });
-      return result;
-    }
+    var blob = await res.blob();
+    const result = await new Promise((resolve, reject) => {
+      var reader = new FileReader();
+      reader.addEventListener(
+        'load',
+        function () {
+          resolve(reader.result);
+        },
+        false
+      );
+
+      reader.onerror = () => {
+        return reject(this);
+      };
+      reader.readAsDataURL(blob);
+    });
+    return result;
   };
 
   onConvertImgToBase64(): void {
-    this.toDataURL(this.staticFilePipe.transform(this.staff?.profile)).then(
-      value => (this.imgBase64 = value as string)
-    );
+    this.toDataURL(
+      this.staff?.profile ? this.staticFilePipe.transform(this.staff?.profile) : 'assets/imgs/profile-default.png'
+    ).then(value => (this.imgBase64 = value as string));
   }
 
   onPrint(): void {
@@ -222,7 +211,7 @@ export class StaffEditingComponent implements OnInit {
           style: ['header', 'alignCenter', 'color']
         },
         {
-          image: this.imgBase64 || 'assets/imgs/profile-default.png',
+          image: this.imgBase64,
           absolutePosition: { x: 470, y: 35 }
         },
 
