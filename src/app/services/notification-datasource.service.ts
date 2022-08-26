@@ -64,7 +64,7 @@ export class NotificationDataSourceService extends DataSource<
             const dateNow = new Date().setHours(0, 0, 0, 0);
             const date = new Date(element.create_at).setHours(0, 0, 0, 0);
             const message = dateNow === date ? 'ថ្ងៃនេះជាថ្ងៃឈប់សម្រាករបស់ ' : formatDate(element.create_at, 'dd-MM-yyyy', 'en-US') + ' ជាថ្ងៃឈប់សម្រាករបស់ ';
-            element.message = message + '<strong>' + element.staff.last_name + '' + element.staff.first_name + '<strong>';
+            element.message = message + '<strong>' + element.staff.first_name + ' ' + element.staff.last_name + '<strong>';
           });
           return map;
         })

@@ -96,7 +96,7 @@ export class StaffListComponent implements OnInit {
 
   exportAll(): void {
     this.staffService
-      .getAll({ page: 1, limit: 0 })
+      .getAll({ page: 1, limit: 0, status: this.index === 0 ? null : this.index === 2 ? false : true })
       .pipe(
         map(map => {
           for (let data of map.list) {
