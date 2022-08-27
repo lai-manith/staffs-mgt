@@ -15,6 +15,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
 import { SelectionFilterComponent } from './components/selection-filter/selection-filter.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NativeDateModule } from '@angular/material/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent],
@@ -30,7 +33,10 @@ import { SelectionFilterComponent } from './components/selection-filter/selectio
     MatSelectModule,
     MatBadgeModule,
     MatIconModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatDatepickerModule,
+    NativeDateModule,
+    MatTooltipModule
   ],
   exports: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent]
 })

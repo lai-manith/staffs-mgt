@@ -40,6 +40,8 @@ import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 import { ImageCropperModule } from 'src/app/shares/image-cropper/image-cropper.module';
 import { DomSanitizer } from '@angular/platform-browser';
+import { StaffAttendanceComponent } from './components/staff-attendance/staff-attendance.component';
+import { AttendanceTranslateModule } from 'src/app/shares/attendance-translate/attendance-translate.module';
 
 
 @NgModule({
@@ -52,6 +54,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     StaffSalaryDialogComponent,
     StaffContractComponent,
     StaffContractDialogComponent,
+    StaffAttendanceComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +85,7 @@ import { DomSanitizer } from '@angular/platform-browser';
     StaticFileModule,
     MatProgressSpinnerModule,
     ImageCropperModule,
+    AttendanceTranslateModule
   ],
   providers: [StaticFilePipe, DurationPipe, MonthPipe]
 })

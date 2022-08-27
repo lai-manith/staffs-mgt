@@ -119,6 +119,12 @@
               <span>គ្រប់គ្រងកុងត្រា</span>
             </button>
           </a>
+          <a [routerLink]="['manage-attendance', element._id]" class="menu-item">
+            <button mat-menu-item>
+              <mat-icon svgIcon="attendant"></mat-icon>
+              <span>វត្តមាន</span>
+            </button>
+          </a>
         </mat-menu>
       </td>
     </ng-container>

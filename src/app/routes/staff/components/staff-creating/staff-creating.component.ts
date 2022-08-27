@@ -146,6 +146,10 @@ export class StaffCreatingComponent implements OnInit {
     else this.onSubmitCreate();
   }
 
+  onDateChange(event: Date): void {
+    this.form.get('age').setValue(+new Date().getFullYear() - +event.getFullYear());
+  }
+
   onSubmitCreate() {
     if (this.form.invalid) return;
     this.isLoading = true;
@@ -291,17 +295,17 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   docChange(event: any) {
-      if (event != null) {
-        this.form.patchValue({
-          attach_files: event.file,
-          file_name: event.file_name
-        });
-      } else {
-        this.form.patchValue({
-          attach_files: '',
-          file_name: ''
-        });
-      }
+    if (event != null) {
+      this.form.patchValue({
+        attach_files: event.file,
+        file_name: event.file_name
+      });
+    } else {
+      this.form.patchValue({
+        attach_files: '',
+        file_name: ''
+      });
+    }
   }
 
   cityProvinces: CityProvinces[];

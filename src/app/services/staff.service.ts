@@ -2,6 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseDatatable } from '../models/datatables/base.datatable';
 import { Staff } from '../models/staff';
+import { AttendanceResponse } from '../models/staff-attendance';
 import { BaseCrudService } from './base-crud.service';
 
 @Injectable({
@@ -56,5 +57,15 @@ export class StaffService extends BaseCrudService<Staff> {
     image_size: 200;
   }): Observable<BaseDatatable<Staff>> {
     return this.requestService.getJSON<BaseDatatable<Staff>>('/calendar', { data });
+  }
+
+  getAttendance(data: {
+    [key: string]: any;
+    page?: number;
+    limit?: number;
+    year: string;
+    staff: string;
+  }): Observable<BaseDatatable<AttendanceResponse>> {
+    return this.requestService.getJSON<BaseDatatable<AttendanceResponse>>(this.path + '/attendance/recorded', { data });
   }
 }

@@ -9,7 +9,7 @@ import { Filter, Option, OptionParam } from 'src/app/models/filter';
 })
 export class FilterWithoutCreateNewComponent {
   @Input() filters: Filter[] = [];
-  previousFilters : number[] = [];
+  previousFilters: number[] = [];
   @Input() title: string = '';
   @Input() hide: string = null;
   @Output() queryEvent = new EventEmitter<string>();
@@ -17,7 +17,8 @@ export class FilterWithoutCreateNewComponent {
   filterSet = new Set();
   showFilter: boolean;
   @ViewChild('select') select: MatSelect;
-  private params: any = {}
+  private params: any = {};
+  viewDate: Date = new Date();
 
   search(value: string) {
     this.queryEvent.emit(value);
@@ -28,7 +29,7 @@ export class FilterWithoutCreateNewComponent {
   }
 
   onFilter(func: any, valueObj: any) {
-    this.countFilter(func,valueObj)
+    this.countFilter(func, valueObj);
     const filter: OptionParam = {
       labelParam: func.labelFunc,
       value: valueObj.value,
@@ -38,48 +39,48 @@ export class FilterWithoutCreateNewComponent {
     this.queryFilter.emit(this.params);
   }
 
-  countFilter(func: string,valueObj: OptionParam): void {
+  countFilter(func: string, valueObj: OptionParam): void {
     if (func && valueObj.value && !this.filterSet.has(func)) {
-      this.filterSet.add(func)
+      this.filterSet.add(func);
     }
     if (!valueObj.value) {
-      this.filterSet.delete(func)
+      this.filterSet.delete(func);
     }
   }
 
   reset(): void {
-    this.filters.forEach(filter => filter.selectedValue = null)
-    this.filterSet.clear()
-    this.params = {}
-    this.queryFilter.emit(this.params)
+    this.filters.forEach(filter => (filter.selectedValue = null));
+    this.filterSet.clear();
+    this.params = {};
+    this.queryFilter.emit(this.params);
   }
   ngOnChanges(changes: SimpleChanges): void {
     //Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
     //Add '${implements OnChanges}' to the class.
     console.log('fired');
-
-
-
   }
   ngDoCheck(): void {
     //Called every time that the input properties of a component or a directive are checked. Use it to extend change detection by performing a custom check.
     //Add 'implements DoCheck' to the class.
-    if(this.previousFilters.length == 0) {
+    if (this.previousFilters.length == 0) {
       this.filters.forEach(filter => {
-        this.previousFilters.push(filter.data.length)
+        this.previousFilters.push(filter.data.length);
       });
     }
-    const noChangeData = this.filters.every((filter, index) => filter.data.length === this.previousFilters[index])
+    const noChangeData = this.filters.every((filter, index) => filter.data.length === this.previousFilters[index]);
 
     if (!noChangeData) {
-     const changedFilter = this.filters.find((filter, index) => filter.data.length !== this.previousFilters[index])
-     this.params[changedFilter.paramKey] = null;
-     this.queryFilter.emit(this.params);
-     this.previousFilters = []
-     this.filters.forEach(filter => {
-     this.previousFilters.push(filter.data.length)
-    });
+      const changedFilter = this.filters.find((filter, index) => filter.data.length !== this.previousFilters[index]);
+      this.params[changedFilter.paramKey] = null;
+      this.queryFilter.emit(this.params);
+      this.previousFilters = [];
+      this.filters.forEach(filter => {
+        this.previousFilters.push(filter.data.length);
+      });
     }
+  }
 
+  onDateChange(value?: Date): void {
+    console.log(value);
   }
 }

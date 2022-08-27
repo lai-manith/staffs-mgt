@@ -76,6 +76,20 @@
               </mat-form-field>
             </div>
             <div>
+              <label>ថ្ងៃកំណើត</label>
+              <mat-form-field appearance="outline">
+                <input matInput [matDatepicker]="picker" formControlName="date_of_birth" (click)="picker.open()"
+                  placeholder="*" readonly (dateChange)="onDateChange($event.value)">
+                <mat-datepicker-toggle matSuffix [for]="picker">
+                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker startView="multi-year" #picker></mat-datepicker>
+                <mat-error *ngIf="form.get('date_of_birth').errors?.required">
+                  ទាមទារ
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
               <label>អាយុ</label>
               <mat-form-field appearance="outline">
                 <input type="number" matInput formControlName="age" placeholder="*">
@@ -94,24 +108,9 @@
               </mat-radio-group>
             </div>
             <div>
-              <label>ថ្ងៃកំណើត</label>
-              <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="picker" formControlName="date_of_birth" (click)="picker.open()"
-                  placeholder="*" readonly>
-                <mat-datepicker-toggle matSuffix [for]="picker">
-                  <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
-                </mat-datepicker-toggle>
-                <mat-datepicker startView="multi-year" #picker></mat-datepicker>
-                <mat-error *ngIf="form.get('date_of_birth').errors?.required">
-                  ទាមទារ
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div>
               <label>សញ្ជាតិ : </label>
               <mat-form-field appearance="outline" (click)="_id ? getNationality() : ''">
-                <mat-select formControlName="nationality"
-                  placeholder="*">
+                <mat-select formControlName="nationality" placeholder="*">
                   <mat-option *ngFor="let c of nationality" [value]="+c._id">{{ c.nationality }}</mat-option>
                 </mat-select>
                 <mat-icon matSuffix>expand_more</mat-icon>
@@ -123,8 +122,7 @@
             <div>
               <label>ជនជាតិ : </label>
               <mat-form-field appearance="outline" (click)="_id ? getNationality() : ''">
-                <mat-select formControlName="ethnicity"
-                  placeholder="*">
+                <mat-select formControlName="ethnicity" placeholder="*">
                   <mat-option *ngFor="let c of ethnicity" [value]="+c._id">{{ c.nationality }}</mat-option>
                 </mat-select>
                 <mat-icon matSuffix>expand_more</mat-icon>
@@ -183,8 +181,8 @@
             <div *ngIf="!_id">
               <label>ថ្ងៃផុតកុងត្រា</label>
               <mat-form-field appearance="outline">
-                <input matInput [matDatepicker]="picker2" formControlName="contract_expiry_date" (click)="picker2.open()"
-                  placeholder="*" (dateChange)="onExpiredContact($event)">
+                <input matInput [matDatepicker]="picker2" formControlName="contract_expiry_date"
+                  (click)="picker2.open()" placeholder="*" (dateChange)="onExpiredContact($event)">
                 <mat-datepicker-toggle matSuffix [for]="picker2">
                   <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
                 </mat-datepicker-toggle>
@@ -364,7 +362,7 @@
       </button>
       <button mat-raised-button color="primary" class="button-submit">
         <mat-icon *ngIf="!isLoading">save</mat-icon>
-        <mat-spinner  *ngIf="isLoading" [diameter]="25"></mat-spinner>
+        <mat-spinner *ngIf="isLoading" [diameter]="25"></mat-spinner>
         រក្សាទុក
       </button>
     </div>
