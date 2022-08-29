@@ -1,0 +1,9 @@
+<mat-form-field class="form-control year-picker-content" appearance="outline">
+  <input matInput [max]="_max" [matDatepicker]="datepicker" [formControl]="_inputCtrl" (click)="_openDatepickerOnClick(datepicker)" readonly>
+  <mat-datepicker-toggle matSuffix [for]="datepicker" (click)="_openDatepickerOnClick(datepicker)" (focus)="_openDatepickerOnFocus(datepicker)">
+    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+  </mat-datepicker-toggle>
+  <mat-datepicker #datepicker startView="multi-year"
+    (yearSelected)="_yearSelectedHandler($event,datepicker)" panelClass="year-picker">
+  </mat-datepicker>
+</mat-form-field>

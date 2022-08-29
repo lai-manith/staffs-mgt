@@ -9,16 +9,21 @@ import { Filter, Option, OptionParam } from 'src/app/models/filter';
 })
 export class FilterWithoutCreateNewComponent {
   @Input() filters: Filter[] = [];
-  previousFilters: number[] = [];
   @Input() title: string = '';
   @Input() hide: string = null;
+  @Input() hasYearPicker: boolean = false;
+
+  @Output() yearEvent = new EventEmitter<Date>();
   @Output() queryEvent = new EventEmitter<string>();
   @Output() queryFilter = new EventEmitter<any>();
+
   filterSet = new Set();
+  previousFilters: number[] = [];
   showFilter: boolean;
   @ViewChild('select') select: MatSelect;
   private params: any = {};
   viewDate: Date = new Date();
+  maxDate: Date = new Date();
 
   search(value: string) {
     this.queryEvent.emit(value);
@@ -80,7 +85,7 @@ export class FilterWithoutCreateNewComponent {
     }
   }
 
-  onDateChange(value?: Date): void {
-    console.log(value);
+  onSelectedYear(value): void {
+    this.yearEvent.emit(value);
   }
 }

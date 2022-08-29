@@ -6,7 +6,7 @@ import { map } from 'rxjs';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
-import { AttendanceResponse } from 'src/app/models/staff-attendance';
+import { AttendanceResponse, AttendanceType } from 'src/app/models/staff-attendance';
 import { DialogService } from 'src/app/services/dialog.service';
 import { SalaryService } from 'src/app/services/salary.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -94,12 +94,12 @@ export class StaffAttendanceComponent implements OnInit {
     year: new Date().getFullYear().toString(),
     staff: this.id
   };
+  staff: Staff;
+  totalAttendance: AttendanceType;
 
   //*ViewChild
 
   //*FormControl
-
-  staff: Staff;
 
   constructor(
     private dialog: MatDialog,
@@ -113,32 +113,7 @@ export class StaffAttendanceComponent implements OnInit {
 
   ngOnInit() {
     this.onLoad();
-    this.onLoadStaff();
     this.onSetActiveFilter();
-  }
-
-  onLoadStaff(): void {
-    this.staffService
-      .getById(this.id)
-      .pipe(
-        map(data => {
-          data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
-          data.status =
-            data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
-          return data;
-        })
-      )
-      .subscribe(
-        res => {
-          this.staff = res;
-        },
-        err =>
-          this.snackBarService.onShowSnackbar({
-            message: err.message ?? err,
-            component: SnackbarComponent,
-            isError: true
-          })
-      );
   }
 
   onLoad() {
@@ -147,7 +122,7 @@ export class StaffAttendanceComponent implements OnInit {
       .getAttendance(this.params)
       .pipe(
         map(map => {
-          for (const element of map.list) {
+          for (const element of map.list['attendance']) {
             element.attendance_type = AttendanceTypeEnum[element.attendance_type] as any;
           }
           return map;
@@ -156,7 +131,9 @@ export class StaffAttendanceComponent implements OnInit {
       .subscribe(
         res => {
           this.setLoading(false);
-          this.dataSource = new MatTableDataSource(res.list);
+          this.staff = res.list['staff'];
+          this.totalAttendance = res.list['attendance_total'];
+          this.dataSource = new MatTableDataSource(res.list['attendance']);
           this.total = res.total;
         },
         err => {
@@ -167,6 +144,11 @@ export class StaffAttendanceComponent implements OnInit {
           });
         }
       );
+  }
+
+  onYearChange(year: Date): void {
+    this.params.year = year.getFullYear().toString();
+    this.onLoad();
   }
 
   loadingTimeout: ReturnType<typeof setTimeout>;

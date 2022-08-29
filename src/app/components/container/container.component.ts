@@ -69,7 +69,22 @@ export class ContainerComponent implements OnInit {
         icon: '',
         svgIcon: 'staff',
         permissions: [],
-        child: []
+        child: [
+          {
+            title: 'Create New',
+            route: ['/staff/create'],
+            icon: '',
+            svgIcon: 'create',
+            permissions: []
+          },
+          {
+            title: 'Staff List',
+            route: ['/staff/staff-active'],
+            icon: '',
+            svgIcon: 'listing',
+            permissions: []
+          }
+        ]
       },
       {
         title: 'សម្រង់វត្តមាន',

@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class AttendanceTranslatePipe implements PipeTransform {
   transform(value: string, ...args: unknown[]): string {
     let status: string;
-    switch (value.toString().toLowerCase()) {
+    switch (value.toString()?.toLowerCase()) {
       case 'present':
         status = 'មក';
         break;

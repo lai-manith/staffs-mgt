@@ -16,6 +16,10 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'create',
+    component: StaffCreatingComponent
+  },
+  {
     path: ':tab',
     canActivate: [AuthGuard],
     children: [
@@ -40,7 +44,7 @@ const routes: Routes = [
         component: StaffContractComponent
       },
       {
-        path: 'manage-attendance/:id',
+        path: 'manage-attendant-year/:id',
         canActivate: [AuthGuard],
         component: StaffAttendanceComponent
       },

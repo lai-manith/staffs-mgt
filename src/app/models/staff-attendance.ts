@@ -64,6 +64,7 @@ export interface AttendanceHistoryStaffAttendanceResponse {
 export interface AttendanceHistory {
   attendance_total: AttendanceType;
   staff: Staff[] & AttendanceType;
+  attendance?: Attendance[];
 }
 
 export interface AttendanceType {

@@ -1,4 +1,5 @@
-<app-filter-with-create-new [filters]="filters" (createNew)="onCreateNew()" (queryFilter)="setParams($event)" (queryEvent)="onSearch($event)"></app-filter-with-create-new>
+<app-filter-with-create-new [filters]="filters" (createNew)="onCreateNew()" (queryFilter)="setParams($event)"
+  (queryEvent)="onSearch($event)"></app-filter-with-create-new>
 <div id="table">
   <div class="progress-table">
     <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
@@ -17,9 +18,11 @@
       <td mat-cell *matCellDef="let element" class="col-image-name">
         <span class="mobile-label">ឈ្មោះ:</span>
         <div class="thumbnail-list">
-          <div [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }" class="profile-picture"></div>
+          <div
+            [ngStyle]="{ 'background-image': element.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+            class="profile-picture"></div>
           <span>{{element.first_name}} {{element.last_name}}</span>
-      </div>
+        </div>
       </td>
     </ng-container>
 
@@ -92,12 +95,14 @@
       <th mat-header-cell *matHeaderCellDef>ព័ត៌មានលម្អិត</th>
       <td mat-cell *matCellDef="let element">
         <span class="mobile-label">ព័ត៌មានលម្អិត</span>
-        <button *ngIf="element.status.name_en === 'inactive'" mat-stroked-button class="btn-sm" [routerLink]="['detail/' + element._id]"
-            #tooltip="matTooltip" matTooltip="មើលព័ត៌មានលម្អិត" matTooltipPosition="right">
-            <mat-icon svgIcon="visibility"></mat-icon>
-          </button>
-        <button *ngIf="element.status.name_en === 'active'" mat-stroked-button color="primary" [matMenuTriggerFor]="menu" class="btn-sm" #tooltip="matTooltip"
-          matTooltip="មានច្រើនទៀត" matTooltipPosition="right">
+        <button *ngIf="element.status.name_en === 'inactive'" mat-stroked-button class="btn-sm"
+          [routerLink]="['detail/' + element._id]" #tooltip="matTooltip" matTooltip="មើលព័ត៌មានលម្អិត"
+          matTooltipPosition="right">
+          <mat-icon svgIcon="visibility"></mat-icon>
+        </button>
+        <button *ngIf="element.status.name_en === 'active'" mat-stroked-button color="primary"
+          [matMenuTriggerFor]="menu" class="btn-sm" #tooltip="matTooltip" matTooltip="មានច្រើនទៀត"
+          matTooltipPosition="right">
           <mat-icon>more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu" xPosition="before">
@@ -105,6 +110,12 @@
             <button mat-menu-item>
               <mat-icon svgIcon="visibility"></mat-icon>
               <span>មើលព័ត៌មានលម្អិត</span>
+            </button>
+          </a>
+          <a [routerLink]="['manage-attendant-year', element._id]" class="menu-item">
+            <button mat-menu-item>
+              <mat-icon svgIcon="attendant"></mat-icon>
+              <span>វត្តមាន</span>
             </button>
           </a>
           <a [routerLink]="['manage-salary', element._id]" class="menu-item">
@@ -117,12 +128,6 @@
             <button mat-menu-item>
               <mat-icon>edit_document</mat-icon>
               <span>គ្រប់គ្រងកុងត្រា</span>
-            </button>
-          </a>
-          <a [routerLink]="['manage-attendance', element._id]" class="menu-item">
-            <button mat-menu-item>
-              <mat-icon svgIcon="attendant"></mat-icon>
-              <span>វត្តមាន</span>
             </button>
           </a>
         </mat-menu>

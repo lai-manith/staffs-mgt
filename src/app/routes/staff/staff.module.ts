@@ -42,6 +42,7 @@ import { ImageCropperModule } from 'src/app/shares/image-cropper/image-cropper.m
 import { DomSanitizer } from '@angular/platform-browser';
 import { StaffAttendanceComponent } from './components/staff-attendance/staff-attendance.component';
 import { AttendanceTranslateModule } from 'src/app/shares/attendance-translate/attendance-translate.module';
+import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module';
 
 
 @NgModule({
@@ -85,7 +86,8 @@ import { AttendanceTranslateModule } from 'src/app/shares/attendance-translate/a
     StaticFileModule,
     MatProgressSpinnerModule,
     ImageCropperModule,
-    AttendanceTranslateModule
+    AttendanceTranslateModule,
+    YearPickerModule
   ],
   providers: [StaticFilePipe, DurationPipe, MonthPipe]
 })

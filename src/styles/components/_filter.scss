@@ -51,6 +51,10 @@
         //   padding: $spacing-xs - 2 $spacing-md + 4;
         // }
 
+        .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+
         .date-today {
           position: relative;
           border-radius: $rounded-sm;

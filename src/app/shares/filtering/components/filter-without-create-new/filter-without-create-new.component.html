@@ -29,30 +29,11 @@
     </mat-menu>
   </div>
 
-  <div class="holiday-container">
+  <div class="holiday-container" *ngIf="hasYearPicker">
     <!-- *Calendar Title Header -->
     <div class="calendar-header group-btn">
       <div class="holiday-container__btn-group calendar-button">
-        <button class="btn-sm date-back" mat-stroked-button mwlCalendarPreviousView (viewDateChange)="onDateChange()" #tooltip="matTooltip"
-          matTooltip="Previous Month" matTooltipPosition="left">
-          <mat-icon>chevron_left</mat-icon>
-        </button>
-
-        <button class="date-today" mat-stroked-button mwlCalendarToday (viewDateChange)="dp.open();">
-          {{ viewDate | date: 'MMMM yyyy' }}
-          <div class="hidden">
-            <input matInput [matDatepicker]="dp" readonly>
-            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-            <mat-datepicker #dp startView="multi-year" (yearSelected)="onDateChange($event)"
-              panelClass="example-month-picker">
-            </mat-datepicker>
-          </div>
-        </button>
-
-        <button class="btn-sm date-forward" mat-stroked-button mwlCalendarNextView (viewDateChange)="onDateChange()" #tooltip="matTooltip"
-          matTooltip="Next Month" matTooltipPosition="right">
-          <mat-icon>navigate_next</mat-icon>
-        </button>
+        <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
       </div>
     </div>
   </div>
