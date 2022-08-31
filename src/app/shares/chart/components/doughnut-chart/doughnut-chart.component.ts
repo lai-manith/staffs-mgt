@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { ChartData, ChartType } from 'chart.js';
 import '../../custom-doughnut.d.ts';
 @Component({
@@ -17,6 +17,10 @@ export class DoughnutChartComponent implements OnInit {
   public doughnutOptions: any;
 
   ngOnInit(): void {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
     this.doughnutChartData = {
       labels: this.doughnutChartLabels,
       datasets: [

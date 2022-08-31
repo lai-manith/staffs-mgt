@@ -103,6 +103,14 @@ export class ContainerComponent implements OnInit {
         child: []
       },
       {
+        title: 'របាយការណ៍',
+        route: '/report',
+        icon: '',
+        svgIcon: 'report',
+        child: [],
+        permissions: []
+      },
+      {
         title: 'ការកំណត់',
         route: '/setting',
         icon: '',

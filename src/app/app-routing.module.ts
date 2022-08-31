@@ -44,6 +44,11 @@ const routes: Routes = [
         canActivate: [AuthGuard],
         loadChildren: () => import('./routes/setting/setting.module').then(m => m.SettingModule)
       },
+      {
+        path: 'report',
+        canActivate: [AuthGuard],
+        loadChildren: () => import('./routes/report/report.module').then(m => m.ReportModule)
+      }
     ]
   },
   {
@@ -60,4 +65,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
