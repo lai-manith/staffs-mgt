@@ -7,7 +7,7 @@ import '../../custom-doughnut.d.ts';
   styleUrls: ['./doughnut-chart.component.scss']
 })
 export class DoughnutChartComponent implements OnInit {
-  constructor() {}
+  constructor() { }
   @Input() dougnutChartDataset: number[] = [0, 0];
   @Input() doughnutChartLabels: string[] = [];
   @Input() dougnutChartDataTotal: number;
@@ -26,7 +26,7 @@ export class DoughnutChartComponent implements OnInit {
       datasets: [
         {
           data: this.dougnutChartDataset,
-          backgroundColor: ['hsla(43, 100%, 71%, 1)', 'hsla(14, 100%, 71%, 1)', 'hsla(186, 69%, 54%, 1)']
+          backgroundColor: ['#ED589D', '#3AACFF']
         }
       ]
     };
@@ -45,7 +45,7 @@ export class DoughnutChartComponent implements OnInit {
           minFontSize: 16,
           maxFontSize: 25,
           lineHeight: 25,
-          fontStyle: 'Open Sans'
+          fontStyle: "'Open Sans', Khmer, 'system ui'"
         }
       },
       plugins: {
@@ -61,7 +61,25 @@ export class DoughnutChartComponent implements OnInit {
             padding: 15
           },
           events: ['mousemove', 'mouseout', 'touchstart', 'touchmove']
-        }
+        },
+        tooltip: {
+          backgroundColor: '#fff',
+          titleColor: '#000',
+          bodyColor: '#000',
+          borderColor: 'rgba(0,0,0,0.09)',
+          borderWidth: 3,
+          padding: 10,
+          bodyFont: {
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+          titleFont: {
+            size: 14,
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+          footerFont: {
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+        },
       }
     };
   }

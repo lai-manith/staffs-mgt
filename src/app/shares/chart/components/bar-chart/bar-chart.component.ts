@@ -35,7 +35,7 @@ export class BarChartComponent implements OnInit {
 
     let stepSize = 1;
     // calc step size
-    if(this.datasets) {
+    if (this.datasets) {
       const max = Math.max(...this.datasets);
       if (max <= 5) {
         stepSize = 1;
@@ -104,6 +104,11 @@ export class BarChartComponent implements OnInit {
             grid: {
               display: false
             },
+            ticks: {
+              font: {
+                family: "'Open Sans', Khmer, 'system ui'"
+              }
+            }
           },
           y: {
             suggestedMin: 2,
@@ -120,18 +125,35 @@ export class BarChartComponent implements OnInit {
     }
 
     this.options.plugins = {
+      legend: {
+        align: 'start',
+        labels: {
+          usePointStyle: true,
+          padding: 16,
+          font: {
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+        }
+      },
       tooltip: {
         backgroundColor: '#fff',
         titleColor: '#000',
-        titleFont: {
-          size: 14
-        },
         bodyColor: '#000',
         borderColor: 'rgba(0,0,0,0.09)',
         borderWidth: 3,
         padding: 10,
         displayColors: false,
-      }
+        bodyFont: {
+          family: "'Open Sans', Khmer, 'system ui'"
+        },
+        titleFont: {
+          size: 14,
+          family: "'Open Sans', Khmer, 'system ui'"
+        },
+        footerFont: {
+          family: "'Open Sans', Khmer, 'system ui'"
+        },
+      },
     };
 
     // chart config

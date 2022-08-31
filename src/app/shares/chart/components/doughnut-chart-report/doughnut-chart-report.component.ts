@@ -18,7 +18,7 @@ export class DoughnutChartReportComponent {
   public doughnutChartType: ChartType = 'overlappedDoughnut';
   public doughnutOptions: any = {};
 
-  constructor() {}
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.dougnutChartDataset.currentValue) {
@@ -64,12 +64,7 @@ export class DoughnutChartReportComponent {
             events: ['mousemove', 'mouseout', 'touchstart', 'touchmove']
           },
           tooltip: {
-            callbacks: {
-              label: function(context) {
-                  console.log(context);
-                  return context;
-              }
-          }
+            enabled: false
           }
         }
       };

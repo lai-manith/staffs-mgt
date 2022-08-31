@@ -10,7 +10,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   styleUrls: ['./staff-gender-by-year.component.scss']
 })
 export class StaffGenderByYearComponent implements OnInit {
-  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) { }
 
   dougnutChartDataset: number[];
   doughnutChartLabels: string[];
@@ -37,17 +37,17 @@ export class StaffGenderByYearComponent implements OnInit {
           res.data.total < 1
             ? ['បុគ្គលិកស្រី៖ 0% (0នាក់)', 'បុគ្គលិកប្រុស៖ 0% (0នាក់)']
             : [
-                'បុគ្គលិកស្រី៖ ' +
-                  ((res.data.total_female / res.data.total) * 100).toFixed(2) +
-                  '% (' +
-                  res.data.total_female +
-                  ' នាក់)',
-                'បុគ្គលិកប្រុស៖ ' +
-                  ((res.data.total_male / res.data.total) * 100).toFixed(2) +
-                  '% (' +
-                  res.data.total_male +
-                  ' នាក់)'
-              ];
+              'បុគ្គលិកស្រី៖ ' +
+              ((res.data.total_female / res.data.total) * 100).toFixed(2) +
+              '% (' +
+              res.data.total_female +
+              ' នាក់)',
+              'បុគ្គលិកប្រុស៖ ' +
+              ((res.data.total_male / res.data.total) * 100).toFixed(2) +
+              '% (' +
+              res.data.total_male +
+              ' នាក់)'
+            ];
         this.dougnutChartDataTotal = res.data.total;
 
         let labels = [],
@@ -56,7 +56,7 @@ export class StaffGenderByYearComponent implements OnInit {
           data = [];
 
         res.report.map((res: any) => {
-          labels.push(res.name);
+          labels.push('អាយុ' + res.name);
           female.push(res.female_count);
           male.push(res.male_count);
         });
@@ -108,7 +108,7 @@ export class StaffGenderByYearComponent implements OnInit {
               },
               ticks: {
                 font: {
-                  family: 'Khmer'
+                  family: "'Open Sans', Khmer, 'system ui'"
                 }
               }
             }
