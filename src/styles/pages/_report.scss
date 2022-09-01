@@ -1,0 +1,16 @@
+.report {
+  .group-btn {
+    button.year-picker {
+      background: none;
+    }
+
+    .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+  }
+
+  canvas {
+    image-rendering: pixelated;
+    image-rendering: optimizespeed;
+  }
+}

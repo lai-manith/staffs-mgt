@@ -2,7 +2,13 @@
   <div class="app-title">
     <h1 class="title">របាយការណ៍</h1>
     <div class="group-btn">
-      <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
+      <button class="year-picker">
+        <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
+      </button>
+      <button mat-flat-button color="print" (click)="onPrint()">
+        <mat-icon svgIcon="print"></mat-icon>
+        បោះពុម្ភ
+      </button>
     </div>
   </div>
 
@@ -14,7 +20,7 @@
       </div>
       <div class="report__teacher-chart">
         <div>
-          <app-bar-chart-report [legendDisplay]="legendDisplay" [chartData]="chartData" [chartOptions]="chartOptions"
+          <app-bar-chart-report id="attendance-of-staff" [legendDisplay]="legendDisplay" [chartData]="chartData" [chartOptions]="chartOptions"
             [tooltipMode]="tooltipMode">
           </app-bar-chart-report>
         </div>

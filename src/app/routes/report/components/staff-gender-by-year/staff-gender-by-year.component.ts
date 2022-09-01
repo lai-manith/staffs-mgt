@@ -14,7 +14,7 @@ import * as pdfFonts from 'src/assets/fonts/vfs_fonts.js';
   styleUrls: ['./staff-gender-by-year.component.scss']
 })
 export class StaffGenderByYearComponent implements OnInit {
-  constructor(private reportService: ReportService, private snackbarService: SnackbarService) { }
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
 
   dougnutChartDataset: number[];
   doughnutChartLabels: string[];
@@ -41,17 +41,17 @@ export class StaffGenderByYearComponent implements OnInit {
           res.data.total < 1
             ? ['បុគ្គលិកស្រី៖ 0% (0នាក់)', 'បុគ្គលិកប្រុស៖ 0% (0នាក់)']
             : [
-              'បុគ្គលិកស្រី៖ ' +
-              ((res.data.total_female / res.data.total) * 100).toFixed(2) +
-              '% (' +
-              res.data.total_female +
-              ' នាក់)',
-              'បុគ្គលិកប្រុស៖ ' +
-              ((res.data.total_male / res.data.total) * 100).toFixed(2) +
-              '% (' +
-              res.data.total_male +
-              ' នាក់)'
-            ];
+                'បុគ្គលិកស្រី៖ ' +
+                  ((res.data.total_female / res.data.total) * 100).toFixed(2) +
+                  '% (' +
+                  res.data.total_female +
+                  ' នាក់)',
+                'បុគ្គលិកប្រុស៖ ' +
+                  ((res.data.total_male / res.data.total) * 100).toFixed(2) +
+                  '% (' +
+                  res.data.total_male +
+                  ' នាក់)'
+              ];
         this.dougnutChartDataTotal = res.data.total;
 
         let labels = [],
@@ -79,7 +79,7 @@ export class StaffGenderByYearComponent implements OnInit {
             backgroundColor: ['#3AACFF'],
             hoverBackgroundColor: ['#3AACFF'],
             barThickness: 16,
-            data: data[1],
+            data: data[1]
           }
         ];
 
@@ -177,9 +177,7 @@ export class StaffGenderByYearComponent implements OnInit {
     this.tooltipMode = mode;
   }
 
-
   async onPrint() {
-
     // stop here, if not complete filter
 
     let docDefinition: any = await this.getDocumentDefinition(); // return document definition
@@ -200,26 +198,25 @@ export class StaffGenderByYearComponent implements OnInit {
     };
 
     const doughnutTitle = {
-      text: 'Number of Teacher by Gender',
-      color: '#4F9573'
+      text: 'បុគ្គលិកតាមភេទ',
+      color: '#4F9573',
+      fontSize: 14
     };
     const doughnutChart = {
       image: await this.getBase64ImageFromURLDoughnutChart(),
-      width: 200,
-      margin: [0, -20, 0, 0]
-    }
-    docDefinition.content.push(doughnutTitle, doughnutChart)
+      width: 200
+    };
+    docDefinition.content.push(doughnutTitle, doughnutChart);
     pdfMake.createPdf(docDefinition, null, fonts).open();
     // pdfMake.createPdf(docDefinition, null, fonts).download(this.selectedFilter.type.value + '-report.pdf');
   }
 
   async getDocumentDefinition() {
-
     (<any>pdfMake).pageLayout = {
       height: 842,
       width: 595,
       margins: Array(4).fill(25)
-    }
+    };
 
     return {
       pageSize: 'A4',
@@ -229,24 +226,22 @@ export class StaffGenderByYearComponent implements OnInit {
       },
       content: [
         {
-          alignment: 'justify',
+          alignment: 'center',
           columns: [
             {
-              image: await this.getBase64ImageFromURL("assets/imgs/logo.png"),
+              image: await this.getBase64ImageFromURL('assets/imgs/logo.png'),
               fit: [45, 46],
               alignment: 'right'
             },
             {
               text: [
                 {
-                  text: 'SM',
-                  style: 'header',
-                  color: '#4F9573'
-                },
-                {
-                  text: 'SM',
-                  style: 'bigger'
-                },
+                  text: 'ភោជនីយដ្ឋានស្រូវ',
+                  fontSize: 18,
+                  color: '#4F9573',
+                  bold: true,
+                  alignment: 'left'
+                }
               ],
               margin: [0, 10]
             }
@@ -258,38 +253,23 @@ export class StaffGenderByYearComponent implements OnInit {
         {
           columns: [
             {
-              text: 'Report Type',
-              color: 'grey'
-            },
-            {
-              text: 'Academic Year',
-              color: 'grey',
-              alignment: 'right'
-            },
-          ]
-        },
-        {
-          columns: [
-            {
-              text: 'number-of-staff',
-              fontSize: 11,
-
-            },
-            {
-              text: 'test',
-              fontSize: 11,
-              alignment: 'right'
+              text: 'ឆ្នាំ: ' + this.year,
+              fontSize: 14
             }
-          ],
+          ]
         },
         '\n',
         {
-          text: 'test sub-title',
-          color: '#4F9573'
+          text: 'បុគ្គលិកតាមអាយុ',
+          color: '#4F9573',
+          fontSize: 14
         },
         {
           image: await this.getBase64ImageFromURLChart(),
-          width: ((<any>pdfMake).pageLayout.width - (<any>pdfMake).pageLayout.margins[0] - (<any>pdfMake).pageLayout.margins[2]) // page-width - margin-left - margin-right
+          width:
+            (<any>pdfMake).pageLayout.width -
+            (<any>pdfMake).pageLayout.margins[0] -
+            (<any>pdfMake).pageLayout.margins[2] // page-width - margin-left - margin-right
         },
         '\n\n'
       ],
@@ -316,24 +296,24 @@ export class StaffGenderByYearComponent implements OnInit {
         font: 'Battambang',
         fontSize: 10,
         columnGap: 32
-      },
+      }
     };
   }
 
   getBase64ImageFromURL(url: string) {
     return new Promise((resolve, reject) => {
       var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
+      img.setAttribute('crossOrigin', 'anonymous');
 
       img.onload = () => {
-        var canvas = document.createElement("canvas");
+        var canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
 
-        var ctx = canvas.getContext("2d");
+        var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
 
-        var dataURL = canvas.toDataURL("image/png");
+        var dataURL = canvas.toDataURL('image/png');
 
         resolve(dataURL);
       };
@@ -350,20 +330,20 @@ export class StaffGenderByYearComponent implements OnInit {
     console.log(1);
     return new Promise((resolve, reject) => {
       var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
+      img.setAttribute('crossOrigin', 'anonymous');
 
       const canvas = document.querySelector('#' + 'number-of-staff' + ' canvas');
       const url = (<any>canvas).toDataURL();
 
       img.onload = () => {
-        var canvas = document.createElement("canvas");
+        var canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
 
-        var ctx = canvas.getContext("2d");
+        var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
 
-        var dataURL = canvas.toDataURL("image/png");
+        var dataURL = canvas.toDataURL('image/png');
         resolve(dataURL);
       };
 
@@ -377,20 +357,20 @@ export class StaffGenderByYearComponent implements OnInit {
   getBase64ImageFromURLDoughnutChart() {
     return new Promise((resolve, reject) => {
       var img = new Image();
-      img.setAttribute("crossOrigin", "anonymous");
+      img.setAttribute('crossOrigin', 'anonymous');
 
       const canvas = document.querySelector('#' + 'number-of-staff-doughnut' + ' canvas');
       const url = (<any>canvas).toDataURL();
 
       img.onload = () => {
-        var canvas = document.createElement("canvas");
+        var canvas = document.createElement('canvas');
         canvas.width = img.width;
         canvas.height = img.height;
 
-        var ctx = canvas.getContext("2d");
+        var ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0);
 
-        var dataURL = canvas.toDataURL("image/png");
+        var dataURL = canvas.toDataURL('image/png');
         resolve(dataURL);
       };
 
@@ -400,5 +380,4 @@ export class StaffGenderByYearComponent implements OnInit {
       img.src = url;
     });
   }
-
 }

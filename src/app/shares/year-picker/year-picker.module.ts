@@ -6,6 +6,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -18,7 +20,9 @@ import { MatIconModule } from '@angular/material/icon';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatTooltipModule,
+    MatButtonModule
   ],
   exports: [YearPickerComponent]
 })

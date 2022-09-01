@@ -1,9 +1,21 @@
-<mat-form-field class="form-control year-picker-content" appearance="outline">
-  <input matInput [max]="_max" [matDatepicker]="datepicker" [formControl]="_inputCtrl" (click)="_openDatepickerOnClick(datepicker)" readonly>
-  <mat-datepicker-toggle matSuffix [for]="datepicker" (click)="_openDatepickerOnClick(datepicker)" (focus)="_openDatepickerOnFocus(datepicker)">
-    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
-  </mat-datepicker-toggle>
-  <mat-datepicker #datepicker startView="multi-year"
-    (yearSelected)="_yearSelectedHandler($event,datepicker)" panelClass="year-picker">
-  </mat-datepicker>
-</mat-form-field>
+<div class="datepicker-arrow year-picker" id="datepicker-arrow">
+  <button (click)="onPrevDate()" mat-stroked-button color="print" class="btn-sm create-btn" #tooltip="matTooltip"
+    matTooltip="ថ្ងៃមុន" matTooltipPosition="below">
+    <mat-icon matPrefix>chevron_left</mat-icon>
+  </button>
+  <mat-form-field appearance="outline" (click)="datepicker.open()">
+    <input matInput [max]="_max" [matDatepicker]="datepicker" [formControl]="_inputCtrl"
+    (click)="_openDatepickerOnClick(datepicker)" readonly>
+    <mat-datepicker-toggle matPrefix [for]="datepicker" (click)="_openDatepickerOnClick(datepicker)"
+    (focus)="_openDatepickerOnFocus(datepicker)">
+      <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
+    </mat-datepicker-toggle>
+    <mat-datepicker #datepicker startView="multi-year" (yearSelected)="_yearSelectedHandler($event,datepicker)">
+    </mat-datepicker>
+  </mat-form-field>
+  <span></span>
+  <button (click)="onNextDate()" mat-stroked-button color="print" class="btn-sm create-btn" #tooltip="matTooltip"
+    matTooltip="ថ្ងៃបន្ទាប់" matTooltipPosition="below">
+    <mat-icon matPrefix>navigate_next</mat-icon>
+  </button>
+</div>

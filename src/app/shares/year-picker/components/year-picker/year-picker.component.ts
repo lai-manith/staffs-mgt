@@ -108,4 +108,15 @@ export class YearPickerComponent implements ControlValueAccessor {
     return true;
   }
 
+
+  onPrevDate() {
+    this._inputCtrl.setValue(new Date(new Date(this._inputCtrl.value).setFullYear(new Date(this._inputCtrl.value).getFullYear() - 1)));
+    this.selectedYear.emit(this._inputCtrl.value);
+  }
+
+  onNextDate() {
+    this._inputCtrl.setValue(new Date(new Date(this._inputCtrl.value).setFullYear(new Date(this._inputCtrl.value).getFullYear() + 1)));
+    this.selectedYear.emit(this._inputCtrl.value);
+  }
+
 }
