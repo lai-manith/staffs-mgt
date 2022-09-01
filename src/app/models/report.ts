@@ -11,7 +11,19 @@ export interface GenderData {
   female_count?: number;
   name?: string
 }
+
+export interface PositionData {
+  _id?: string;
+  total_male?: number;
+  total_female?: number;
+  name?: string
+}
 export interface ReportStaffAgeGender {
   data?: SimpleData;
   report?: GenderData[];
+}
+
+export interface ReportStaffPosition {
+  data?: SimpleData;
+  report?: PositionData[];
 }

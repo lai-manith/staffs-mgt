@@ -59,7 +59,7 @@ export class ContainerComponent implements OnInit {
         title: 'ប្រភេទតំណែង',
         route: '/position',
         icon: '',
-        svgIcon: 'position',
+        svgIcon: 'position_working',
         child: [],
         permissions: []
       },
@@ -107,7 +107,22 @@ export class ContainerComponent implements OnInit {
         route: '/report',
         icon: '',
         svgIcon: 'report',
-        child: [],
+        child: [
+          {
+            title: 'បុគ្គលិកតាមអាយុនិងភេទ',
+            route: ['/report/gender'],
+            icon: '',
+            svgIcon: 'gender',
+            permissions: []
+          },
+          {
+            title: 'បុគ្គលិកតាមតំណែង',
+            route: ['/report/position'],
+            icon: '',
+            svgIcon: 'position_working',
+            permissions: []
+          }
+        ],
         permissions: []
       },
       {

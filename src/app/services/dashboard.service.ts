@@ -24,6 +24,10 @@ export class DashboardService extends BaseCrudService<StaffByGender> {
     return this.requestService.getJSON<BaseDatatable<StaffByPosition>>(this.path + '/staff_by_position');
   };
 
+  getStaffAttendance(): Observable<BaseDatatable<StaffByPosition>> {
+    return this.requestService.getJSON<BaseDatatable<StaffByPosition>>(this.path + '/attendance');
+  };
+
   getSalarySummary(): Observable<SalarySummary> {
     return this.requestService.getJSON<SalarySummary>(this.path + '/salary');
   };

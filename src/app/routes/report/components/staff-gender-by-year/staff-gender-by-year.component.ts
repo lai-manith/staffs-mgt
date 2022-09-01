@@ -4,6 +4,10 @@ import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
+import * as pdfMake from 'pdfmake/build/pdfmake';
+import * as pdfFonts from 'src/assets/fonts/vfs_fonts.js';
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
+
 @Component({
   selector: 'app-staff-gender-by-year',
   templateUrl: './staff-gender-by-year.component.html',
@@ -172,4 +176,229 @@ export class StaffGenderByYearComponent implements OnInit {
     this.legendDisplay = legend;
     this.tooltipMode = mode;
   }
+
+
+  async onPrint() {
+
+    // stop here, if not complete filter
+
+    let docDefinition: any = await this.getDocumentDefinition(); // return document definition
+
+    let fonts = {
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      },
+      Battambang: {
+        normal: 'Battambang-Regular.ttf',
+        bold: 'Battambang-Bold.ttf',
+        italics: 'Battambang-Regular.ttf',
+        bolditalics: 'Battambang-Regular.ttf'
+      }
+    };
+
+    const doughnutTitle = {
+      text: 'Number of Teacher by Gender',
+      color: '#4F9573'
+    };
+    const doughnutChart = {
+      image: await this.getBase64ImageFromURLDoughnutChart(),
+      width: 200,
+      margin: [0, -20, 0, 0]
+    }
+    docDefinition.content.push(doughnutTitle, doughnutChart)
+    pdfMake.createPdf(docDefinition, null, fonts).open();
+    // pdfMake.createPdf(docDefinition, null, fonts).download(this.selectedFilter.type.value + '-report.pdf');
+  }
+
+  async getDocumentDefinition() {
+
+    (<any>pdfMake).pageLayout = {
+      height: 842,
+      width: 595,
+      margins: Array(4).fill(25)
+    }
+
+    return {
+      pageSize: 'A4',
+      pageMargins: (<any>pdfMake).pageLayout.margins,
+      info: {
+        title: 'report.pdf'
+      },
+      content: [
+        {
+          alignment: 'justify',
+          columns: [
+            {
+              image: await this.getBase64ImageFromURL("assets/imgs/logo.png"),
+              fit: [45, 46],
+              alignment: 'right'
+            },
+            {
+              text: [
+                {
+                  text: 'SM',
+                  style: 'header',
+                  color: '#4F9573'
+                },
+                {
+                  text: 'SM',
+                  style: 'bigger'
+                },
+              ],
+              margin: [0, 10]
+            }
+          ],
+          columnGap: 10,
+          margin: [0, -10, 0, 0]
+        },
+        '\n',
+        {
+          columns: [
+            {
+              text: 'Report Type',
+              color: 'grey'
+            },
+            {
+              text: 'Academic Year',
+              color: 'grey',
+              alignment: 'right'
+            },
+          ]
+        },
+        {
+          columns: [
+            {
+              text: 'number-of-staff',
+              fontSize: 11,
+
+            },
+            {
+              text: 'test',
+              fontSize: 11,
+              alignment: 'right'
+            }
+          ],
+        },
+        '\n',
+        {
+          text: 'test sub-title',
+          color: '#4F9573'
+        },
+        {
+          image: await this.getBase64ImageFromURLChart(),
+          width: ((<any>pdfMake).pageLayout.width - (<any>pdfMake).pageLayout.margins[0] - (<any>pdfMake).pageLayout.margins[2]) // page-width - margin-left - margin-right
+        },
+        '\n\n'
+      ],
+
+      styles: {
+        header: {
+          font: 'Roboto',
+          fontSize: 18,
+          bold: true
+        },
+        bigger: {
+          font: 'Roboto',
+          fontSize: 14,
+          bold: true
+        },
+        semibold: {
+          fontSize: 18,
+          bold: true
+        }
+      },
+
+      // Default style
+      defaultStyle: {
+        font: 'Battambang',
+        fontSize: 10,
+        columnGap: 32
+      },
+    };
+  }
+
+  getBase64ImageFromURL(url: string) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
+
+  getBase64ImageFromURLChart() {
+    console.log(1);
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      const canvas = document.querySelector('#' + 'number-of-staff' + ' canvas');
+      const url = (<any>canvas).toDataURL();
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+
+  getBase64ImageFromURLDoughnutChart() {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute("crossOrigin", "anonymous");
+
+      const canvas = document.querySelector('#' + 'number-of-staff-doughnut' + ' canvas');
+      const url = (<any>canvas).toDataURL();
+
+      img.onload = () => {
+        var canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL("image/png");
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+
 }

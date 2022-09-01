@@ -1,99 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartData, ChartOptions, InteractionMode, ChartDataset } from 'chart.js';
-import moment from 'moment';
-import { map } from 'rxjs';
-import { SalarySummary } from 'src/app/models/dashboard';
-import { UserStatusEnum } from 'src/app/models/enums/user-status.enum';
-import { DashboardService } from 'src/app/services/dashboard.service';
-import { LoadingService } from 'src/app/services/loading.service';
+import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
-import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: 'app-staff-position-by-year',
+  templateUrl: './staff-position-by-year.component.html',
+  styleUrls: ['./staff-position-by-year.component.scss']
 })
-export class HomeComponent {
-  constructor(
-    private loadingService: LoadingService,
-    private dashboardService: DashboardService,
-    private snackbarService: SnackbarService,
-    private khmerMonth: MonthPipe
-  ) {
-    this.onGetGender();
-    this.onGetStaffPosition();
-    this.onGetSalarySummary();
-  }
+export class StaffPositionByYearComponent implements OnInit {
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
 
-  userStatusEnum = UserStatusEnum;
-  userStatus = UserStatusEnum.active;
-
-  dougnutChartDataset: number[];
-  doughnutChartLabels: string[];
-  dougnutChartDataTotal: number;
-
-  lineChartDataset: number[];
-  lineChartLabel: string[];
-  staffChartDataset: number[];
-
-  salarySummary: SalarySummary;
-
-  onGetGender(): void {
-    this.dashboardService.getGender().subscribe(
-      res => {
-        this.dougnutChartDataset = [res.total_male, res.total_female];
-        this.doughnutChartLabels = ['បុគ្គលិកប្រុស', 'បុគ្គលិកស្រី'];
-        this.dougnutChartDataTotal = res.total;
-      },
-      err => {
-        this.snackbarService.onShowSnackbar({
-          message: err.error.message,
-          isError: true,
-          component: SnackbarComponent
-        });
-      }
-    );
-  }
-
-  onGetSalarySummary(): void {
-    this.dashboardService
-      .getSalarySummary()
-      .pipe(
-        map(map => {
-          map.max_salary = map.max_salary.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.min_salary = map.min_salary.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.salary_per_month = map.salary_per_month.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.salary_per_year = map.salary_per_year.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          return map;
-        })
-      )
-      .subscribe(
-        res => {
-          this.salarySummary = res;
-        },
-        err => {
-          this.snackbarService.onShowSnackbar({
-            message: err.error.message,
-            isError: true,
-            component: SnackbarComponent
-          });
-        }
-      );
-  }
+  year: string = new Date().getFullYear().toString();
+  maxDate: Date = new Date();
 
   public legendDisplay = true;
   public chartData: ChartData;
@@ -104,11 +24,10 @@ export class HomeComponent {
 
   ngOnInit(): void {
     this.onGetGender();
-    this.getStaffAttendance();
   }
 
-  onGetStaffPosition(): void {
-    this.dashboardService.getStaffByPosition().subscribe(
+  onGetGender(): void {
+    this.reportService.getStaffPosition({ year: this.year }).subscribe(
       res => {
         let labels = [],
           female = [],
@@ -187,18 +106,14 @@ export class HomeComponent {
     );
   }
 
-  getStaffAttendance(): void {
-    this.dashboardService.getStaffAttendance().subscribe(res => {
-      this.lineChartLabel = res.list.map(
-        l => moment(l._id).format('DD') + ' ' + this.khmerMonth.transform((new Date(l._id).getMonth() + 1).toString())
-      );
-      this.staffChartDataset = res.list.map(l => l.count);
-    });
-  }
-
   sumArrays(list: any[]): number[] {
     const sums = list[0].map((x, index: number) => list.reduce((sum, curr) => sum + curr[index], 0));
     return sums;
+  }
+
+  onSelectedYear(value): void {
+    this.year = new Date(value).getFullYear().toString();
+    this.onGetGender();
   }
 
   calcMaxTarget(list: number[]): number {

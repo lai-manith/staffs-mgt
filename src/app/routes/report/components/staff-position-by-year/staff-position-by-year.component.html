@@ -1,0 +1,24 @@
+<div class="app-content report">
+  <div class="app-title">
+    <h1 class="title">របាយការណ៍</h1>
+    <div class="group-btn">
+      <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
+    </div>
+  </div>
+
+  <!-- Filtering -->
+  <section class="detail-form">
+    <div class="rounded-10">
+      <div class="header-label mt-32">
+        បុគ្គលិកតាមតំណែង
+      </div>
+      <div class="report__teacher-chart">
+        <div>
+          <app-bar-chart-report [legendDisplay]="legendDisplay" [chartData]="chartData" [chartOptions]="chartOptions"
+            [tooltipMode]="tooltipMode">
+          </app-bar-chart-report>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

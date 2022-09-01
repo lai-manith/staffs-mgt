@@ -33,32 +33,51 @@
     <div class="chart-container col-span-lg-8">
       <div class="title-and-more">
         <mat-card-header>
-          <mat-card-title> <h2>ស្ថិតិបុគ្គលិកតាមតំណែង</h2></mat-card-title>
+          <mat-card-title>
+            <h2>ស្ថិតិបុគ្គលិកតាមតំណែង</h2>
+          </mat-card-title>
         </mat-card-header>
       </div>
-      <app-bar-chart [labels]="labels" [datasets]="datasets" [indexAxis]="indexAxis" [datasetLabel]="datasetLabel"
-      [legend]="false">
-  </app-bar-chart>
+      <app-bar-chart-report [legendDisplay]="legendDisplay" [chartData]="chartData" [chartOptions]="chartOptions"
+        [tooltipMode]="tooltipMode">
+      </app-bar-chart-report>
     </div>
     <div class="chart-container col-span-lg-4 ">
       <div class="title-and-more ">
         <mat-card-header>
-          <mat-card-title><h2>ស្ថិតិបុគ្គលិកតាមភេទ</h2></mat-card-title>
+          <mat-card-title>
+            <h2>ស្ថិតិបុគ្គលិកតាមភេទ</h2>
+          </mat-card-title>
         </mat-card-header>
       </div>
-      <app-doughnut-chart *ngIf="dougnutChartDataset && doughnutChartLabels"
-        class="doughnut-chart"
-        [dougnutChartDataset]="dougnutChartDataset"
-        [doughnutChartLabels]="doughnutChartLabels"
-        [dougnutChartDataTotal]="dougnutChartDataTotal"
-      ></app-doughnut-chart>
+      <app-doughnut-chart *ngIf="dougnutChartDataset && doughnutChartLabels" class="doughnut-chart"
+        [dougnutChartDataset]="dougnutChartDataset" [doughnutChartLabels]="doughnutChartLabels"
+        [dougnutChartDataTotal]="dougnutChartDataTotal"></app-doughnut-chart>
     </div>
   </div>
+
+  <div class="grid gap-16 mt-16">
+    <div class="chart-container" [ngStyle]="{'height': 'fit-content'}">
+      <div class="title-and-more">
+        <mat-card-header>
+          <mat-card-title>
+            <h2>វត្តមានបុគ្គលិកក្នុងរយៈពេល15ថ្ងៃចុងក្រោយ</h2>
+          </mat-card-title>
+        </mat-card-header>
+      </div>
+      <app-line-chart class="line-chart" [lineChartDataset]="staffChartDataset" [lineChartLabel]="lineChartLabel"
+        [datasetLabel]="'Staffs Absented'" [ngStyle]="{'margin-top': '0'}">
+      </app-line-chart>
+    </div>
+  </div>
+
   <div class="mt-16"></div>
   <div class="grid col-lg-12 col-sm-1 col-md-1 col-xs-1 gap-16 mt-16 app-content">
     <div class="title-and-more col-span-lg-12">
       <mat-card-header>
-        <mat-card-title><h2>បុគ្គលិកជិតផុតកុងត្រាក្នុងរយៈពេល២ខែចុងក្រោយ</h2></mat-card-title>
+        <mat-card-title>
+          <h2>បុគ្គលិកជិតផុតកុងត្រាក្នុងរយៈពេល២ខែចុងក្រោយ</h2>
+        </mat-card-title>
       </mat-card-header>
     </div>
     <div class="col-span-lg-12">

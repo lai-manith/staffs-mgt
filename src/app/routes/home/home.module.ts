@@ -25,6 +25,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { StaticMonthModule } from 'src/app/shares/static-month/static-month.module';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
 import { MatMenuModule } from '@angular/material/menu';
+import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 
 @NgModule({
   declarations: [HomeComponent, FacultyListComponent],
@@ -51,7 +52,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatProgressBarModule,
     StaticMonthModule,
     StaticFileModule, MatMenuModule
-  ]
+  ],
+  providers: [MonthPipe]
 })
 export class HomeModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {

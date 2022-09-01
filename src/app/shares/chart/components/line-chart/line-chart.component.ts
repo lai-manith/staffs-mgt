@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit, Input, SimpleChanges } from '@angular/core';
 import { BaseChartDirective } from 'ng2-charts';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import '../../hovering-line.d.ts';
@@ -8,74 +8,23 @@ import '../../hovering-line.d.ts';
   styleUrls: ['./line-chart.component.scss']
 })
 export class LineChartComponent implements AfterViewInit {
-  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
-  @ViewChild('myCanvas') canvas: ElementRef;
+  stepSize: number = 1;
+
   chartLineType: ChartType = 'hoveringLine';
   lineChartData: ChartConfiguration['data'] = {
     datasets: [{ data: [] }],
     labels: []
   };
-  lineChartOptions: ChartConfiguration['options'] = {
-    aspectRatio: 920 / 320,
-    interaction: {
-      intersect: false,
-      mode: 'x'
-    },
-    responsive: true,
-    scales: {
-      x: {
-        beginAtZero: true,
-        grid: {
-          display: false,
-          drawBorder: false
-        },
-        ticks: {
-          padding: 20
-        }
-      },
-      y: {
-        beginAtZero: true,
-        grid: {
-          drawBorder: false
-        },
-        ticks: {
-          stepSize: 20,
-          padding: 20
-        }
-      }
-    },
-    plugins: {
-      tooltip: {
-        padding: 10,
-        xAlign: 'center',
-        yAlign: 'bottom',
-        titleAlign: 'center',
-        bodyAlign: 'center',
-        titleFont: {
-          size: 13,
-          weight: 'normal',
-          family: "'Open Sans', Khmer, 'system ui'"
-        },
-        bodyFont: {
-          size: 16,
-          weight: 'bold',
-          family: "'Open Sans', Khmer, 'system ui'"
-        },
-        displayColors: false,
-        backgroundColor: '#24292f',
-        callbacks: {
-          title: function (context): string {
-            return context[0].dataset.label;
-          },
-          label: function (context): string {
-            return context.parsed.y + '';
-          }
-        }
-      }
-    }
-  };
+  lineChartOptions: ChartConfiguration['options'] = {};
+  gradientFill: any;
+  gradientStroke: any;
+
   @Input() lineChartDataset: number[] = [];
-  @Input() lineChartLabel: string[] = [];
+  @Input() lineChartLabel: string[];
+  @Input() datasetLabel: string;
+
+  @ViewChild(BaseChartDirective, { static: true }) chart: BaseChartDirective;
+  @ViewChild('myCanvas') canvas: ElementRef;
 
   ngAfterViewInit(): void {
     const ctx = this.canvas.nativeElement.getContext('2d');
@@ -94,19 +43,106 @@ export class LineChartComponent implements AfterViewInit {
     this.lineChartData.datasets[0].borderColor = gradientStroke;
     this.lineChartData.datasets[0].backgroundColor = gradientFill;
 
+    this.gradientFill = gradientFill;
+    this.gradientStroke = gradientStroke;
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.setChart();
+  }
+
+  setChart() {
+    if (this.lineChartDataset?.length > 0) {
+      const max = Math.max(...this.lineChartDataset);
+      if (max <= 5) {
+        this.stepSize = 1;
+      } else if (max <= 10) {
+        this.stepSize = 2;
+      } else {
+        this.stepSize = 5;
+      }
+    }
+
+    this.lineChartOptions = {
+      aspectRatio: 920 / 320,
+      interaction: {
+        intersect: false,
+        mode: 'x'
+      },
+      responsive: true,
+      scales: {
+        x: {
+          beginAtZero: true,
+          grid: {
+            display: false,
+            drawBorder: false
+          },
+          ticks: {
+            padding: 20,
+            font: {
+              family: "'Open Sans', Khmer, 'system ui'"
+            }
+          }
+        },
+        y: {
+          beginAtZero: true,
+          suggestedMin: 2,
+          suggestedMax: 5,
+          grid: {
+            drawBorder: false
+          },
+          ticks: {
+            stepSize: this.stepSize,
+            padding: 20
+          }
+        }
+      },
+      plugins: {
+        tooltip: {
+          padding: 10,
+          xAlign: 'center',
+          yAlign: 'bottom',
+          titleAlign: 'center',
+          bodyAlign: 'center',
+          titleFont: {
+            size: 13,
+            weight: 'normal',
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+          bodyFont: {
+            size: 16,
+            weight: 'bold',
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+          footerFont: {
+            family: "'Open Sans', Khmer, 'system ui'"
+          },
+          displayColors: false,
+          backgroundColor: '#24292f',
+          callbacks: {
+            title: function (context): string {
+              return context[0].dataset.label;
+            },
+            label: function (context): string {
+              return context.parsed.y + '';
+            }
+          }
+        }
+      }
+    };
+
     this.lineChartData = {
       datasets: [
         {
           data: this.lineChartDataset,
-          label: 'Students Enrolled',
-          backgroundColor: gradientFill,
-          borderColor: gradientStroke,
-          pointBackgroundColor: 'rgba(255,255,255,1)',
-          pointBorderColor: 'hsla(258, 87%, 76%, 1)',
+          label: this.datasetLabel,
+          backgroundColor: this.gradientFill,
+          borderColor: this.gradientStroke,
+          borderWidth: 2,
+          pointRadius: 0,
           pointHoverBackgroundColor: '#fff',
-          pointHoverBorderColor: 'rgba(148,159,177,0.8)',
-          pointBorderWidth: 3,
-          pointRadius: 7,
+          pointHoverBorderWidth: 2,
+          pointHoverRadius: 5,
           fill: true,
           tension: 0.4
         }
