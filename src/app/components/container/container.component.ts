@@ -64,21 +64,21 @@ export class ContainerComponent implements OnInit {
         permissions: []
       },
       {
-        title: 'បញ្ជីបុគ្គលិក',
+        title: 'បុគ្គលិក',
         route: 'staff',
         icon: '',
         svgIcon: 'staff',
         permissions: [],
         child: [
           {
-            title: 'Create New',
+            title: 'បង្កើតថ្មី',
             route: ['/staff/create'],
             icon: '',
             svgIcon: 'create',
             permissions: []
           },
           {
-            title: 'Staff List',
+            title: 'បញ្ជីបុគ្គលិក',
             route: ['/staff/staff-active'],
             icon: '',
             svgIcon: 'listing',
