@@ -121,7 +121,7 @@ export class LineChartComponent implements AfterViewInit {
           backgroundColor: '#24292f',
           callbacks: {
             title: function (context): string {
-              return context[0].dataset.label;
+              return context[0].dataset.label === 'Staffs Absented' ? 'ចំនួនបុគ្គលិកអវត្តមាន' : context[0].dataset.label;
             },
             label: function (context): string {
               return context.parsed.y + '';

@@ -63,7 +63,7 @@ export class StaffService extends BaseCrudService<Staff> {
     [key: string]: any;
     page?: number;
     limit?: number;
-    year: string;
+    date: string;
     staff: string;
   }): Observable<BaseDatatable<AttendanceHistory>> {
     return this.requestService.getJSON<BaseDatatable<AttendanceHistory>>(this.path + '/attendance/recorded', { data });

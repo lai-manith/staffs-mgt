@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatSelect } from '@angular/material/select';
 import { Filter, Option, OptionParam } from 'src/app/models/filter';
 
@@ -85,7 +87,21 @@ export class FilterWithoutCreateNewComponent {
     }
   }
 
-  onSelectedYear(value): void {
+  activeDayIsOpen: boolean = false;
+  date: FormControl = new FormControl(new Date());
+  onDateChange(value?: any, datepicker?: MatDatepicker<moment.Moment>): void {
+    this.activeDayIsOpen = false;
+    if (datepicker) datepicker.close();
     this.yearEvent.emit(value);
+  }
+
+  onPrevDate() {
+    this.date.setValue(new Date(new Date(this.date.value).setMonth(new Date(this.date.value).getMonth() - 1)));
+    this.yearEvent.emit(this.date.value);
+  }
+
+  onNextDate() {
+    this.date.setValue(new Date(new Date(this.date.value).setMonth(new Date(this.date.value).getMonth() + 1)));
+    this.yearEvent.emit(this.date.value);
   }
 }

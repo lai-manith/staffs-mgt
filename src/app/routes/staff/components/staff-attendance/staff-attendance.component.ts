@@ -1,19 +1,16 @@
+import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params } from '@angular/router';
 import { map } from 'rxjs';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
 import { AttendanceResponse, AttendanceType } from 'src/app/models/staff-attendance';
-import { DialogService } from 'src/app/services/dialog.service';
-import { SalaryService } from 'src/app/services/salary.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { Pagination } from 'src/app/shares/pagination/pagination';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
-import { StaffSalaryDialogComponent } from '../staff-salary-dialog/staff-salary-dialog.component';
 
 @Component({
   selector: 'app-staff-attendance',
@@ -81,17 +78,18 @@ export class StaffAttendanceComponent implements OnInit {
 
   //*Date Type
   date: Date = new Date();
+  dateString = formatDate(new Date(), 'MM-dd-yyyy', 'en-US');
 
   //*Object Type
   params: Pagination & {
-    year: string;
+    date: string;
     staff: string;
     attendance_type?: number;
     shift_type?: number;
   } = {
     limit: 10,
     page: 1,
-    year: new Date().getFullYear().toString(),
+    date: this.dateString,
     staff: this.id
   };
   staff: Staff;
@@ -102,11 +100,7 @@ export class StaffAttendanceComponent implements OnInit {
   //*FormControl
 
   constructor(
-    private dialog: MatDialog,
-    private router: Router,
     private route: ActivatedRoute,
-    private snackBarService: SnackbarService,
-    private dialogService: DialogService,
     private staffService: StaffService,
     private snackbarService: SnackbarService
   ) {}
@@ -147,7 +141,7 @@ export class StaffAttendanceComponent implements OnInit {
   }
 
   onYearChange(year: Date): void {
-    this.params.year = year.getFullYear().toString();
+    this.params.date = formatDate(year, 'MM-dd-yyyy', 'en-US');
     this.onLoad();
   }
 

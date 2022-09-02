@@ -19,6 +19,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { YearPickerModule } from '../year-picker/year-picker.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent],
@@ -38,7 +39,8 @@ import { YearPickerModule } from '../year-picker/year-picker.module';
     MatDatepickerModule,
     NativeDateModule,
     MatTooltipModule,
-    YearPickerModule
+    YearPickerModule,
+    ReactiveFormsModule
   ],
   exports: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent]
 })

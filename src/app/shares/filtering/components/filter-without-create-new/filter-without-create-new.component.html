@@ -33,7 +33,26 @@
     <!-- *Calendar Title Header -->
     <div class="calendar-header group-btn">
       <div class="holiday-container__btn-group calendar-button">
-        <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
+        <button class="btn-sm date-back" mat-stroked-button (click)="onPrevDate()" #tooltip="matTooltip"
+          matTooltip="Previous Month" matTooltipPosition="left">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+
+        <button class="date-today" mat-stroked-button mwlCalendarToday (click)="dp.open();">
+          {{ date.value | date: 'MMMM yyyy' }}
+          <div class="hidden">
+            <input matInput [matDatepicker]="dp" readonly [formControl]="date">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (monthSelected)="onDateChange($event, dp)"
+              panelClass="example-month-picker">
+            </mat-datepicker>
+          </div>
+        </button>
+
+        <button class="btn-sm date-forward" mat-stroked-button mwlCalendarNextView (click)="onNextDate()" #tooltip="matTooltip"
+          matTooltip="Next Month" matTooltipPosition="right">
+          <mat-icon>navigate_next</mat-icon>
+        </button>
       </div>
     </div>
   </div>

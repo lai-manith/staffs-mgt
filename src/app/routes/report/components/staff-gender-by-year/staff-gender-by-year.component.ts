@@ -178,8 +178,6 @@ export class StaffGenderByYearComponent implements OnInit {
   }
 
   async onPrint() {
-    // stop here, if not complete filter
-
     let docDefinition: any = await this.getDocumentDefinition(); // return document definition
 
     let fonts = {
@@ -204,7 +202,8 @@ export class StaffGenderByYearComponent implements OnInit {
     };
     const doughnutChart = {
       image: await this.getBase64ImageFromURLDoughnutChart(),
-      width: 200
+      width: 200,
+      alignment: 'center'
     };
     docDefinition.content.push(doughnutTitle, doughnutChart);
     pdfMake.createPdf(docDefinition, null, fonts).open();
@@ -327,7 +326,6 @@ export class StaffGenderByYearComponent implements OnInit {
   }
 
   getBase64ImageFromURLChart() {
-    console.log(1);
     return new Promise((resolve, reject) => {
       var img = new Image();
       img.setAttribute('crossOrigin', 'anonymous');

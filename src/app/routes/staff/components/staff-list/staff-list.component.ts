@@ -13,6 +13,7 @@ import * as XLSX from 'xlsx';
 
 import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
+import { stat } from 'fs';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -24,6 +25,7 @@ export class StaffListComponent implements OnInit {
   index: number;
   urlParam: string;
   staffs: Staff[];
+  dataRender: Staff[];
 
   constructor(
     private route: ActivatedRoute,
@@ -70,6 +72,9 @@ export class StaffListComponent implements OnInit {
   }
 
   onGetData(value: Staff[]): void {
+    this.dataRender = value.map(data => {
+      return { ...data };
+    });
     this.staffs = value.map(data => {
       return { ...data };
     });
@@ -94,17 +99,26 @@ export class StaffListComponent implements OnInit {
       delete map.file_name;
       delete map.attach_files;
 
+      if (this.index === 1) delete map.stop_working_date;
+
       return map;
     });
   }
 
-  exportAll(): void {
+  exportAll(status: number): void {
     this.staffService
       .getAll({ page: 1, limit: 0, status: this.index === 0 ? null : this.index === 2 ? false : true })
       .pipe(
         map(map => {
+          this.dataRender = map.list.map(data => {
+            return { ...data };
+          });
+
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+            data.status =
+              data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
+
             data.date_of_birth = this.customMonth(data.date_of_birth) as any;
             data.hire_date = this.customMonth(data.hire_date) as any;
             data.contract_expiry_date = this.customMonth(data.contract_expiry_date) as any;
@@ -119,18 +133,21 @@ export class StaffListComponent implements OnInit {
 
             delete data._id;
             delete data['__v'];
-            delete data.status;
             delete data.month_worked;
             delete data.profile;
             delete data.file_name;
+            delete data.status;
             delete data.attach_files;
+
+            if (this.index === 1) delete data.stop_working_date;
           }
           return map;
         })
       )
       .subscribe(
         res => {
-          this.excelService.exportAsExcelFile(res.list, 'staff-list');
+          if (status === 1) this.onPrint();
+          else this.excelService.exportAsExcelFile(res.list, 'staff-list');
         },
         err =>
           this.snackbarService.onShowSnackbar({
@@ -141,34 +158,81 @@ export class StaffListComponent implements OnInit {
       );
   }
 
-  export(): void {
-    this.onPrint();
-    //this.excelService.exportAsExcelFile(this.staffs, 'staff-list');
+  khmerMonth(date: Date): string {
+    let newDate = new Date(date);
+    return (
+      formatDate(newDate, 'dd', 'en-US') +
+      '-' +
+      this.monthPipe.transform(newDate.getMonth().toString()) +
+      '-' +
+      newDate.getFullYear()
+    );
+  }
+
+  export(status: number): void {
+    if (status === 1) this.onPrint();
+    else this.excelService.exportAsExcelFile(this.staffs, 'staff-list');
   }
 
   customMonth(date: Date) {
     return formatDate(new Date(date), 'dd-MM-yyyy', 'en-US');
   }
 
+  getBase64ImageFromURL(url: string) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
 
-  mapTableBody(data: any[]): Array<Array<string>> {
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL('image/png');
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
+
+  mapTableBody(data: Staff[]): Array<Array<string>> {
     let tbData: any[];
-    tbData = [['លេខរៀង', 'ឈ្មោះ', 'ភេទ', 'ពិន្ទុចុងឆ្នាំ', 'អវត្តមានសរុប', 'លទ្ធផលចុងឆ្នាំ']];
+    tbData = [['លេខរៀង', 'ឈ្មោះ', 'អត្តលេខ', 'អាយុ', 'ភេទ', 'តំណែង', 'ថ្ងៃចូលធ្វើការ', 'ថ្ងៃផុតកុងត្រា', 'ស្ថានភាព']];
     for (let i: number = 0; i < data.length; i++) {
+      if (data[i].gender === 'male' || data[i].gender === 'female') {
+        data[i].gender = data[i].gender === 'male' ? 'ប្រុស' : 'ស្រី';
+      }
+
+      if (!data[i].status?.name) {
+        data[i].status =
+          data[i].status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
+      }
+
       const tempRow = [];
       tempRow.push(i + 1);
-      tempRow.push(data[i].name);
+      tempRow.push(data[i].first_name + ' ' + data[i].last_name);
+      tempRow.push(data[i].id_card);
+      tempRow.push(data[i].age);
       tempRow.push(data[i].gender);
-      tempRow.push(data[i].year_average);
-      tempRow.push(data[i].attendances);
-      tempRow.push(data[i].pass_fail);
-
+      tempRow.push(data[i].position.title);
+      tempRow.push(this.khmerMonth(data[i].hire_date));
+      tempRow.push(this.khmerMonth(data[i].contract_expiry_date));
+      tempRow.push(data[i].status?.name);
       tbData.push(tempRow);
     }
     return tbData;
   }
 
-  onPrint() {
+  async onPrint() {
     const cWidths = [];
     cWidths.push('auto');
     cWidths.push('*');
@@ -176,19 +240,19 @@ export class StaffListComponent implements OnInit {
     cWidths.push('auto');
     cWidths.push('auto');
     cWidths.push('auto');
+    cWidths.push('auto');
+    cWidths.push('auto');
+    cWidths.push('auto');
 
-    let dataRender = this.staffs;
-
-    let dataBody = this.mapTableBody(dataRender);
+    let dataBody = this.mapTableBody(this.dataRender);
     let styledData = dataBody.map((rowValue, rIndex) =>
       dataBody[rIndex].map((columnValue, cIndex) => {
-
         //Sample Data to return
         let dataReturn = {
           text: '',
           color: '#424242',
           margin: [10, 5, 10, 5],
-          alignment: 'center',
+          alignment: 'left',
           fillColor: ''
         };
 
@@ -197,116 +261,60 @@ export class StaffListComponent implements OnInit {
           dataReturn.color = '#000';
           dataReturn.fillColor = '#D3E4DD';
           return dataReturn;
-        }
-        else if (cIndex === 0) {
+        } else if (cIndex === 0) {
           dataReturn.text = columnValue;
           dataReturn.color = '#237a57';
           if (rIndex % 2 === 0) {
             dataReturn.fillColor = '#e8f1ee';
             return dataReturn;
-          }
-          else {
+          } else {
             return dataReturn;
           }
         }
 
         if (rIndex % 2 === 0) {
-          if (+columnValue === 1) {
-            dataReturn.color = '#13A200';
-            dataReturn.text = 'ជាប់';
-            dataReturn.fillColor = '#e8f1ee';
-            return dataReturn;
-          }
-          else if (+columnValue === -1) {
-            dataReturn.text = 'ធ្លាក់';
-            dataReturn.color = '#F44336';
-            dataReturn.fillColor = '#e8f1ee';
-            return dataReturn;
-          }
-          else {
-            dataReturn.text = columnValue;
-            dataReturn.fillColor = '#e8f1ee';
-            return dataReturn;
-          }
-        }
-        else {
-          if (+columnValue === -1) {
-            dataReturn.text = 'ធ្លាក់';
-            dataReturn.color = '#F44336';
-            return dataReturn;
-          }
-          else if (+columnValue === 1) {
-            dataReturn.color = '#13A200';
-            dataReturn.text = 'ជាប់';
-            return dataReturn;
-          }
-          else {
-            dataReturn.text = columnValue;
-            return dataReturn;
-          }
+          dataReturn.text = columnValue;
+          dataReturn.fillColor = '#e8f1ee';
+          return dataReturn;
+        } else {
+          dataReturn.text = columnValue;
+          return dataReturn;
         }
       })
     );
 
-    let pdfTitle: string = "ព័ត៌មានថ្នាក់ និងចំនួនសិស្ស";
-    let classHeader: string = "ព័ត៌មានទូទៅក្នុងថ្នាក់";
-    let dataHeader = {
-      academicYear: 2022,
-      grade: 'test',
-      name: 'test',
-      classroom: 'test',
-      homeroomTeacher: 'test',
-      status: 1 === 1 ? { name: "សកម្ម", name_en: "active" } : { name: "អសកម្ម", name_en: "inactive" }
-    }
-    let tableHeader: string = "តារាងឈ្មោះសិស្សក្នុងថ្នាក់"
+    let pdfTitle: string = 'តារាងបុគ្គលិក';
 
     const DATA = {
       pageSize: 'A4',
+      pageOrientation: 'landscape',
       content: [
         {
-          text: pdfTitle, style: ['header', 'alignCenter']
-        },
-        {
-          text: classHeader,
-          style: 'sectionHeader'
-        },
-        {
+          alignment: 'center',
           columns: [
-            [
-              { text: `ឆ្នាំសិក្សា: ${dataHeader.academicYear}` },
-              { text: `ថ្នាក់: ${dataHeader.grade}` },
-              { text: `ឈ្មោះ:  ${dataHeader.name}` },
-              { text: `ថ្នាក់រៀន: ${dataHeader.classroom}` },
-            ],
-            [
-              {
-                text: `គ្រូបន្ទុកថ្នាក់: ${dataHeader.homeroomTeacher}`,
-                alignment: 'right'
-              },
-              {
-                text: `វេនសិក្សាបច្ចុប្បន្ន:  —/—`,
-                alignment: 'right'
-              },
-              {
-                alignment: 'right',
-                text: [
-                  {
-                    text: 'ស្ថានភាព:  '
-                  },
-                  {
-                    style: dataHeader.status.name_en,
-                    text: dataHeader.status.name,
-                  }
-                ]
-              }
-            ]
-          ]
+            {
+              image: await this.getBase64ImageFromURL('assets/imgs/logo.png'),
+              fit: [45, 46],
+              alignment: 'right'
+            },
+            {
+              text: [
+                {
+                  text: 'ភោជនីយដ្ឋានស្រូវ',
+                  fontSize: 18,
+                  color: '#4F9573',
+                  bold: true,
+                  alignment: 'left'
+                }
+              ],
+              margin: [0, 10]
+            }
+          ],
+          columnGap: 10,
+          margin: [0, -10, 0, 0]
         },
         {
-          text: '\n'
-        },
-        {
-          text: tableHeader,
+          text: pdfTitle,
           style: 'sectionHeader'
         },
         {
@@ -322,7 +330,7 @@ export class StaffListComponent implements OnInit {
             },
             vLineWidth: function (i, node) {
               return 0;
-            },
+            }
           }
         }
       ],
@@ -338,7 +346,7 @@ export class StaffListComponent implements OnInit {
         },
         subheader: {
           fontSize: 16,
-          bold: true,
+          bold: true
         },
         tableHeader: {
           bold: true,
@@ -352,7 +360,7 @@ export class StaffListComponent implements OnInit {
           margin: [-15, 0, 0, 0]
         },
         tableGrading: {
-          color: '#424242',
+          color: '#424242'
         },
         sectionHeader: {
           decoration: 'underline',

@@ -3,14 +3,34 @@
     <div class="app-title">
       <h1 class="title">បញ្ជីបុគ្គលិក</h1>
       <div class="group-btn">
-        <button mat-raised-button color="primary" (click)="export()" class="create-btn">
+        <button mat-raised-button color="print" class="create-btn" [matMenuTriggerFor]="menu">
           <mat-icon>file_download</mat-icon>
-          នាំចេញ
+          ទាញយក
         </button>
-        <button mat-raised-button color="primary" (click)="exportAll()" class="create-btn">
+        <button mat-raised-button color="print" class="create-btn" [matMenuTriggerFor]="menu1">
           <mat-icon>file_download</mat-icon>
-          នាំចេញទាំងអស់
+          ទាញយកទាំងអស់
         </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="export(1)">
+            <mat-icon svgIcon="pdf-icon"></mat-icon>
+            <span>PDF</span>
+          </button>
+          <button mat-menu-item (click)="export(2)">
+            <mat-icon svgIcon="csv-icon"></mat-icon>
+            <span>Excel</span>
+          </button>
+        </mat-menu>
+        <mat-menu #menu1="matMenu">
+          <button mat-menu-item (click)="exportAll(1)">
+            <mat-icon svgIcon="pdf-icon"></mat-icon>
+            <span>PDF</span>
+          </button>
+          <button mat-menu-item (click)="exportAll(2)">
+            <mat-icon svgIcon="csv-icon"></mat-icon>
+            <span>Excel</span>
+          </button>
+        </mat-menu>
       </div>
     </div>
     <mat-tab-group animationDuration="500ms" [selectedIndex]="index" (selectedIndexChange)="onIndexChange($event)">
