@@ -59,11 +59,11 @@
                         class="name">{{e.staff.first_name + ' ' + e.staff.last_name}}</span>
                       <mat-menu #menu="matMenu">
                         <button mat-menu-item [routerLink]="'/staff/staff-active/detail/' + e.staff._id">
-                          <mat-icon color="primary">visibility</mat-icon>
+                          <mat-icon svgIcon="visibility"></mat-icon>
                           <span>ព័ត៌មានលំអិត</span>
                         </button>
                         <button mat-menu-item (click)="onDeleteDayOff(e._id)">
-                          <mat-icon color="warn">delete</mat-icon>
+                          <mat-icon svgIcon="delete-color"></mat-icon>
                           <span>លុប</span>
                         </button>
                       </mat-menu>

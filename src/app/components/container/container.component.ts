@@ -111,15 +111,15 @@ export class ContainerComponent implements OnInit {
           {
             title: 'បុគ្គលិកតាមអាយុនិងភេទ',
             route: ['/report/gender'],
-            icon: '',
-            svgIcon: 'gender',
+            icon: 'transgender',
+            svgIcon: '',
             permissions: []
           },
           {
             title: 'បុគ្គលិកតាមតំណែង',
             route: ['/report/position'],
-            icon: '',
-            svgIcon: 'position_working',
+            icon: 'diversity_3',
+            svgIcon: '',
             permissions: []
           }
         ],

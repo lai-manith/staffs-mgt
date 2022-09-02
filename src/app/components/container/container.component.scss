@@ -38,7 +38,7 @@ $sm-width: 84px;
       mat-icon {
         width: 20px;
         height: 20px;
-        font-size: 18px;
+        font-size: 22px;
       }
 
       .mat-list-item {
@@ -203,6 +203,7 @@ mat-sidenav {
       .mat-icon {
         margin-right: 10px;
         min-width: 24px;
+        margin: 4px;
       }
     }
   }

@@ -153,7 +153,6 @@
   mat-nav-list#list-nav {
     .active {
       span,
-      mat-icon,
       .mat-expansion-indicator::after {
         filter: invert(48%) sepia(85%) saturate(218%) hue-rotate(98deg) brightness(92%) contrast(86%);
         color: variables.$color-primary !important;
@@ -163,6 +162,9 @@
     mat-list-item {
       .mat-list-item-content {
         width: 100%;
+        svg {
+          width: 28px;
+        }
       }
     }
 
