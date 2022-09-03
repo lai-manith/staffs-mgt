@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { ManageSalary } from 'src/app/models/salary';
 import { Staff } from 'src/app/models/staff';
 import { SalaryService } from 'src/app/services/salary.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';

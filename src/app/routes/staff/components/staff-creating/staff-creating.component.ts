@@ -1,17 +1,13 @@
-import { formatDate } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CityProvinces, Districts, Communes, Villages, Nationality } from 'src/app/models/address';
 import { Position } from 'src/app/models/position';
-import { Staff } from 'src/app/models/staff';
 import { AddressService } from 'src/app/services/address.service';
-import { DialogService } from 'src/app/services/dialog.service';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
-import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 
@@ -35,16 +31,12 @@ export class StaffCreatingComponent implements OnInit {
   isExpired: boolean = false;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private snackbarService: SnackbarService,
     private router: Router,
-    private dialogService: DialogService,
     private readonly positionService: PositionService,
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
-    private dialog: MatDialog,
     private addressService: AddressService,
     private staticFilePipe: StaticFilePipe
   ) {}
@@ -165,7 +157,7 @@ export class StaffCreatingComponent implements OnInit {
           message: 'add',
           component: SnackbarComponent
         });
-        this.router.navigate([this.url + '/detail/' + res._id]);
+        this.router.navigate(['staff/staff-active/detail/' + res._id]);
       },
       err => {
         this.isLoading = false;

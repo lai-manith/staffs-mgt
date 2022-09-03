@@ -6,7 +6,6 @@ import {
   Attendance,
   AttendanceCreateModel,
   AttendanceHistory,
-  AttendanceHistoryResponse,
   AttendanceResponse
 } from '../models/staff-attendance';
 import { BaseDatatable } from '../models/datatables/base.datatable';

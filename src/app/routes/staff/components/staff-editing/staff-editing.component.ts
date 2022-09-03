@@ -1,13 +1,9 @@
-import { formatDate } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CityProvinces, Districts, Communes, Villages, Address } from 'src/app/models/address';
 import { Staff } from 'src/app/models/staff';
-import { AddressService } from 'src/app/services/address.service';
 import { DialogService } from 'src/app/services/dialog.service';
-import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
@@ -18,8 +14,6 @@ import { map } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
-import { HttpHeaders } from '@angular/common/http';
-import { LocalStorageEnum } from 'src/app/models/enums/local-storage.enum';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
@@ -39,17 +33,14 @@ export class StaffEditingComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private snackbarService: SnackbarService,
     private router: Router,
     private dialogService: DialogService,
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
     private dialog: MatDialog,
-    private fb: FormBuilder,
     private staticFilePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
     private monthPipe: MonthPipe,
-    private localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {

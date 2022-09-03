@@ -99,9 +99,9 @@
         </ng-container>
 
         <ng-container matColumnDef="createAt">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃបង្កើត</th>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>ថ្ងៃកែប្រែ</th>
           <td mat-cell *matCellDef="let element">
-            <span class="mobile-label">ថ្ងៃបង្កើត:</span>
+            <span class="mobile-label">ថ្ងៃកែប្រែ:</span>
             <span>
               {{ element.createAt | date: 'dd' }}
               {{ element.createAt | date: 'MM' | khmerMonth }}

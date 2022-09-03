@@ -7,7 +7,6 @@ import { StaffCreatingComponent } from './components/staff-creating/staff-creati
 import { StaffEditingComponent } from './components/staff-editing/staff-editing.component';
 import { StaffListComponent } from './components/staff-list/staff-list.component';
 import { StaffSalaryComponent } from './components/staff-salary/staff-salary.component';
-import { StaffComponent } from './components/staff/staff.component';
 
 const routes: Routes = [
   {

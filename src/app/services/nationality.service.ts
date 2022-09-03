@@ -1,6 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Address, CityProvince } from '../models/address';
+import { Address } from '../models/address';
 import { Nationality } from '../models/nationality';
 import { BaseCrudService } from './base-crud.service';
 

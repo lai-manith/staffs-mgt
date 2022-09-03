@@ -2,7 +2,7 @@ import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseDatatable } from '../models/datatables/base.datatable';
 import { Staff } from '../models/staff';
-import { AttendanceHistory, AttendanceResponse } from '../models/staff-attendance';
+import { AttendanceHistory } from '../models/staff-attendance';
 import { BaseCrudService } from './base-crud.service';
 
 @Injectable({

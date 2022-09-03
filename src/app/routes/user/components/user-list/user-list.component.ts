@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { User } from 'src/app/models/user';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -37,9 +36,6 @@ export class UserListComponent implements OnInit {
   loadingTimeout: ReturnType<typeof setTimeout>;
 
   constructor(
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
     private userService: UserService,
     private snackbarService: SnackbarService,
     ) { }

@@ -1,13 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
-import { Filter } from 'src/app/models/filter';
 import { ManageSalary } from 'src/app/models/salary';
 import { Staff } from 'src/app/models/staff';
 import { DialogService } from 'src/app/services/dialog.service';
-import { PositionService } from 'src/app/services/position.service';
 import { SalaryService } from 'src/app/services/salary.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
@@ -34,7 +32,6 @@ export class StaffSalaryComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private router: Router,
     private route: ActivatedRoute,
     private snackBarService: SnackbarService,
     private salaryService: SalaryService,

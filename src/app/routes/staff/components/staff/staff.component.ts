@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map, take } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
 import { PositionService } from 'src/app/services/position.service';

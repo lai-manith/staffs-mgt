@@ -20,6 +20,7 @@ import { NativeDateModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { YearPickerModule } from '../year-picker/year-picker.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StaticMonthModule } from '../static-month/static-month.module';
 
 @NgModule({
   declarations: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent],
@@ -40,7 +41,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NativeDateModule,
     MatTooltipModule,
     YearPickerModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StaticMonthModule
   ],
   exports: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent]
 })

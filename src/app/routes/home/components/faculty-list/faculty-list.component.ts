@@ -5,9 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs';
 import { Staff } from 'src/app/models/staff';
 import { DashboardService } from 'src/app/services/dashboard.service';
-import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
 @Component({
@@ -33,7 +31,6 @@ export class FacultyListComponent {
     page: 1,
     limit: 10,
     search: '',
-    image_size: 150,
     status: null,
     gender: null,
     position: null
@@ -43,9 +40,6 @@ export class FacultyListComponent {
   images: string[];
 
   constructor(
-    private dialog: MatDialog,
-    private router: Router,
-    private route: ActivatedRoute,
     private dashboardService: DashboardService,
     private snackBarService: SnackbarService,
   ) {}

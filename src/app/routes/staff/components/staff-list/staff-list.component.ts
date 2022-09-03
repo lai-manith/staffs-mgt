@@ -4,16 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Staff } from 'src/app/models/staff';
 import { ExcelService } from 'src/app/services/excel.service';
-import { LoadingService } from 'src/app/services/loading.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
-import * as XLSX from 'xlsx';
 
 import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
-import { stat } from 'fs';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({

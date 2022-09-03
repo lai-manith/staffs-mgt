@@ -19,7 +19,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { RouterModule } from '@angular/router';
 import { NameModule } from './shares/name/name.module';
 import { SnackbarModule } from './shares/snackbar/snackbar.module';
-import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogModule } from './shares/confirm-dialog/confirm-dialog.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { QuillModule } from 'ngx-quill';

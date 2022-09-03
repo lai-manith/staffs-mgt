@@ -5,7 +5,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MonthPipe implements PipeTransform {
 
-  transform(value: string): string {
+  transform(value: string | Date | number): string {
 
     const khmerMonthList = [
       { value: 1, name: 'មករា'},

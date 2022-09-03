@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';

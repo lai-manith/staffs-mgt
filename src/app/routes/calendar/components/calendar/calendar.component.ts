@@ -9,7 +9,6 @@ import { StaffDayOff } from 'src/app/models/calendar';
 import { Staff } from 'src/app/models/staff';
 import { CalendarService } from 'src/app/services/calendar.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
-import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 import { StudentListDialogComponent } from '../student-list-dialog/student-list-dialog.component';
 
@@ -93,7 +92,6 @@ export class CalendarComponent implements OnInit {
   date: Date;
 
   constructor(
-    private staffService: StaffService,
     private snackBarService: SnackbarService,
     private readonly calendarService: CalendarService,
     private dialog: MatDialog,

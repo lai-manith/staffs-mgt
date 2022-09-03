@@ -3,7 +3,6 @@ import { Observable } from 'rxjs';
 import { StaffByGender, StaffByPosition, SalarySummary } from '../models/dashboard';
 import { BaseDatatable } from '../models/datatables/base.datatable';
 import { Staff } from '../models/staff';
-import { User } from '../models/user';
 import { BaseCrudService } from './base-crud.service';
 
 @Injectable({
@@ -38,7 +37,6 @@ export class DashboardService extends BaseCrudService<StaffByGender> {
     page?: number;
     limit?: number;
     status?: boolean;
-    image_size?: number;
     gender?: string;
     position?: string;
   }): Observable<BaseDatatable<Staff>> {

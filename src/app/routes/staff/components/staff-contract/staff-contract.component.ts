@@ -11,7 +11,6 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 import { StaffContractDialogComponent } from '../staff-contract-dialog/staff-contract-dialog.component';
-import { StaffSalaryDialogComponent } from '../staff-salary-dialog/staff-salary-dialog.component';
 
 @Component({
   selector: 'app-staff-contract',

@@ -2,7 +2,6 @@ import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChil
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MustMatch } from 'src/app/helpers/must-match';
 import { User } from 'src/app/models/user';
 import { DialogService } from 'src/app/services/dialog.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -40,12 +39,10 @@ export class UserEditingComponent implements OnInit {
   isLoading: boolean = false;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private router: Router,
-    private dialogService: DialogService,
     private userService: UserService,
     private dialog: MatDialog,
     private staticFilePipe: StaticFilePipe

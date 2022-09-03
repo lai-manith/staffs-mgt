@@ -9,7 +9,8 @@
     <mat-menu #menu class="menu-filter-panel">
       <div class="menu-filter-header">
         <b>ស្រង់តាម</b>
-        <span *ngIf="filterSet.size" (click)="reset(); $event.stopPropagation()" class="menu-filter-panel__clear">លុបចេញ​ទាំងអស់</span>
+        <span *ngIf="filterSet.size" (click)="reset(); $event.stopPropagation()"
+          class="menu-filter-panel__clear">លុបចេញ​ទាំងអស់</span>
       </div>
       <div class="grid gap-x-16 col-md-2 col-lg-2 col-xl-2" (click)="$event.stopPropagation()" (keyup)="null">
         <div *ngFor="let option of filters;" class="mt-8">
@@ -39,7 +40,7 @@
         </button>
 
         <button class="date-today" mat-stroked-button mwlCalendarToday (click)="dp.open();">
-          {{ date.value | date: 'MMMM yyyy' }}
+          {{ (date.value | date: 'MM' | khmerMonth) + ' ' + (date.value | date: 'yyyy') }}
           <div class="hidden">
             <input matInput [matDatepicker]="dp" readonly [formControl]="date">
             <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
@@ -49,8 +50,8 @@
           </div>
         </button>
 
-        <button class="btn-sm date-forward" mat-stroked-button mwlCalendarNextView (click)="onNextDate()" #tooltip="matTooltip"
-          matTooltip="Next Month" matTooltipPosition="right">
+        <button class="btn-sm date-forward" mat-stroked-button mwlCalendarNextView (click)="onNextDate()"
+          #tooltip="matTooltip" matTooltip="Next Month" matTooltipPosition="right">
           <mat-icon>navigate_next</mat-icon>
         </button>
       </div>

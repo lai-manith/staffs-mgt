@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ChartData, ChartOptions, InteractionMode, ChartDataset } from 'chart.js';
 import moment from 'moment';
 import { map } from 'rxjs';
@@ -17,7 +17,6 @@ import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 })
 export class HomeComponent {
   constructor(
-    private loadingService: LoadingService,
     private dashboardService: DashboardService,
     private snackbarService: SnackbarService,
     private khmerMonth: MonthPipe
@@ -39,6 +38,10 @@ export class HomeComponent {
   staffChartDataset: number[];
 
   salarySummary: SalarySummary;
+
+  date = new Date();
+  firstDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
+  lastDay = new Date(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).setMonth(new Date().getMonth() + 1));
 
   onGetGender(): void {
     this.dashboardService.getGender().subscribe(

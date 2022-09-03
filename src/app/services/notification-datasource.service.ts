@@ -3,8 +3,6 @@ import { formatDate } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subscription, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { EnumConstant } from '../models/enums/enumConstant';
-import { NotificationType } from '../models/enums/notification-type';
 import { Notification } from '../models/notification';
 import { NotificationService } from './notification.service';
 

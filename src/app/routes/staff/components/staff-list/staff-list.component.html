@@ -12,7 +12,7 @@
           ទាញយកទាំងអស់
         </button>
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="export(1)">
+          <button mat-menu-item (click)="export(1)" [disabled]="staffs?.length < 1">
             <mat-icon svgIcon="pdf-icon"></mat-icon>
             <span>PDF</span>
           </button>

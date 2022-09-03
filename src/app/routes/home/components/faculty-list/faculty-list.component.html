@@ -94,6 +94,12 @@
               <span>មើលព័ត៌មានលម្អិត</span>
             </button>
           </a>
+          <a [routerLink]="['/staff/staff-active/manage-attendant-year', element._id]" class="menu-item">
+            <button mat-menu-item>
+              <mat-icon svgIcon="attendant"></mat-icon>
+              <span>វត្តមាន</span>
+            </button>
+          </a>
           <a [routerLink]="['/staff/staff-active/manage-salary', element._id]" class="menu-item">
             <button mat-menu-item>
               <mat-icon>currency_exchange</mat-icon>
