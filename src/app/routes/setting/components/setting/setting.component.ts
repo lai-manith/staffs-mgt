@@ -4,7 +4,7 @@ export interface CardItem {
   svgIcon: string;
   title: string;
   route: string;
-};
+}
 
 @Component({
   selector: 'app-setting',
@@ -12,7 +12,6 @@ export interface CardItem {
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
-
   settings: CardItem[];
   academicItems: CardItem[];
   lmsItems: CardItem[];
@@ -20,14 +19,14 @@ export class SettingComponent implements OnInit {
   staffId: string;
   account: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.account = JSON.parse(localStorage.getItem('account'));
     this.settings = [
       { svgIcon: 'my-profile.svg', title: `ព័ត៌មានរបស់ខ្ញុំ`, route: 'manage-user/detail/' + this.account._id },
-      { svgIcon: 'manage-user.svg', title: `អ្នកគ្រប់គ្រង`, route: 'manage-user' }
+      { svgIcon: 'staff.svg', title: `អ្នកគ្រប់គ្រង`, route: 'manage-user' },
+      { svgIcon: 'manage-title.svg', title: `គ្រប់គ្រងតំណែង`, route: 'manage-position' }
     ];
   }
-
 }

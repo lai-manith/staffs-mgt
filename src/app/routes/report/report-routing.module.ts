@@ -11,12 +11,12 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'gender',
+    path: 'by_gender',
     canActivate: [AuthGuard],
     component: StaffGenderByYearComponent
   },
   {
-    path: 'position',
+    path: 'by_position',
     canActivate: [AuthGuard],
     component: StaffPositionByYearComponent
   }
