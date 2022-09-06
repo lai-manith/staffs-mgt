@@ -13,6 +13,6 @@ export interface StaffByPosition {
 export interface SalarySummary {
   max_salary?: number;
   min_salary?: number;
-  salary_per_month?: number;
-  salary_per_year?: number;
+  max_age?: number;
+  min_age?: number;
 }

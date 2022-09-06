@@ -41,7 +41,9 @@ export class HomeComponent {
 
   date = new Date();
   firstDay = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
-  lastDay = new Date(new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).setMonth(new Date().getMonth() + 1));
+  lastDay = new Date(
+    new Date(this.date.getFullYear(), this.date.getMonth() + 1, 0).setMonth(new Date().getMonth() + 1)
+  );
 
   onGetGender(): void {
     this.dashboardService.getGender().subscribe(
@@ -73,14 +75,8 @@ export class HomeComponent {
             style: 'currency',
             currency: 'USD'
           }) as any;
-          map.salary_per_month = map.salary_per_month.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.salary_per_year = map.salary_per_year.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
+          map.max_age = map.max_age;
+          map.min_age = map.min_age;
           return map;
         })
       )

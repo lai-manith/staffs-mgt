@@ -1,12 +1,21 @@
 <div class="home">
   <h1 class="title">ផ្ទាំងគ្រប់គ្រង</h1>
-  <div class="grid gap-16 col-lg-3 mb-16">
+  <div class="grid gap-16 col-lg-4 mb-16">
     <mat-card class="mat-elevation-z0 p-32">
       <div class="stat-detail">
-        <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="lecturer icon" />
+        <img src="assets/imgs/dashboard-staff.svg" svgIcon="student" alt="lecturer icon" />
         <div>
-          <h1>{{salarySummary?.salary_per_month}}</h1>
-          <p>ចំណាយប្រចាំខែ</p>
+          <h1>{{(salarySummary?.max_age ?? 0) + ' ឆ្នាំ'}}</h1>
+          <p>បុគ្គលិកអាយុច្រើនបំផុត</p>
+        </div>
+      </div>
+    </mat-card>
+    <mat-card class="mat-elevation-z0 p-32">
+      <div class="stat-detail">
+        <img src="assets/imgs/dashboard-staff.svg" svgIcon="student" alt="lecturer icon" />
+        <div>
+          <h1>{{(salarySummary?.min_age ?? 0) + ' ឆ្នាំ'}}</h1>
+          <p>បុគ្គលិកអាយុតិចបំផុត</p>
         </div>
       </div>
     </mat-card>
