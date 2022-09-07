@@ -41,6 +41,7 @@ export class YearPickerComponent implements ControlValueAccessor {
   selectedYear: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild(MatDatepicker) _picker: MatDatepicker<Moment>;
   _inputCtrl: FormControl = new FormControl(this._max);
+  date: Date = new Date();
 
   // Function to call when the date changes.
   onChange = (year: Date) => { };

@@ -8,11 +8,11 @@
   <div class="table">
     <div class="calendar-header">
       <section class="calendar-button">
-        <button class="date-back" mat-button type="button" (click)="decreaseMonth()">
+        <button class="date-back" mat-button type="button" (click)="decreaseMonth()" matTooltip="ខែមុន">
           <mat-icon>west</mat-icon>
         </button>
         <button class="date-today" mat-button type="button" (click)="setCurrentMonth()">ថ្ងៃនេះ</button>
-        <button class="date-forward" mat-button type="button" (click)="increaseMonth()">
+        <button class="date-forward" mat-button type="button" (click)="increaseMonth()" matTooltip="ខែបន្ទាប់">
           <mat-icon>east</mat-icon>
         </button>
       </section>

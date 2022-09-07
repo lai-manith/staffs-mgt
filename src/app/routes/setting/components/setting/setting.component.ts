@@ -26,7 +26,7 @@ export class SettingComponent implements OnInit {
     this.settings = [
       { svgIcon: 'my-profile.svg', title: `ព័ត៌មានរបស់ខ្ញុំ`, route: 'manage-user/detail/' + this.account._id },
       { svgIcon: 'staff.svg', title: `អ្នកគ្រប់គ្រង`, route: 'manage-user' },
-      { svgIcon: 'manage-title.svg', title: `គ្រប់គ្រងតំណែង`, route: 'manage-position' }
+      { svgIcon: 'manage-title.svg', title: `តំណែង`, route: 'manage-position' }
     ];
   }
 }

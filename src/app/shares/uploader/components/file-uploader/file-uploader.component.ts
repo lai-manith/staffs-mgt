@@ -40,7 +40,7 @@ export class FileUploaderComponent implements OnInit {
           title: 'ទំហំឯកសារធំពេក',
           message: 'ទំហំឯកសារធំបំផុត: 5MB'
         };
-        this.dialog.open(ConfirmDialogComponent, {
+        return this.dialog.open(ConfirmDialogComponent, {
           width: '420px',
           data
         });
@@ -59,7 +59,7 @@ export class FileUploaderComponent implements OnInit {
           title: 'មិនមែនជាប្រភេទឯកសារ ដែលបានកំណត់',
           message: 'ប្រភេទឯកសារ: PDF, DOC, DOCX'
         };
-        this.dialog.open(ConfirmDialogComponent, {
+        return this.dialog.open(ConfirmDialogComponent, {
           width: '420px',
           data
         });

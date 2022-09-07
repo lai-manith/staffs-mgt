@@ -32,9 +32,9 @@ export class StudentListDialogComponent implements OnInit {
     'position',
     'hire_date',
     'contact_expiry_date',
-    'action',
+    'action'
   ];
-  dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);;
+  dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);
   total: number;
   params = {
     page: 1,
@@ -43,7 +43,7 @@ export class StudentListDialogComponent implements OnInit {
     image_size: 150,
     status: true,
     gender: null,
-    position: null,
+    position: null
   };
   isLoading: boolean = true;
   loadingTimeout: ReturnType<typeof setTimeout>;
@@ -57,34 +57,34 @@ export class StudentListDialogComponent implements OnInit {
       data: [
         {
           label: 'ទាំងអស់',
-          value: null,
-        },
+          value: null
+        }
       ],
       selectedIndex: 0,
       labelFunc: 'តំណែង',
       paramKey: 'position',
-      matIcon: 'person',
+      matIcon: 'person'
     },
     {
       data: [
         {
           label: 'ទាំងអស់',
-          value: null,
+          value: null
         },
         {
           label: 'ស្រី',
-          value: 'female',
+          value: 'female'
         },
         {
           label: 'ប្រុស',
-          value: 'male',
-        },
+          value: 'male'
+        }
       ],
       selectedIndex: 0,
       labelFunc: 'ភេទ',
       paramKey: 'gender',
-      matIcon: 'transgender',
-    },
+      matIcon: 'transgender'
+    }
   ];
 
   constructor(
@@ -98,7 +98,7 @@ export class StudentListDialogComponent implements OnInit {
     private readonly calendarService: CalendarService,
     private staffService: StaffService,
     private positionService: PositionService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.onSetActiveFilter();
@@ -135,13 +135,13 @@ export class StudentListDialogComponent implements OnInit {
         })
       )
       .subscribe(
-        (res) => {
+        res => {
           this.dataSource = new MatTableDataSource(res.list);
           this.total = res.total;
           this.onCheckDataReload();
           this.setLoading(false);
         },
-        (err) =>
+        err =>
           this.snackBarService.onShowSnackbar({
             message: err.error.message ?? err,
             component: SnackbarComponent,
@@ -158,10 +158,10 @@ export class StudentListDialogComponent implements OnInit {
     };
     this.positionService.getMany(param).subscribe(
       res => {
-        res.list.forEach((element) => {
+        res.list.forEach(element => {
           this.filters[0].data.push({
             label: element.title,
-            value: element._id,
+            value: element._id
           });
         });
       },
@@ -181,15 +181,14 @@ export class StudentListDialogComponent implements OnInit {
   }
 
   onSubmit() {
-    // this.assignDataList = [];
-    // this.selectedDataList.forEach(element => {
-    //   this.assignDataList.push(element._id);
-    // });
+    this.assignDataList = [];
+    this.selectedDataList.forEach(element => {
+      this.assignDataList.push(element._id);
+    });
 
-    //if (this.assignDataList.length < 1) return;
+    if (this.assignDataList.length < 1) return;
     this.dialogRef.close({
-      // staff: this.assignDataList.toString()
-      staff: this.id
+      staff: this.assignDataList.toString()
     });
   }
 
@@ -290,10 +289,7 @@ export class StudentListDialogComponent implements OnInit {
 
     this.params.page = 1;
     this.onLoad();
-    this.selectedFilterCount = [
-      this.params.gender,
-      this.params.position,
-    ].filter((fil) => fil || fil === false).length;
+    this.selectedFilterCount = [this.params.gender, this.params.position].filter(fil => fil || fil === false).length;
   }
 
   goTo(event) {
@@ -314,5 +310,4 @@ export class StudentListDialogComponent implements OnInit {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => this.onLoad(), 500);
   }
-
 }

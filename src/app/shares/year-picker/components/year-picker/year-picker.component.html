@@ -1,21 +1,22 @@
 <div class="datepicker-arrow year-picker" id="datepicker-arrow">
   <button (click)="onPrevDate()" mat-stroked-button color="print" class="btn-sm create-btn" #tooltip="matTooltip"
-    matTooltip="ថ្ងៃមុន" matTooltipPosition="below">
+    matTooltip="ឆ្នាំមុន" matTooltipPosition="below">
     <mat-icon matPrefix>chevron_left</mat-icon>
   </button>
   <mat-form-field appearance="outline" (click)="datepicker.open()">
     <input matInput [max]="_max" [matDatepicker]="datepicker" [formControl]="_inputCtrl"
-    (click)="_openDatepickerOnClick(datepicker)" readonly>
+      (click)="_openDatepickerOnClick(datepicker)" readonly>
     <mat-datepicker-toggle matPrefix [for]="datepicker" (click)="_openDatepickerOnClick(datepicker)"
-    (focus)="_openDatepickerOnFocus(datepicker)">
+      (focus)="_openDatepickerOnFocus(datepicker)">
       <mat-icon matDatepickerToggleIcon>date_range</mat-icon>
     </mat-datepicker-toggle>
     <mat-datepicker #datepicker startView="multi-year" (yearSelected)="_yearSelectedHandler($event,datepicker)">
     </mat-datepicker>
   </mat-form-field>
   <span></span>
-  <button (click)="onNextDate()" mat-stroked-button color="print" class="btn-sm create-btn" #tooltip="matTooltip"
-    matTooltip="ថ្ងៃបន្ទាប់" matTooltipPosition="below">
+  <button [disabled]="+(_inputCtrl.value | date: 'yyyy') >= +(date | date: 'yyyy')" (click)="onNextDate()"
+    mat-stroked-button color="print" class="btn-sm create-btn" #tooltip="matTooltip" matTooltip="ឆ្នាំបន្ទាប់"
+    matTooltipPosition="below">
     <mat-icon matPrefix>navigate_next</mat-icon>
   </button>
 </div>

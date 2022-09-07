@@ -97,6 +97,21 @@
     .group-btn {
       margin-left: auto;
     }
+
+    @media screen and (max-width: 600px) {
+      .group-btn {
+        display: flex;
+        flex-direction: column;
+
+        button:not(:first-child) {
+          margin-top: 8px;
+        }
+
+        button:not(:last-child) {
+          margin-right: 0;
+        }
+      }
+    }
   }
 
   .sub-title {

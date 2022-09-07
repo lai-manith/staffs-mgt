@@ -217,7 +217,7 @@ export class StaffListComponent implements OnInit {
       const tempRow = [];
       tempRow.push(i + 1);
       tempRow.push(data[i].first_name + ' ' + data[i].last_name);
-      tempRow.push(data[i].id_card);
+      tempRow.push(data[i].staff_id);
       tempRow.push(data[i].age);
       tempRow.push(data[i].gender);
       tempRow.push(data[i].position.title);
