@@ -13,7 +13,6 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   styleUrls: ['./staff-contract-dialog.component.scss']
 })
 export class StaffContractDialogComponent implements OnInit {
-
   form: FormGroup;
   id: string;
   isLoading: boolean = false;
@@ -53,25 +52,28 @@ export class StaffContractDialogComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.contractService.updateContract(this.data._id, { new_expired_contract: this.form.value.new_expired_contract }).subscribe(
-      res => {
-        this.isLoading = false;
-        this.snackbarService.onShowSnackbar({
-          message: 'កុងត្រាត្រូវបានកែប្រែដោយជោគជ័យ',
-          component: SnackbarComponent
-        });
-        this.dialogRef.close(this.form.value);
-      },
-      err => {
-
-        this.isLoading = false;
-        this.snackbarService.onShowSnackbar({
-          message: err.error.message === 'Invalid date of new contract' ? 'ថ្ងៃផុតកុងត្រាថ្មីមិនត្រឹមត្រូវ' : err.error.message,
-          component: SnackbarComponent,
-          isError: true
-        })
-      }
-    );
+    this.contractService
+      .updateContract(this.data._id, { new_expired_contract: this.form.value.new_expired_contract })
+      .subscribe(
+        res => {
+          this.isLoading = false;
+          this.snackbarService.onShowSnackbar({
+            message: 'កុងត្រាត្រូវបានកែប្រែដោយជោគជ័យ',
+            component: SnackbarComponent
+          });
+          this.dialogRef.close(this.form.value);
+        },
+        err => {
+          this.isLoading = false;
+          this.snackbarService.onShowSnackbar({
+            message:
+              err.error.message === 'Invalid date of new contract'
+                ? 'ថ្ងៃផុតកុងត្រាថ្មីមិនត្រឹមត្រូវ'
+                : err.error.message,
+            component: SnackbarComponent,
+            isError: true
+          });
+        }
+      );
   }
-
 }

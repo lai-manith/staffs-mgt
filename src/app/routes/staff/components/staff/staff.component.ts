@@ -30,6 +30,7 @@ export class StaffComponent implements OnInit {
     'position',
     'hire_date',
     'contract_expiry_date',
+    'province',
     'status',
     '_id'
   ];

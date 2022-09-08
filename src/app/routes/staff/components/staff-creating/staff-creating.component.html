@@ -39,7 +39,7 @@
             <div>
               <label>លេខអត្តសញ្ញាណប័ណ្ណ</label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="id_card" placeholder="*">
+                <input type="number" matInput formControlName="id_card" placeholder="*">
                 <mat-error *ngIf="form.get('staff_id').errors?.required">
                   ទាមទារ
                 </mat-error>

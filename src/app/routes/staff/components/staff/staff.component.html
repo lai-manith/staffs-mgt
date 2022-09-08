@@ -83,6 +83,14 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="province">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ទីកន្លែងកំណត់</th>
+      <td mat-cell *matCellDef="let element">
+        <span class="mobile-label">ទីកន្លែងកំណត់:</span>
+        <span>{{ element.place_of_birth.city_provinces.name }}</span>
+      </td>
+    </ng-container>
+
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>ស្ថានភាព</th>
       <td mat-cell *matCellDef="let element">
