@@ -203,7 +203,7 @@ export class StaffListComponent implements OnInit {
 
   mapTableBody(data: Staff[]): Array<Array<string>> {
     let tbData: any[];
-    tbData = [['លេខរៀង', 'ឈ្មោះ', 'អត្តលេខ', 'អាយុ', 'ភេទ', 'តំណែង', 'ថ្ងៃចូលធ្វើការ', 'ថ្ងៃផុតកុងត្រា', 'ស្ថានភាព']];
+    tbData = [['លេខរៀង', 'ឈ្មោះ', 'អត្តលេខ', 'អាយុ', 'ភេទ', 'តំណែង', 'ថ្ងៃចូលធ្វើការ', 'ថ្ងៃផុតកុងត្រា', 'ទីកន្លែងកំណើត', 'ស្ថានភាព']];
     for (let i: number = 0; i < data.length; i++) {
       if (data[i].gender === 'male' || data[i].gender === 'female') {
         data[i].gender = data[i].gender === 'male' ? 'ប្រុស' : 'ស្រី';
@@ -223,6 +223,7 @@ export class StaffListComponent implements OnInit {
       tempRow.push(data[i].position.title);
       tempRow.push(this.khmerMonth(data[i].hire_date));
       tempRow.push(this.khmerMonth(data[i].contract_expiry_date));
+      tempRow.push(data[i].place_of_birth.city_provinces.name);
       tempRow.push(data[i].status?.name);
       tbData.push(tempRow);
     }
@@ -233,6 +234,7 @@ export class StaffListComponent implements OnInit {
     const cWidths = [];
     cWidths.push('auto');
     cWidths.push('*');
+    cWidths.push('auto');
     cWidths.push('auto');
     cWidths.push('auto');
     cWidths.push('auto');

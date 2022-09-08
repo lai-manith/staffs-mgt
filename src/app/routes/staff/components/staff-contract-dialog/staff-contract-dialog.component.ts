@@ -53,7 +53,7 @@ export class StaffContractDialogComponent implements OnInit {
     }
     this.isLoading = true;
     this.contractService
-      .updateContract(this.data._id, { new_expired_contract: this.form.value.new_expired_contract })
+      .updateContract(this.data._id, { new_expired_contract: formatDate(this.form.value.new_expired_contract, 'MM-dd-yyyy', 'en-US') })
       .subscribe(
         res => {
           this.isLoading = false;

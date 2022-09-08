@@ -6,15 +6,13 @@ import { BaseCrudService } from './base-crud.service';
 @Injectable({
   providedIn: 'root'
 })
-export class ContractService  extends BaseCrudService<ManageContract> {
-
+export class ContractService extends BaseCrudService<ManageContract> {
   constructor(injector: Injector) {
     super(injector);
     this.path = '/contract';
   }
 
-  updateContract(_id: string, data: {new_expired_contract: Date}):Observable<ManageContract>{
-    return this.requestService.patchJSON<ManageContract>(this.path + '/' + _id, { data })
+  updateContract(_id: string, data: { new_expired_contract: string }): Observable<ManageContract> {
+    return this.requestService.patchJSON<ManageContract>(this.path + '/' + _id, { data });
   }
-
 }
