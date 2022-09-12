@@ -34,11 +34,11 @@ export class FileUploaderComponent implements OnInit {
         'application/msword'
       ];
       const bytesToMegaBytes = bytes => bytes / 1024 ** 2;
-      if (+bytesToMegaBytes(file.size).toFixed(2) > 5) {
+      if (+bytesToMegaBytes(file.size).toFixed(2) > 1) {
         let data = {
           icon: 'assets/imgs/document-unknown.svg',
           title: 'ទំហំឯកសារធំពេក',
-          message: 'ទំហំឯកសារធំបំផុត: 5MB'
+          message: 'ទំហំឯកសារធំបំផុត: 1MB'
         };
         return this.dialog.open(ConfirmDialogComponent, {
           width: '420px',

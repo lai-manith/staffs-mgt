@@ -25,7 +25,8 @@
           <mat-icon matPrefix>mail</mat-icon>
           {{isVerified ? 'ប្ដូរ' : (isVerified === false ? 'ភ្ជាប់' : '')}}
         </button>
-        <button mat-flat-button *ngIf="isSelf === false" (click)="onSetStatusAccount(!userLoad?.status)" [color]="userLoad?.status ? 'warn' : 'print'">
+        <button mat-flat-button *ngIf="isSelf === false" (click)="onSetStatusAccount(!userLoad?.status)"
+          [color]="userLoad?.status ? 'warn' : 'print'">
           <mat-icon>{{userLoad?.status ? 'person_off' : 'person_add'}}</mat-icon>
           {{userLoad?.status ? 'បិទគណនី' : 'បើកគណនី'}}
         </button>
@@ -36,7 +37,8 @@
     <div class="detail-form grid gap-16 col-lg-2">
       <div class="left-side">
         <div class="profile-with-name mb-16">
-          <img class="lecturer-profile" [src]="(userLoad?.profile | staticFile) || 'assets/imgs/profile-default.svg'" alt="profile picture">
+          <img class="lecturer-profile" [src]="(userLoad?.profile | staticFile) || 'assets/imgs/profile-default.svg'"
+            alt="profile picture">
           <div class="grid gap-4 ml-16">
             <div class="value name mb-8">{{userLoad | fullName}}</div>
             <div>តំណែង: អ្នកគ្រប់គ្រង</div>
@@ -81,7 +83,8 @@
             </div>
             <div>
               <label>ស្ថានភាព</label>
-              <div [ngStyle]="{'color': userLoad?.status ? 'green' : 'red'}" class="value">{{userLoad?.status ? 'សកម្ម' : 'អសកម្ម'}}</div>
+              <div [ngStyle]="{'color': userLoad?.status ? 'green' : 'red'}" class="value">
+                {{userLoad?.status ? 'សកម្ម' : 'អសកម្ម'}}</div>
             </div>
           </div>
         </div>
@@ -352,7 +355,7 @@
         </div>
         <ng-template #hasCode>
           <div style="text-align: center;">
-            <h4>លេខកូដផ្ទៀងផ្ទាត់</h4>
+            <p><strong>លេខកូដផ្ទៀងផ្ទាត់</strong></p>
             <p>
               សូមវាយបញ្ចូលលេខកូដដែលបានបញ្ជូនទៅកាន់
               <br>
@@ -377,7 +380,7 @@
               </ng-template>
             </div>
             <div class="space-2"></div>
-            <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់spam របស់អ្នក</p>
+            <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់ spam របស់អ្នក</p>
           </div>
         </ng-template>
       </div>
