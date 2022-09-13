@@ -15,7 +15,7 @@
     <mat-card class="mat-elevation-z0 filter-card with-create grid gap-16 col-md-3 bg-grey mb-16 border">
       <div class="search-box">
         <div class="filter-search">
-          <app-datepicker [ngStyle]="{'pointer-event': dataSource?.data?.length < 0 ? 'none' : ''}"
+          <app-datepicker [ngClass]="dataSource?.data?.length < 0 || !isCompleted ? 'e-none' : ''"
             (dateChange)="dateChange($event)"></app-datepicker>
         </div>
       </div>

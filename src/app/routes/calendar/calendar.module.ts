@@ -3,8 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarRoutingModule } from './calendar-routing.module';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { MatIcon, MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { CalendarDatePipe } from 'src/app/shares/calendar-date/pipes/calendar-date.pipe';
+import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { StaticMonthModule } from 'src/app/shares/static-month/static-month.module';
 import { MatMenuModule } from '@angular/material/menu';
@@ -30,6 +29,8 @@ import { StaticFileModule } from 'src/app/shares/static-file/static-file.module'
 import { DomSanitizer } from '@angular/platform-browser';
 import { ProfileHoverModule } from 'src/app/shares/profile-hover/profile-hover.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -64,7 +65,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     NameModule,
     StaticFileModule,
     ProfileHoverModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    StaticMonthModule
   ]
 })
 export class CalendarModule {

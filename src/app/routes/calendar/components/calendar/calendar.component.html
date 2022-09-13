@@ -17,8 +17,16 @@
         </button>
       </section>
       <section class="date-display">
-        <div class="space-2"></div>
-        <span>{{displayDate.month | khmerMonth}} {{displayDate.year}}</span>
+        <button class="date-today pb-7" mat-button (click)="dp.open();">
+          <span>{{displayDate.month | khmerMonth}} {{displayDate.year}}</span>
+          <div class="hidden">
+            <input matInput [matDatepicker]="dp" readonly [formControl]="dateForm">
+            <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+            <mat-datepicker #dp startView="multi-year" (monthSelected)="onDateChange($event, dp)"
+              panelClass="example-month-picker">
+            </mat-datepicker>
+          </div>
+        </button>
       </section>
     </div>
     <div class="wrapper" *ngIf="calendar">

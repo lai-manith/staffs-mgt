@@ -55,7 +55,7 @@ export class AttendanceComponent implements OnInit {
     }
   ];
 
-  isCompleted: boolean = false;
+  isCompleted: boolean = true;
   isSaved: boolean = true;
   isCanSave: boolean = false;
   attendance: Attendance[];
@@ -68,6 +68,7 @@ export class AttendanceComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   getAttendance() {
+    this.isCompleted = false;
     let today = new Date();
     today.setHours(0, 0, 0);
     this.isCanSave = false;
@@ -109,6 +110,7 @@ export class AttendanceComponent implements OnInit {
           };
           this.attendance.unshift(temp);
           this.dataSource = new MatTableDataSource(this.attendance);
+          this.isCompleted = true;
         }
       },
       err =>

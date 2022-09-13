@@ -1,6 +1,8 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { formatDate } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
@@ -95,7 +97,7 @@ export class CalendarComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly calendarService: CalendarService,
     private dialog: MatDialog,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -275,6 +277,12 @@ export class CalendarComponent implements OnInit {
       } while (startingDateOfCalendar.getDay() != 1);
     }
     return startingDateOfCalendar;
+  }
+
+  dateForm: FormControl = new FormControl(new Date());
+  onDateChange(value?: any, datepicker?: MatDatepicker<Date>): void {
+    this.generateCalendarDays(new Date(value));
+    if (datepicker) datepicker.close();
   }
 
   increaseMonth() {

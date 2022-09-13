@@ -16,12 +16,10 @@ export class PositionCreatingComponent implements OnInit {
   _id: string = this.route.snapshot.params.id;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private snackbarService: SnackbarService,
     private router: Router,
-    private dialogService: DialogService,
     private positionService: PositionService
   ) {}
 
@@ -34,7 +32,7 @@ export class PositionCreatingComponent implements OnInit {
     this.positionService.create(this.form.value).subscribe(
       res => {
         this.snackbarService.onShowSnackbar({ message: 'add', component: SnackbarComponent });
-        this.router.navigate(['/position/detail/' + res._id]);
+        this.router.navigate(['/setting/manage-position/detail/' + res._id]);
       },
       err => {
         this.snackbarService.onShowSnackbar({

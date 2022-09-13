@@ -12,58 +12,56 @@
   </div>
 
   <div class="detail-form grid gap-16 col-12">
-      <div class="profile-with-name mb-16 col-span-4">
-          <img class="school-profile"
-              [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
-              alt="profile picture">
-          <div class="grid gap-4 ml-16">
-              <div class="value name mb-8">{{staff | fullName}}</div>
-              <div>អត្តលេខ: {{' '+ staff?.staff_id}}</div>
-          </div>
+    <div class="profile-with-name mb-16 col-span-4">
+      <img class="school-profile"
+        [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
+        alt="profile picture">
+      <div class="grid gap-4 ml-16">
+        <div class="value name mb-8">{{staff | fullName}}</div>
+        <div>អត្តលេខ: {{' '+ staff?.staff_id}}</div>
       </div>
-      <div class="col-span-8">
-          <div label="General Information">
-              <div class="grid gap-16 col-sm-3">
-                  <div>
-                      <label>ភេទ</label>
-                      <div class="value">{{staff?.gender}}</div>
-                  </div>
-                  <div>
-                      <label>ថ្ងៃកំណើត</label>
-                      <div class="value">
-                        {{ staff?.date_of_birth | date: 'dd' }}
-                        {{ staff?.date_of_birth | date: 'MM' | khmerMonth }}
-                        {{ staff?.date_of_birth | date: 'yyyy' }}
-                      </div>
-                  </div>
-                  <div>
-                      <label>ជនជាតិ</label>
-                      <div class="value">Khmer</div>
-                  </div>
-                  <div>
-                      <label>សញ្ជាតិ</label>
-                      <div class="value">{{staff?.nationality.nationality}}</div>
-                  </div>
-                  <div>
-                      <label>តំណែង</label>
-                      <div class="value">{{staff?.position?.title}}</div>
-                  </div>
-                  <div>
-                      <label> លេខទូរស័ព្ទ </label>
-                      <div class="phone-number">
-                          <div class="value">{{staff?.phone}}</div>
-                      </div>
-                  </div>
-              </div>
+    </div>
+    <div class="col-span-8">
+      <div label="General Information">
+        <div class="grid gap-16 col-sm-3">
+          <div>
+            <label>ភេទ</label>
+            <div class="value">{{staff?.gender}}</div>
           </div>
+          <div>
+            <label>ថ្ងៃកំណើត</label>
+            <div class="value">
+              {{ staff?.date_of_birth | date: 'dd' }}
+              {{ staff?.date_of_birth | date: 'MM' | khmerMonth }}
+              {{ staff?.date_of_birth | date: 'yyyy' }}
+            </div>
+          </div>
+          <div>
+            <label>ជនជាតិ</label>
+            <div class="value">Khmer</div>
+          </div>
+          <div>
+            <label>សញ្ជាតិ</label>
+            <div class="value">{{staff?.nationality.nationality}}</div>
+          </div>
+          <div>
+            <label>តំណែង</label>
+            <div class="value">{{staff?.position?.title}}</div>
+          </div>
+          <div>
+            <label> លេខទូរស័ព្ទ </label>
+            <div class="phone-number">
+              <div class="value">{{staff?.phone}}</div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
   </div>
-</div>
-<div class="mt-16"></div>
-<div class="app-content staff-salary">
+
   <div class="detail-form">
-    <div class="flex justify-between mb-16">
-      <div class="header-label">ប្រវត្តិនៃការកែប្រែប្រាក់ខែ</div>
+    <div class="flex justify-between item-center mb-16">
+      <div class="header-label" style="margin-bottom: 0">ប្រវត្តិនៃការកែប្រែប្រាក់ខែ</div>
       <button mat-raised-button color="primary" class="create-btn" (click)="updateSalary()">
         <mat-icon svgIcon="add_new"></mat-icon>
         កែប្រែប្រាក់ខែ

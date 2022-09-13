@@ -17,7 +17,6 @@ export class PositionEditingComponent implements OnInit {
   _id: string = this.route.snapshot.params.id;
 
   constructor(
-    private cd: ChangeDetectorRef,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private snackbarService: SnackbarService,
@@ -89,7 +88,7 @@ export class PositionEditingComponent implements OnInit {
         if (res === 'confirm') {
           this.positionService.delete(this._id).subscribe(
             res => {
-              this.router.navigate(['/', 'position']);
+              this.router.navigate(['/setting/manage-position']);
               this.snackbarService.onShowSnackbar({
                 message: 'delete',
                 component: SnackbarComponent

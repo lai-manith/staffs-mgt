@@ -25,7 +25,7 @@ export class StaffAttendanceService extends BaseCrudService<Attendance> {
     limit?: number;
     search?: string;
   }): Observable<BaseDatatable<Attendance>> {
-    return this.requestService.getJSON<BaseDatatable<Attendance>>(this.path, { data, is_loading: true });
+    return this.requestService.getJSON<BaseDatatable<Attendance>>(this.path, { data });
   }
 
   createAttendance(data: AttendanceCreateModel): Observable<AttendanceCreateModel> {
