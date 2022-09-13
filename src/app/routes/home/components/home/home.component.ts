@@ -67,16 +67,16 @@ export class HomeComponent {
       .getSalarySummary()
       .pipe(
         map(map => {
-          map.max_salary = map.max_salary.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.min_salary = map.min_salary.toLocaleString('en-US', {
-            style: 'currency',
-            currency: 'USD'
-          }) as any;
-          map.max_age = map.max_age;
-          map.min_age = map.min_age;
+          // map.max_salary = map.max_salary.toLocaleString('en-US', {
+          //   style: 'currency',
+          //   currency: 'USD'
+          // }) as any;
+          // map.min_salary = map.min_salary.toLocaleString('en-US', {
+          //   style: 'currency',
+          //   currency: 'USD'
+          // }) as any;
+          // map.max_age = map.max_age;
+          // map.min_age = map.min_age;
           return map;
         })
       )

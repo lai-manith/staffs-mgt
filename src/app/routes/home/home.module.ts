@@ -26,9 +26,10 @@ import { StaticMonthModule } from 'src/app/shares/static-month/static-month.modu
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
 import { MatMenuModule } from '@angular/material/menu';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
+import { CountUpDirective } from './components/count-up.directive';
 
 @NgModule({
-  declarations: [HomeComponent, FacultyListComponent],
+  declarations: [HomeComponent, FacultyListComponent, CountUpDirective],
   imports: [
     CommonModule,
     HomeRoutingModule,

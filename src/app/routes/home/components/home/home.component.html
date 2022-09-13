@@ -5,7 +5,9 @@
       <div class="stat-detail">
         <img src="assets/imgs/dashboard-staff.svg" svgIcon="student" alt="lecturer icon" />
         <div>
-          <h1>{{(salarySummary?.max_age ?? 0) + ' ឆ្នាំ'}}</h1>
+          <section class="flex">
+            <h1 [countUp]="salarySummary?.max_age ?? 0"></h1><span class="ml-8">ឆ្នាំ</span>
+          </section>
           <p>បុគ្គលិកអាយុច្រើនបំផុត</p>
         </div>
       </div>
@@ -14,7 +16,9 @@
       <div class="stat-detail">
         <img src="assets/imgs/dashboard-staff.svg" svgIcon="student" alt="lecturer icon" />
         <div>
-          <h1>{{(salarySummary?.min_age ?? 0) + ' ឆ្នាំ'}}</h1>
+          <section class="flex">
+            <h1 [countUp]="salarySummary?.min_age ?? 0"></h1><span class="ml-8">ឆ្នាំ</span>
+          </section>
           <p>បុគ្គលិកអាយុតិចបំផុត</p>
         </div>
       </div>
@@ -23,7 +27,10 @@
       <div class="stat-detail">
         <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="earning icon" />
         <div>
-          <h1>{{salarySummary?.max_salary}}</h1>
+          <section class="flex">
+            <summary class="mr-8">$</summary>
+            <h1 [countUp]="salarySummary?.max_salary"></h1>
+          </section>
           <p>ប្រាក់ខែខ្ពស់បំផុត</p>
         </div>
       </div>
@@ -32,7 +39,10 @@
       <div class="stat-detail">
         <img src="assets/imgs/dashboard-money.svg" svgIcon="student" alt="faculty icon" />
         <div>
-          <h1>{{salarySummary?.min_salary}}</h1>
+          <section class="flex">
+            <summary class="mr-8">$</summary>
+            <h1 [countUp]="salarySummary?.min_salary"></h1>
+          </section>
           <p>ប្រាក់ខែទាបបំផុត</p>
         </div>
       </div>
