@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Staff } from 'src/app/models/staff';
@@ -14,7 +13,6 @@ import { map } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -38,9 +36,9 @@ export class StaffEditingComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
     private dialog: MatDialog,
-    private staticFilePipe: StaticFilePipe,
+    private staticImagePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
-    private monthPipe: MonthPipe,
+    private monthPipe: MonthPipe
   ) {}
 
   ngOnInit(): void {
@@ -187,7 +185,7 @@ export class StaffEditingComponent implements OnInit {
     this.staffService
       .getBase64Image({
         profile: this.staff?.profile
-          ? (this.staticFilePipe.transform(this.staff?.profile) as string)
+          ? (this.staticImagePipe.transform(this.staff?.profile) as string)
           : 'assets/imgs/profile-default.png'
       })
       .subscribe(
@@ -225,7 +223,8 @@ export class StaffEditingComponent implements OnInit {
         },
         {
           image: this.imgBase64,
-          absolutePosition: { x: 470, y: 35 }
+          absolutePosition: { x: 470, y: 35 },
+          fit: [95, 125]
         },
 
         {

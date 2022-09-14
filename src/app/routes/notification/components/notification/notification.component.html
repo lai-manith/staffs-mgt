@@ -1,7 +1,7 @@
 <button mat-icon-button class="button-border alert" [matMenuTriggerFor]="notification"
   #notificationTrigger="matMenuTrigger" (menuOpened)="menuOpened()">
-  <mat-icon [matBadge]="dataSource.unreadCount > 0 ? dataSource.unreadCount : ''" matBadgeColor="accent" matBadgeSize="small"
-    svgIcon="notification"></mat-icon>
+  <mat-icon [matBadge]="dataSource.unreadCount > 0 ? dataSource.unreadCount : ''" matBadgeColor="accent"
+    matBadgeSize="small" svgIcon="notification"></mat-icon>
 </button>
 <mat-menu #notification="matMenu" xPosition="before" backdropClass="notification">
   <mat-nav-list class="noti-content" (click)="$event.stopPropagation();">
@@ -16,7 +16,8 @@
       [ngClass]="dataSource.cachedNotifications.length < 1 ? 'no-data' : ''">
       <mat-list-item *cdkVirtualFor="let data of dataSource; index as i" class="noti-text">
         <div class="profile" (click)="notificationTrigger.closeMenu() ;goToNotificationSource(data)">
-          <div [style.background-image]="'url('+ ((data?.staff?.profile | staticFile) || imgDefault) + ')'"
+          <div
+            [style.background-image]="data?.staff?.profile ? 'url('+ ('size=s' + data?.staff?.profile | staticImage) + ')' : 'url('+ imgDefault + ')' "
             class="profile-picture mr-6">
           </div>
         </div>
@@ -30,7 +31,8 @@
           </div>
 
           <button *ngIf="data.read === 0" [matMenuTriggerFor]="button" #buttonTrigger="matMenuTrigger" mat-icon-button
-            class="button-border alert unread-dot" #tooltip="matTooltip" matTooltip="មានច្រើនទៀត" matTooltipPosition="right">
+            class="button-border alert unread-dot" #tooltip="matTooltip" matTooltip="មានច្រើនទៀត"
+            matTooltipPosition="right">
             <mat-icon>more_horiz</mat-icon>
           </button>
 

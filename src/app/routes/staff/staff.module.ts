@@ -43,6 +43,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { StaffAttendanceComponent } from './components/staff-attendance/staff-attendance.component';
 import { AttendanceTranslateModule } from 'src/app/shares/attendance-translate/attendance-translate.module';
 import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module';
+import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.pipe';
 
 
 @NgModule({
@@ -89,7 +90,7 @@ import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module'
     AttendanceTranslateModule,
     YearPickerModule
   ],
-  providers: [StaticFilePipe, DurationPipe, MonthPipe]
+  providers: [StaticFilePipe, DurationPipe, MonthPipe, StaticImagePipe]
 })
 export class StaffModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {

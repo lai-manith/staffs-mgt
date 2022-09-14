@@ -99,7 +99,7 @@ export class HomeComponent {
   public chartOptions: ChartOptions = {};
   public tooltipMode: InteractionMode;
 
-  backgroundColor: string[] = ['#ED589D', '#3AACFF'];
+  backgroundColor: string[] = ['#00C67C', '#DAD873'];
 
   ngOnInit(): void {
     this.onGetGender();
@@ -124,15 +124,15 @@ export class HomeComponent {
         const datasets: ChartDataset[] = [
           {
             label: 'បុគ្គលិកស្រី',
-            backgroundColor: ['#ED589D'],
-            hoverBackgroundColor: ['#ED589D'],
+            backgroundColor: this.backgroundColor[0],
+            hoverBackgroundColor: this.backgroundColor[0],
             barThickness: 16,
             data: data[0]
           },
           {
             label: 'បុគ្គលិកប្រុស',
-            backgroundColor: ['#3AACFF'],
-            hoverBackgroundColor: ['#3AACFF'],
+            backgroundColor: this.backgroundColor[1],
+            hoverBackgroundColor: this.backgroundColor[1],
             barThickness: 16,
             data: data[1]
           }

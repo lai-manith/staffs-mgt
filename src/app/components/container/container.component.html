@@ -3,8 +3,7 @@
     <mat-sidenav #sidenav class="example-sidenav" [class.large-width]="mobileQuery || isExpanded"
       [mode]="mobileQuery ? 'over' : 'side'" [opened]="!mobileQuery" [disableClose]="!mobileQuery">
       <div class="main-logo" routerLink="/">
-        <img
-          src="{{account?.schools?.profile_image ? (account.schools?.profile_image) : 'assets/imgs/logo.png'}}"
+        <img src="{{account?.schools?.profile_image ? (account.schools?.profile_image) : 'assets/imgs/logo.png'}}"
           width="68" height="68" alt="logo-image" />
       </div>
       <mat-nav-list class="menu-list" id="list-nav">
@@ -58,7 +57,7 @@
                     <span class="role">អ្នកគ្រប់គ្រង</span>
                   </div>
                   <img mat-card-avatar class="avtar-icon" alt="avatar"
-                    [src]="account?.profile? (account?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
+                    [src]="account?.profile ? ('size=s' + account?.profile | staticImage) + '' : '/assets/imgs/profile-default.svg'"
                     onerror="this.src='/assets/imgs/profile-default.svg'" />
                 </button>
                 <mat-menu #beforeMenu="matMenu" xPosition="before">

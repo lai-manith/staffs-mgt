@@ -3,7 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ChildItem, MenuItem } from 'src/app/models/menu-item';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -44,7 +44,7 @@ export class ContainerComponent implements OnInit {
     private userDataService: UserDataService,
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
-    private snackBarService: SnackbarService,
+    private snackBarService: SnackbarService
   ) {
     this.menuAdmin = [
       {
@@ -142,31 +142,31 @@ export class ContainerComponent implements OnInit {
     this.authSubscribe = this.authService.authChange$.subscribe(isAuth => {
       this.isAuth = isAuth;
       if (this.isAuth) {
-        this.profileService.getAccountInfo()
-          .subscribe(data => {
+        this.profileService.getAccountInfo().subscribe(
+          data => {
             this.account = data;
             this.profileService.staffId = data._id;
             this.userDataService.changeUserData(data);
             localStorage.setItem('account', JSON.stringify(data));
             this.initSidenav();
           },
-            err => {
-              if(err.error.message == "Not Found Data") {
-                this.snackBarService.onShowSnackbar({
-                  message: 'សូមចូលប្រព័ន្ធម្ដងទៀត',
-                  component: SnackbarComponent,
-                  isError: true
-                })
-                this.logout();
-              } else {
-                this.snackBarService.onShowSnackbar({
-                  message: 'សូមចូលប្រព័ន្ធម្ដងទៀត',
-                  component: SnackbarComponent,
-                  isError: true
-                })
-              }
+          err => {
+            if (err.error.message == 'Not Found Data') {
+              this.snackBarService.onShowSnackbar({
+                message: 'សូមចូលប្រព័ន្ធម្ដងទៀត',
+                component: SnackbarComponent,
+                isError: true
+              });
+              this.logout();
+            } else {
+              this.snackBarService.onShowSnackbar({
+                message: 'សូមចូលប្រព័ន្ធម្ដងទៀត',
+                component: SnackbarComponent,
+                isError: true
+              });
             }
-          );
+          }
+        );
       }
     });
   }
@@ -185,13 +185,11 @@ export class ContainerComponent implements OnInit {
   subscription;
   onReloadData() {
     // subscribe to the school service to reload logo when data is updated.
-    this.subscription = this.userService.get().subscribe(
-      res => {
-        setTimeout(() => {
-          this.account = res;
-        }, 500);
-      }
-    )
+    this.subscription = this.userService.get().subscribe(res => {
+      setTimeout(() => {
+        this.account = res;
+      }, 500);
+    });
   }
   ngOnDestroy() {
     // this._sidenavService.sideNavState$.next();

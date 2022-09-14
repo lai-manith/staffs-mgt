@@ -18,9 +18,6 @@ export class ImageUploaderComponent implements OnInit {
   @Input() onSubmit: boolean;
   @Output() uploadFileEvent = new EventEmitter();
   @Output() fileEvent = new EventEmitter();
-  @Input() aspectRatio: number = 3 / 4;
-  @Input() resizeToWidth: number = 90;
-  @Input() resizeToHeight: number = 125;
 
   constructor(private dialog: MatDialog) {}
 
@@ -51,7 +48,6 @@ export class ImageUploaderComponent implements OnInit {
 
   fileChange(files: FileList) {
     this.fileName = files[0].name;
-    this.imageChangedEvent = files;
     if (files.length) {
       const file = files[0];
       const supportImage = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -79,33 +75,5 @@ export class ImageUploaderComponent implements OnInit {
   removeFile() {
     this.file = null;
     this.uploadFileEvent.emit(null);
-  }
-
-  imageChangedEvent: any = '';
-  croppedImage: any = '';
-  imageCropped(event: ImageCroppedEvent) {
-    const imageName = this.fileName;
-    const imageBlob = this.dataURItoBlob(event.base64);
-    const imageFile = new File([imageBlob], imageName, { type: 'image/png' });
-    this.uploadFileEvent.emit(imageFile);
-  }
-  imageLoaded() {
-    // show cropper
-  }
-  cropperReady() {
-    // cropper ready
-  }
-  loadImageFailed() {
-    // show message
-  }
-  dataURItoBlob(dataURI) {
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for (var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {
-      type: 'image/jpg'
-    });
   }
 }

@@ -62,7 +62,7 @@
 
         <div *ngIf="formState == 1" class="form-field" @fastFadeIn>
           <form [formGroup]="formEmail" (ngSubmit)="formEmail.valid && onGetCode()">
-            <h3 style="text-align: center;">ការស្តារគណនី</h3>
+            <p style="text-align: center;"><strong>ការស្តារគណនី</strong></p>
             <p class="desc-title" style="text-align: center;">សូម​បញ្ចូលអាសយដ្ឋានអុីម៉ែល
               ដើម្បីស្តារគណនីរបស់អ្នកឡើងវិញ។</p>
             <div class="user-detail">
@@ -88,7 +88,7 @@
         </div>
 
         <div *ngIf="formState == 2" class="form-field" style="text-align: center;" @fastFadeIn>
-          <h3 style="text-align: center;">ការស្តារគណនី</h3>
+          <p><strong>លេខកូដផ្ទៀងផ្ទាត់</strong></p>
           <p class="desc-title" style="text-align: center;">
             សូមវាយបញ្ចូលលេខកូដដែលបានបញ្ជូនទៅកាន់
             <br>
@@ -96,21 +96,19 @@
           </p>
           <ng-otp-input [ngClass]="invalidCode ? 'my-otp-input-invalid' : 'my-otp-input'"
             (onInputChange)="onOtpChange($event)" [config]="config" style="margin: 10px 0;"></ng-otp-input>
-          <div class="space-2"></div>
-          <div style="margin-top: 10px;">
+          <div class="mt-16 mb-16">
             <span *ngIf="!isCodeExpired; else codeExpire;">
               {{ resendTime.min | number: '2.0-0' }} : {{ resendTime.sec | number: '2.0-0' }}
             </span>
             <ng-template #codeExpire>
               <span>
                 មិនបានទទួលលេខកូដ?
-                <a style="color: #59558e; cursor: pointer;" (click)="onResend()">
+                <a style="color: #4f9573; cursor: pointer;" (click)="onResend()">
                   បញ្ជូនម្តងទៀត
                 </a>
               </span>
             </ng-template>
           </div>
-          <div class="space-2"></div>
           <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់spam របស់អ្នក</p>
           <div class="back">
             <mat-icon matPrefix>keyboard_backspace</mat-icon>
@@ -180,7 +178,7 @@
     <!-- image log in page -->
     <div class="image-form">
       <div class="image-svg">
-        <img src="https://res.cloudinary.com/dxrkctl9c/image/upload/v1639122414/image/sign-in-animate_eea8az.svg"
+        <img src="/assets/imgs/login.svg"
           alt="login.svg">
       </div>
     </div>

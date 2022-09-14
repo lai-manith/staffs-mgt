@@ -17,9 +17,5 @@
     </div>
     <input type="file" #pickThumbnail (change)="fileChange(pickThumbnail.files);"
       accept=".png, .jpg, .jpeg" hidden>
-
-    <image-cropper [ngStyle]="{'width': '15em', 'margin': 'auto'}" *ngIf="file && isFile" [resizeToWidth]="resizeToWidth" [resizeToHeight]="resizeToHeight" [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="aspectRatio"
-      format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()"></image-cropper>
   </div>
 </section>

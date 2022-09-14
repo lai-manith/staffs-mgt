@@ -1,4 +1,3 @@
-
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,6 +9,7 @@ import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
+import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.pipe';
 
 @Component({
   selector: 'app-staff-creating',
@@ -38,7 +38,8 @@ export class StaffCreatingComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
     private addressService: AddressService,
-    private staticFilePipe: StaticFilePipe
+    private staticFilePipe: StaticFilePipe,
+    private staticImagePipe: StaticImagePipe
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class StaffCreatingComponent implements OnInit {
   onLoad() {
     this.staffService.getById(this.route.snapshot.params.id).subscribe(
       res => {
-        let image = this.staticFilePipe.transform(res.profile) as string;
+        let image = res?.profile ? (this.staticImagePipe.transform('size=m' + res.profile) as string) : null;
         this.form.patchValue({
           staff_id: res?.staff_id,
           last_name: res.last_name,

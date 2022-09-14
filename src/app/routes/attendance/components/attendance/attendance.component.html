@@ -31,7 +31,7 @@
           <td mat-cell *matCellDef="let element">
             <div class="thumbnail-list" *ngIf="element._id != 'all'">
               <div
-                [ngStyle]="{ 'background-image': element?.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+                [ngStyle]="{ 'background-image': element?.profile ? 'url(' + ( 'size=s' + element.profile | staticImage) +')' : 'url(/assets/imgs/profile-default.svg)' }"
                 class="profile-picture"></div>
               <div>
                 <span class="ml-4">{{element | fullName}}</span>

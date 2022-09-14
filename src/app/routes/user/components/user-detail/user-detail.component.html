@@ -37,7 +37,8 @@
     <div class="detail-form grid gap-16 col-lg-2">
       <div class="left-side">
         <div class="profile-with-name mb-16">
-          <img class="lecturer-profile" [src]="(userLoad?.profile | staticFile) || 'assets/imgs/profile-default.svg'"
+          <img class="lecturer-profile"
+            [src]="userLoad?.profile ? ( 'size=m' + userLoad?.profile | staticImage) : 'assets/imgs/profile-default.svg'"
             alt="profile picture">
           <div class="grid gap-4 ml-16">
             <div class="value name mb-8">{{userLoad | fullName}}</div>
@@ -366,7 +367,7 @@
               (onInputChange)="funcVerifyStatus === 1 ? onOtpChange($event) : onChangeVerifyEmail($event)"
               [config]="config" style="margin: 10px 0;">
             </ng-otp-input>
-            <div style="margin-top: 10px;">
+            <div class="mt-16 mb-16">
               <span *ngIf="!isCodeExpired; else codeExpire;">
                 {{ resendTime.min | number: '2.0-0' }} : {{ resendTime.sec | number: '2.0-0' }}
               </span>
@@ -379,7 +380,6 @@
                 </span>
               </ng-template>
             </div>
-            <div class="space-2"></div>
             <p>សូមពិនិត្យមេីលក្នុងប្រអប់សារ ឬ ប្រអប់ spam របស់អ្នក</p>
           </div>
         </ng-template>

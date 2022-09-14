@@ -72,7 +72,7 @@
             <span class="mobile-label">ឈ្មោះ:</span>
             <div class="thumbnail-list">
               <div
-                [ngStyle]="{ 'background-image': element?.profile ? 'url(' + (element.profile | staticFile) +')' : 'url(/assets/imgs/profile-default.svg)' }"
+                [ngStyle]="{ 'background-image': element?.profile ? 'url(' + ( 'size=s' + element.profile | staticImage) +')' : 'url(/assets/imgs/profile-default.svg)' }"
                 class="profile-picture"></div>
               <span>{{element | fullName}}</span>
             </div>

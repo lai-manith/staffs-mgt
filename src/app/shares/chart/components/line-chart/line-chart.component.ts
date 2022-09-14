@@ -29,16 +29,16 @@ export class LineChartComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const ctx = this.canvas.nativeElement.getContext('2d');
     const gradientStroke = ctx.createLinearGradient(100, 0, 500, 0);
-    gradientStroke.addColorStop(0, 'hsla(202, 100%, 68%, 0.8)');
-    gradientStroke.addColorStop(0.3, 'hsla(227, 100%, 68%, 0.8)');
-    gradientStroke.addColorStop(0.6, 'hsla(258, 100%, 68%, 0.8)');
-    gradientStroke.addColorStop(1, 'hsla(306, 100%, 68%, 0.8)');
+    gradientStroke.addColorStop(0, '#4F9573');
+    gradientStroke.addColorStop(0.3, '#EDE683');
+    gradientStroke.addColorStop(0.6, '#7BB278');
+    gradientStroke.addColorStop(1, '#B0CE7C');
 
     const gradientFill = ctx.createLinearGradient(100, 0, 500, 0);
-    gradientFill.addColorStop(0, 'hsla(202, 100%, 68%, 0.1)');
-    gradientFill.addColorStop(0.3, 'hsla(227, 100%, 68%, 0.1)');
-    gradientFill.addColorStop(0.6, 'hsla(258, 100%, 68%, 0.1)');
-    gradientFill.addColorStop(1, 'hsla(306, 100%, 68%, 0.1)');
+    gradientFill.addColorStop(0, '#7bb27836');
+    gradientFill.addColorStop(0.3, '#ede68329');
+    gradientFill.addColorStop(0.6, '#4f95736e');
+    gradientFill.addColorStop(1, '#dad87340');
 
     this.lineChartData.datasets[0].borderColor = gradientStroke;
     this.lineChartData.datasets[0].backgroundColor = gradientFill;

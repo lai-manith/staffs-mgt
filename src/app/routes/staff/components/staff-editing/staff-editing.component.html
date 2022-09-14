@@ -159,7 +159,7 @@
         <div class="header-label">រូបភាព</div>
         <div align="center">
             <div id="imge-base64" [style.background-image]="staff?.profile
-            ? 'url('+ (staff?.profile | staticFile) +')'
+            ? 'url('+ ('size=m' + staff?.profile | staticImage) +')'
             : 'url(assets/imgs/profile-default.svg'" class="lecturer-profile"></div>
         </div>
       </section>

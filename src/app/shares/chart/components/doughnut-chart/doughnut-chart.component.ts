@@ -26,7 +26,7 @@ export class DoughnutChartComponent implements OnInit {
       datasets: [
         {
           data: this.dougnutChartDataset,
-          backgroundColor: ['#ED589D', '#3AACFF']
+          backgroundColor: ['#00C67C', '#DAD873']
         }
       ]
     };
