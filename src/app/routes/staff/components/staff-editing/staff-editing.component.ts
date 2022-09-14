@@ -223,8 +223,8 @@ export class StaffEditingComponent implements OnInit {
         },
         {
           image: this.imgBase64,
-          absolutePosition: { x: 470, y: 35 },
-          fit: [95, 125]
+          absolutePosition: { x: 495, y: 35 },
+          fit: [65, 95]
         },
 
         {
