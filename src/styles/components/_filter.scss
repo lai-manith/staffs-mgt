@@ -1,103 +1,8 @@
-@use '../variables'as *;
+@use '../variables' as *;
 
 .filter-card {
   align-items: center;
-  padding: 10px 10px !important;
-
-  //* Calendar's Styles
-  .holiday-container {
-    margin-left: auto;
-    border-radius: $rounded-md;
-    &__btn-group {
-      position: relative;
-      display: inline-flex;
-      vertical-align: middle;
-
-      button {
-        border-color: $color-primary;
-        color: $color-primary;
-
-        &:not(:last-child) {
-          border-top-right-radius: 0;
-          border-bottom-right-radius: 0;
-        }
-
-        &:not(:first-child) {
-          border-top-left-radius: 0;
-          border-bottom-left-radius: 0;
-        }
-      }
-    }
-
-    .holiday-container__cal-title {
-      font-size: 25px;
-      font-weight: bold;
-      color: $color-primary;
-    }
-
-    //My Custom
-    .calendar-header {
-      //width: 100%;
-
-      // display: flex;
-      // align-items: center;
-      // margin-bottom: $spacing-lg - 7;
-      .calendar-button {
-        // color: $color-primary;
-
-        // button {
-        //   border: 1px solid $color-primary;
-        //   ;
-        //   padding: $spacing-xs - 2 $spacing-md + 4;
-        // }
-
-        .mat-form-field-wrapper {
-          padding-bottom: 0;
-        }
-
-        .date-today {
-          position: relative;
-          border-radius: $rounded-sm;
-          background: $color-white;
-          z-index: 1;
-          min-width: 145px;
-
-          .hidden {
-            position: absolute;
-            top: 0;
-            visibility: hidden;
-          }
-        }
-
-        .date-back {
-          // border-right: none;
-          transform: translateX(5px);
-        }
-
-        .date-forward {
-          // border-left: none;
-          transform: translateX(-5px);
-        }
-      }
-
-      .date-display {
-        width: 73%;
-        text-align: center;
-
-        span {
-          font-size: 25px;
-          color: $color-primary;
-          ;
-          font-weight: bold;
-        }
-      }
-    }
-
-    //!Align Text Space Between
-    .group-btn {
-      margin-left: auto;
-    }
-  }
+  padding: 10px 20px !important;
 
   .filter-box {
     .filter-icon {
@@ -132,6 +37,13 @@
     }
   }
 
+  .mat-form-field {
+    .mat-form-field-wrapper {
+      margin: 0;
+      padding-bottom: 0;
+    }
+  }
+
   .search-box {
     width: 100%;
 
@@ -144,11 +56,6 @@
         .mat-form-field-outline-end {
           min-width: 18px;
           background-color: white;
-        }
-
-        .mat-form-field-wrapper {
-          margin: 0;
-          padding-bottom: 0;
         }
       }
     }
@@ -191,6 +98,21 @@
   }
 }
 
+.filter-card.no-button {
+  .filter-wrapper {
+    display: flex;
+    width: 100%;
+
+    @media screen and (max-width: 700px) {
+      flex-direction: column;
+
+      .section-box:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
 //Custom Filter UI
 .menu-filter-panel {
   width: 350px;
@@ -199,21 +121,7 @@
   margin-top: 1em !important;
   box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
   padding: $spacing-md;
-  border-radius: $rounded-md !important;
-
-  .menu-filter-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 8px;
-
-    span {
-      cursor: pointer;
-
-      &:hover {
-        color: $color-red;
-      }
-    }
-  }
+  border-radius: $rounded-md  !important;
 
   .mat-select-value {
     text-align: center;
@@ -238,4 +146,277 @@
       background-color: #ffffff;
     }
   }
+}
+
+
+
+$input-height: 40;
+$input-width: 250;
+$box-rounded: calc($input-height / 2);
+$black: #000000;
+$spacing: 16;
+
+.filter-wrapper {
+
+  //*Filter Custom Style
+  .mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content {
+    right: -5px;
+  }
+
+  .mat-badge-medium.mat-badge-above .mat-badge-content {
+    top: -8px;
+  }
+
+  .mat-badge-medium .mat-badge-content {
+    width: 15px;
+    height: 15px;
+    line-height: 15px;
+    font-size: 10px;
+  }
+
+  .title {
+    font-size: 14px;
+  }
+
+  .section-box:not(:last-child) {
+    margin-right: $spacing * 1px;
+  }
+
+  .section-box {
+
+    .mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline-start,
+    .mat-form-field.mat-form-field-appearance-outline .mat-form-field-outline-end {
+      background-color: #fff;
+    }
+  }
+
+  .search-box,
+  .trigger-box .trigger-btn {
+    display: flex;
+    align-items: center;
+    height: $input-height * 1px;
+    border: 1px solid $color-thin-grey;
+    background: #fff;
+    border-radius: 10px;
+    padding: 0 8px;
+
+    mat-icon {
+      color: rgba($black, 0.4);
+    }
+  }
+
+  .search-box {
+    width: $input-width * 1px;
+    // min-width: $input-width * 1px;
+
+    input {
+      width: 100%;
+      background: transparent;
+      line-height: inherit;
+      outline: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    mat-icon {
+      min-width: 24px;
+    }
+  }
+
+  .trigger-box {
+    .trigger-btn {
+      min-width: 200px;
+      outline: none;
+      cursor: pointer;
+      line-height: 35px;
+      font-size: 14px;
+      font-weight: 400;
+
+      .title {
+        width: 100%;
+        margin: 0 0.5em;
+        text-align: start;
+        color: rgba($black, 0.4);
+      }
+    }
+
+    .filter-icon {
+      width: 18px;
+    }
+  }
+
+  @media screen and (min-width: (map-get($map: $grid-breakpoints, $key: "sm") + 100px)) {
+    display: flex;
+
+    .trigger-box {
+      flex: 1;
+
+      .trigger-btn {
+        min-width: 200px;
+        outline: none;
+        cursor: pointer;
+        line-height: 35px;
+        font-size: 14px;
+        font-weight: 400;
+
+        .title {
+          width: 100%;
+          margin: 0 0.5em;
+          text-align: flex-start;
+          color: rgba($black, 0.4);
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: (map-get($map: $grid-breakpoints, $key: "sm") + 101px)) {
+
+    .search-box,
+    .trigger-box,
+    .trigger-box .trigger-btn {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.selection-card {
+  .search-box {
+    .mat-form-field-appearance-outline .mat-form-field-wrapper {
+      padding: 8px;
+    }
+  }
+}
+
+.filter-select {
+  display: inline-block;
+}
+
+//Custom Filter UI
+.menu-filter-panel {
+  width: 360px;
+  min-width: 360px !important;
+  max-width: none !important;
+  margin-top: 1em !important;
+  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+  padding: $spacing * 1px;
+  border-radius: $spacing * 1px !important;
+
+  &__clear {
+    cursor: pointer;
+
+    &:hover {
+      color: rgb(246, 36, 85);
+    }
+  }
+
+  .menu-filter-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  .mat-menu-content {
+    padding: 0 !important;
+  }
+
+  .mat-select-value {
+    text-align: center;
+  }
+
+  .filter-icon {
+    width: 24px;
+    height: 24px;
+    padding: 2px;
+  }
+
+  .mat-form-field-wrapper {
+    padding: 0;
+  }
+
+  .mat-form-field-prefix {
+    mat-icon {
+      color: $color-secondary;
+    }
+  }
+
+  .mat-accent.mat-radio-checked {
+    .mat-radio-outer-circle {
+      border-color: $bittersweet;
+    }
+
+    .mat-radio-inner-circle {
+      background-color: $bittersweet;
+    }
+
+    .mat-radio-label-content {
+      color: $bittersweet;
+    }
+  }
+
+  .mat-form-field.mat-form-field-appearance-outline {
+    .mat-form-field-outline-start {
+      background-color: #ffffff !important;
+    }
+
+    .mat-form-field-outline-end {
+      background-color: #ffffff;
+    }
+  }
+
+  //?make only single filter box fit content
+  .grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+    @media screen and (max-width: map-get($map: $grid-breakpoints, $key: 'md')) {
+      grid-template-columns: auto;
+    }
+  }
+}
+
+
+.no-result-found {
+  font-size: inherit;
+  line-height: 3em;
+  height: 3em;
+  padding: 0 16px;
+}
+
+.option-container {
+  height: 240px;
+  overflow: auto;
+}
+
+.custom-radio-filter {
+  max-height: 24em;
+  overflow-y: auto;
+
+  .mat-radio-label {
+    height: 100%;
+  }
+
+  .custom-radio-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    padding: 0;
+    border-top: 0;
+  }
+
+  .custom-radio-button {
+    display: flex;
+    height: 48px;
+    padding: 0 16px;
+    width: 100%;
+    align-items: center;
+    border-radius: 4px;
+  }
+
+  .no-data {
+    display: flex;
+    justify-content: center;
+  }
+
 }

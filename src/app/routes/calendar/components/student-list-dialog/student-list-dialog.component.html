@@ -6,8 +6,7 @@
 <mat-divider></mat-divider>
 <mat-dialog-content class="app-content">
   <div class="mt-16"></div>
-  <app-filter-without-create-new [filters]="filters" (queryFilter)="setParams($event)" (queryEvent)="onSearch($event)">
-  </app-filter-without-create-new>
+  <app-filter (queryEvent)="onSearch($event)"></app-filter>
   <div id="table">
     <div class="progress-table">
       <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

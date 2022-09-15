@@ -19,9 +19,7 @@ export class PositionComponent implements OnInit {
   params = {
     page: 1,
     limit: 10,
-    search: '',
-    image_size: 150,
-    status: null
+    search: ''
   };
   isLoading: boolean = true;
   loadingTimeout: ReturnType<typeof setTimeout>;

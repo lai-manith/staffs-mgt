@@ -1,5 +1,6 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
+import { CityProvinces } from '../models/address';
 import { BaseDatatable } from '../models/datatables/base.datatable';
 import { Staff } from '../models/staff';
 import { AttendanceHistory } from '../models/staff-attendance';
@@ -31,10 +32,6 @@ export class StaffService extends BaseCrudService<Staff> {
     return this.requestService.getJSON<Staff>(this.path + '/' + _id);
   }
 
-  getFilter(): Observable<string[]> {
-    return this.requestService.getJSON<string[]>(this.path + '/filter/status');
-  }
-
   getBase64Image(data: { profile: string }): Observable<string[]> {
     return this.requestService.postJSON<string[]>(this.path + '/image_base64', { data });
   }
@@ -51,11 +48,7 @@ export class StaffService extends BaseCrudService<Staff> {
     return this.requestService.patchJSON<Staff>(this.path + '/' + _id + '/set_status', {});
   }
 
-  getStaffCalendarExpired(data: {
-    start_date: string;
-    end_date: string;
-    image_size: 200;
-  }): Observable<BaseDatatable<Staff>> {
+  getStaffCalendarExpired(data: { start_date: string; end_date: string }): Observable<BaseDatatable<Staff>> {
     return this.requestService.getJSON<BaseDatatable<Staff>>('/calendar', { data });
   }
 
@@ -67,5 +60,9 @@ export class StaffService extends BaseCrudService<Staff> {
     staff: string;
   }): Observable<BaseDatatable<AttendanceHistory>> {
     return this.requestService.getJSON<BaseDatatable<AttendanceHistory>>(this.path + '/attendance/recorded', { data });
+  }
+
+  getFilter(): Observable<BaseDatatable<CityProvinces>> {
+    return this.requestService.getJSON<BaseDatatable<CityProvinces>>(this.path + '/filter_data/city_province', {});
   }
 }

@@ -61,9 +61,7 @@
     <div class="flex justify-between mt-16">
       <div class="header-label">វត្តមានក្នុងខែនេះ</div>
     </div>
-
-    <app-filter-without-create-new [hasYearPicker]="true" (yearEvent)="onYearChange($event)" [filters]="filters"
-      (queryFilter)="setParams($event)" [hide]="'search'"></app-filter-without-create-new>
+    <app-filter (queryEvent)="onSearch($event)"></app-filter>
     <div id="table">
       <div class="progress-table">
         <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params } from '@angular/router';
 import { map } from 'rxjs';
+import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
@@ -17,56 +18,10 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './staff-attendance.component.html',
   styleUrls: ['./staff-attendance.component.scss']
 })
-export class StaffAttendanceComponent implements OnInit {
+export class StaffAttendanceComponent extends SearchFilter implements OnInit {
   //*Array Type
   displayedColumns: string[] = ['position', 'date', 'shift', 'status'];
   dataSource: MatTableDataSource<AttendanceResponse> = new MatTableDataSource([]);
-  filters: Filter[] = [
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'មក',
-          value: 1
-        },
-        {
-          label: 'អត់ច្បាប់',
-          value: 2
-        },
-        {
-          label: 'មានច្បាប់',
-          value: 3
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'ប្រភេទវត្តមាន',
-      paramKey: 'attendance_type',
-      matIcon: 'person_search'
-    },
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'ព្រឹក',
-          value: 1
-        },
-        {
-          label: 'ល្ងាច',
-          value: 2
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'វេន',
-      paramKey: 'shift_type',
-      matIcon: 'light_mode'
-    }
-  ];
 
   //*Boolean Type
 
@@ -103,17 +58,18 @@ export class StaffAttendanceComponent implements OnInit {
     private route: ActivatedRoute,
     private staffService: StaffService,
     private snackbarService: SnackbarService
-  ) {}
-
-  ngOnInit() {
-    this.onLoad();
-    this.onSetActiveFilter();
+  ) {
+    super();
   }
 
-  onLoad() {
+  ngOnInit() {
+    this.onInitData();
+  }
+
+  onInitData(pagination?: Pagination): void {
     this.setLoading(true);
     this.staffService
-      .getAttendance(this.params)
+      .getAttendance({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
         map(map => {
           for (const element of map.list['attendance']) {
@@ -142,7 +98,7 @@ export class StaffAttendanceComponent implements OnInit {
 
   onYearChange(year: Date): void {
     this.params.date = formatDate(year, 'MM-dd-yyyy', 'en-US');
-    this.onLoad();
+    this.onInitData();
   }
 
   loadingTimeout: ReturnType<typeof setTimeout>;
@@ -159,28 +115,5 @@ export class StaffAttendanceComponent implements OnInit {
       this.isLoading = isLoading;
       this.loadingTimeout = null;
     }, delayTime);
-  }
-
-  goTo(event: Pagination) {
-    this.params.limit = event.limit;
-    this.params.page = event.page;
-    this.onLoad();
-  }
-
-  setParams(paramObj: Params): void {
-    this.params.page = 1;
-    this.params = { ...this.params, ...paramObj };
-    if (Object.entries(paramObj).length < 1) {
-      this.onSetActiveFilter();
-      delete this.params.shift_type;
-      delete this.params.attendance_type;
-    }
-    this.onLoad();
-  }
-
-  onSetActiveFilter() {
-    this.filters.forEach((element, i) => {
-      this.filters[i].selectedValue = this.filters[i].data[0];
-    });
   }
 }

@@ -15,7 +15,6 @@ import { map } from 'rxjs/operators';
 import { NotificationType } from 'src/app/models/enums/notification-type';
 import { Notification } from 'src/app/models/notification';
 import { NotificationService } from 'src/app/services/notification.service';
-import { EnumConstant } from 'src/app/models/enums/enumConstant';
 import { MatMenu, MatMenuTrigger } from '@angular/material/menu';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
@@ -39,7 +38,6 @@ export class NotificationComponent {
   @ViewChild(CdkVirtualScrollViewport)
   cdkVirtualScrollViewport: CdkVirtualScrollViewport;
   notificationTypes = NotificationType;
-  courseStatus = EnumConstant;
   notifications = [];
   notificationDetail: any;
   dataSource: NotificationDataSourceService;

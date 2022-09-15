@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Params } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
+import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
@@ -18,7 +19,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './attendance-history-record.component.html',
   styleUrls: ['./attendance-history-record.component.scss']
 })
-export class AttendanceHistoryRecordComponent implements OnInit {
+export class AttendanceHistoryRecordComponent extends SearchFilter implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA)
     public data: {
@@ -27,57 +28,13 @@ export class AttendanceHistoryRecordComponent implements OnInit {
     },
     private staffService: StaffAttendanceService,
     private snackbarService: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   //*Array Type
   displayedColumns: string[] = ['position', 'date', 'shift', 'status'];
   dataSource: MatTableDataSource<AttendanceResponse> = new MatTableDataSource([]);
-  filters: Filter[] = [
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'មក',
-          value: 1
-        },
-        {
-          label: 'អត់ច្បាប់',
-          value: 2
-        },
-        {
-          label: 'មានច្បាប់',
-          value: 3
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'ប្រភេទវត្តមាន',
-      paramKey: 'attendance_type',
-      matIcon: 'person_search'
-    },
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'ព្រឹក',
-          value: 1
-        },
-        {
-          label: 'ល្ងាច',
-          value: 2
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'វេន',
-      paramKey: 'shift_type',
-      matIcon: 'light_mode'
-    }
-  ];
 
   //*Boolean Type
 
@@ -111,14 +68,14 @@ export class AttendanceHistoryRecordComponent implements OnInit {
   //*FormControl
 
   ngOnInit(): void {
-    this.onSetActiveFilter();
-    this.onLoad();
+    this.onInitData();
   }
 
-  onLoad() {
+
+  onInitData(pagination?: Pagination): void {
     this.setLoading(true);
     this.staffService
-      .getHistoryRecord(this.params)
+      .getHistoryRecord({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
         map(map => {
           for (const element of map.list) {
@@ -157,28 +114,5 @@ export class AttendanceHistoryRecordComponent implements OnInit {
       this.isLoading = isLoading;
       this.loadingTimeout = null;
     }, delayTime);
-  }
-
-  goTo(event: Pagination) {
-    this.params.limit = event.limit;
-    this.params.page = event.page;
-    this.onLoad();
-  }
-
-  setParams(paramObj: Params): void {
-    this.params.page = 1;
-    this.params = { ...this.params, ...paramObj };
-    if (Object.entries(paramObj).length < 1) {
-      this.onSetActiveFilter();
-      delete this.params.shift_type;
-      delete this.params.attendance_type;
-    }
-    this.onLoad();
-  }
-
-  onSetActiveFilter() {
-    this.filters.forEach((element, i) => {
-      this.filters[i].selectedValue = this.filters[i].data[0];
-    });
   }
 }

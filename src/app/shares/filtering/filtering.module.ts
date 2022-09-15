@@ -2,28 +2,31 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FilteringRoutingModule } from './filtering-routing.module';
-import { FilterWithCreateNewComponent } from './components/filter-with-create-new/filter-with-create-new.component';
-import { FilterWithoutCreateNewComponent } from './components/filter-without-create-new/filter-without-create-new.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { FilterWithPrintingComponent } from './components/filter-with-printing/filter-with-printing.component';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MatSelectModule } from '@angular/material/select';
 import { MatBadgeModule } from '@angular/material/badge';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { MatListModule } from '@angular/material/list';
+import { MatChipsModule } from '@angular/material/chips';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { SelectionFilterComponent } from './components/selection-filter/selection-filter.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { NativeDateModule } from '@angular/material/core';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { YearPickerModule } from '../year-picker/year-picker.module';
-import { ReactiveFormsModule } from '@angular/forms';
-import { StaticMonthModule } from '../static-month/static-month.module';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
-  declarations: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent],
+  declarations: [
+    SelectionFilterComponent,
+    FilterComponent
+  ],
   imports: [
     CommonModule,
     FilteringRoutingModule,
@@ -35,16 +38,21 @@ import { StaticMonthModule } from '../static-month/static-month.module';
     MatMenuModule,
     MatSelectModule,
     MatBadgeModule,
-    MatIconModule,
-    MatFormFieldModule,
+    MatExpansionModule,
+    ScrollingModule,
+    MatListModule,
+    MatChipsModule,
+    FormsModule,
+    MatRadioModule,
+    MatRippleModule,
     MatDatepickerModule,
-    NativeDateModule,
-    MatTooltipModule,
-    YearPickerModule,
-    ReactiveFormsModule,
-    StaticMonthModule
+    MatNativeDateModule,
+    ReactiveFormsModule
   ],
-  exports: [FilterWithCreateNewComponent, FilterWithoutCreateNewComponent, FilterWithPrintingComponent, SelectionFilterComponent]
+  exports: [
+    SelectionFilterComponent,
+    FilterComponent
+  ]
 })
 export class FilteringModule {
   constructor(private matIconRegistry: MatIconRegistry, private domSanitizer: DomSanitizer) {

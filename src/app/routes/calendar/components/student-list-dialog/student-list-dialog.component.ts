@@ -3,6 +3,7 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
+import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
 import { CalendarService } from 'src/app/services/calendar.service';
@@ -11,6 +12,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
+import { Pagination } from 'src/app/shares/pagination/pagination';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
 interface Params {
@@ -23,7 +25,7 @@ interface Params {
   templateUrl: './student-list-dialog.component.html',
   styleUrls: ['./student-list-dialog.component.scss']
 })
-export class StudentListDialogComponent implements OnInit {
+export class StudentListDialogComponent extends SearchFilter implements OnInit {
   displayedColumns: string[] = [
     'ID',
     'name',
@@ -52,41 +54,6 @@ export class StudentListDialogComponent implements OnInit {
   assignDataList: string[];
   selected: number = -1;
 
-  filters: Filter[] = [
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'តំណែង',
-      paramKey: 'position',
-      matIcon: 'person'
-    },
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'ស្រី',
-          value: 'female'
-        },
-        {
-          label: 'ប្រុស',
-          value: 'male'
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'ភេទ',
-      paramKey: 'gender',
-      matIcon: 'transgender'
-    }
-  ];
-
   constructor(
     private loadingService: LoadingService,
     private snackBarService: SnackbarService,
@@ -98,34 +65,18 @@ export class StudentListDialogComponent implements OnInit {
     private readonly calendarService: CalendarService,
     private staffService: StaffService,
     private positionService: PositionService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.onSetActiveFilter();
-    this.onGetPosition();
   }
 
-  onSetActiveFilter() {
-    this.filters.forEach((element, i) => {
-      this.filters[i].selectedValue = this.filters[i].data[0];
-    });
-  }
 
-  setParams(paramObj: Params): void {
-    this.params.page = 1;
-    this.params = { ...this.params, ...paramObj };
-    if (Object.entries(paramObj).length < 1) {
-      this.onSetActiveFilter();
-      delete this.params.position;
-      delete this.params.gender;
-    }
-    this.onLoad();
-  }
-
-  onLoad() {
+  onInitData(pagination: Pagination) {
     this.setLoading(true);
     this.staffService
-      .getMany(this.params)
+      .getMany({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
         map(map => {
           for (let data of map.list) {
@@ -148,30 +99,6 @@ export class StudentListDialogComponent implements OnInit {
             isError: true
           })
       );
-  }
-
-  onGetPosition() {
-    const param = {
-      page: 1,
-      limit: 0,
-      search: ''
-    };
-    this.positionService.getMany(param).subscribe(
-      res => {
-        res.list.forEach(element => {
-          this.filters[0].data.push({
-            label: element.title,
-            value: element._id
-          });
-        });
-      },
-      err =>
-        this.snackBarService.onShowSnackbar({
-          message: err.error.message ?? err,
-          component: SnackbarComponent,
-          isError: true
-        })
-    );
   }
 
   id: string;
@@ -273,41 +200,4 @@ export class StudentListDialogComponent implements OnInit {
   /**
    * !End of be able to check multiple page
    */
-
-  onFilter(func, data) {
-    switch (func) {
-      case 1:
-        this.params.gender = data.value;
-        break;
-      case 2:
-        this.params.position = data.value;
-        break;
-
-      default:
-        break;
-    }
-
-    this.params.page = 1;
-    this.onLoad();
-    this.selectedFilterCount = [this.params.gender, this.params.position].filter(fil => fil || fil === false).length;
-  }
-
-  goTo(event) {
-    this.params.limit = event.limit;
-    this.params.page = event.page;
-    this.isLoading = false;
-    this.onLoad();
-  }
-
-  //TODO: searching functions
-  timer: ReturnType<typeof setTimeout>;
-  onSearch(value: string) {
-    this.params.search = value;
-    this.params.page = 1;
-    this.startSearch();
-  }
-  startSearch() {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.onLoad(), 500);
-  }
 }

@@ -2,12 +2,15 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
+import { CityProvinces } from 'src/app/models/address';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
+import { Pagination } from 'src/app/shares/pagination/pagination';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
 interface Params {
@@ -20,7 +23,7 @@ interface Params {
   templateUrl: './staff.component.html',
   styleUrls: ['./staff.component.scss']
 })
-export class StaffComponent implements OnInit {
+export class StaffComponent extends SearchFilter implements OnInit {
   displayedColumns: string[] = [
     'ID',
     'name',
@@ -46,65 +49,31 @@ export class StaffComponent implements OnInit {
   };
   isLoading: boolean = true;
   loadingTimeout: ReturnType<typeof setTimeout>;
-
-  filters: Filter[] = [
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'តំណែង',
-      paramKey: 'position',
-      matIcon: 'person'
-    },
-    {
-      data: [
-        {
-          label: 'ទាំងអស់',
-          value: null
-        },
-        {
-          label: 'ស្រី',
-          value: 'female'
-        },
-        {
-          label: 'ប្រុស',
-          value: 'male'
-        }
-      ],
-      selectedIndex: 0,
-      labelFunc: 'ភេទ',
-      paramKey: 'gender',
-      matIcon: 'transgender'
-    }
-  ];
   images: string[];
+  provinces: { label: string; value: string }[];
   @Output() dataEvent: EventEmitter<Staff[]> = new EventEmitter();
 
   constructor(
-    private dialog: MatDialog,
     private router: Router,
     private route: ActivatedRoute,
-    private staffService: StaffService,
+    public staffService: StaffService,
     private snackBarService: SnackbarService,
     private readonly positionService: PositionService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
-    this.onSetActiveFilter();
-    this.onGetPosition();
+    this.onInitData();
 
     if (this.router.url.includes('inactive')) this.params.status = false;
     else if (this.router.url.includes('active')) this.params.status = true;
   }
 
-  onLoad() {
+  onInitData(pagination?: Pagination) {
     this.setLoading(true);
     this.staffService
-      .getAll(this.params)
+      .getAll({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
         map(map => {
           for (let data of map.list) {
@@ -118,8 +87,8 @@ export class StaffComponent implements OnInit {
       .subscribe(
         res => {
           this.dataSource = new MatTableDataSource(res.list);
-          this.dataEvent.emit(res.list);
           this.total = res.total;
+          this.dataEvent.emit(res.list);
           this.setLoading(false);
         },
         err =>
@@ -131,67 +100,8 @@ export class StaffComponent implements OnInit {
       );
   }
 
-  onSetActiveFilter() {
-    this.filters.forEach((element, i) => {
-      this.filters[i].selectedValue = this.filters[i].data[0];
-    });
-  }
-
-  onGetPosition() {
-    const param = {
-      page: 1,
-      limit: 0,
-      search: ''
-    };
-    this.positionService.getMany(param).subscribe(
-      res => {
-        res.list.forEach(element => {
-          this.filters[0].data.push({
-            label: element.title,
-            value: element._id
-          });
-        });
-      },
-      err =>
-        this.snackBarService.onShowSnackbar({
-          message: err.message ?? err.error.message,
-          component: SnackbarComponent,
-          isError: true
-        })
-    );
-  }
-
   onCreate() {
     this.router.navigate(['create-new'], { relativeTo: this.route });
-  }
-
-  setParams(paramObj: Params): void {
-    this.params.page = 1;
-    this.params = { ...this.params, ...paramObj };
-    if (Object.entries(paramObj).length < 1) {
-      this.onSetActiveFilter();
-      delete this.params.position;
-      delete this.params.gender;
-    }
-    this.onLoad();
-  }
-
-  goTo(event) {
-    this.params.limit = event.limit;
-    this.params.page = event.page;
-    this.setLoading(false);
-    this.onLoad();
-  }
-
-  onUpdateUser(id) {}
-
-  onDeleteUser(id: string) {
-    this.staffService.delete(id).subscribe(
-      res => {
-        this.onLoad();
-      },
-      err => {}
-    );
   }
 
   onCreateNew(): void {
@@ -210,17 +120,5 @@ export class StaffComponent implements OnInit {
       this.isLoading = isLoading;
       this.loadingTimeout = null;
     }, delayTime);
-  }
-
-  //TODO: searching functions
-  timer: ReturnType<typeof setTimeout>;
-  onSearch(value: string) {
-    this.params.search = value;
-    this.params.page = 1;
-    this.startSearch();
-  }
-  startSearch() {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.onLoad(), 500);
   }
 }

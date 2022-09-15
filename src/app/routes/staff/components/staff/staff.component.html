@@ -1,5 +1,5 @@
-<app-filter-with-create-new [filters]="filters" (createNew)="onCreateNew()" (queryFilter)="setParams($event)"
-  (queryEvent)="onSearch($event)"></app-filter-with-create-new>
+<app-filter [apiRoute]="staffService.getFilter()" [hasButton]="true" (actionButton)="onCreateNew()" (queryEvent)="onSearch($event)" (queryFilter)="setParams($event)" [useFilters]="['position', 'gender']">
+</app-filter>
 <div id="table">
   <div class="progress-table">
     <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

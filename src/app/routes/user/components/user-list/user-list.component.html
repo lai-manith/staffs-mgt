@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  <app-filter-without-create-new [hide]="'filter'" (queryEvent)="onSearch($event)"></app-filter-without-create-new>
+  <app-filter (queryEvent)="onSearch($event)"></app-filter>
   <div id="table">
     <div class="progress-table">
       <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
@@ -36,9 +36,11 @@
         <td mat-cell *matCellDef="let element" class="col-image-name">
           <span class="mobile-label">ឈ្មោះ:</span>
           <div class="thumbnail-list">
-            <div [ngStyle]="{ 'background-image': element.profile ? 'url(' + ( 'size=s' + element.profile | staticImage) +')' : 'url(' + 'assets/imgs/lecturer.svg' +')' }" class="profile-picture"></div>
+            <div
+              [ngStyle]="{ 'background-image': element.profile ? 'url(' + ( 'size=s' + element.profile | staticImage) +')' : 'url(' + 'assets/imgs/lecturer.svg' +')' }"
+              class="profile-picture"></div>
             <span>{{element.first_name}} {{element.last_name}}</span>
-        </div>
+          </div>
         </td>
       </ng-container>
 
@@ -89,8 +91,8 @@
         <td mat-cell *matCellDef="let element">
           <span class="mobile-label">ព័ត៌មានលម្អិត</span>
           <div class="action">
-            <button mat-stroked-button class="btn-sm" [routerLink]="['detail/' + element._id]"
-              #tooltip="matTooltip" matTooltip="មើល" matTooltipPosition="right">
+            <button mat-stroked-button class="btn-sm" [routerLink]="['detail/' + element._id]" #tooltip="matTooltip"
+              matTooltip="មើល" matTooltipPosition="right">
               <mat-icon svgIcon="visibility"></mat-icon>
             </button>
           </div>
