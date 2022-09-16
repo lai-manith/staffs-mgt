@@ -21,6 +21,8 @@ import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { SelectionFilterComponent } from './components/selection-filter/selection-filter.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { FilterComponent } from './components/filter/filter.component';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { StaticMonthModule } from '../static-month/static-month.module';
 
 @NgModule({
   declarations: [
@@ -47,7 +49,9 @@ import { FilterComponent } from './components/filter/filter.component';
     MatRippleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatTooltipModule,
+    StaticMonthModule
   ],
   exports: [
     SelectionFilterComponent,

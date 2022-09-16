@@ -96,7 +96,7 @@ export class StaffAttendanceComponent extends SearchFilter implements OnInit {
       );
   }
 
-  onYearChange(year: Date): void {
+  onMonthChange(year: Date): void {
     this.params.date = formatDate(year, 'MM-dd-yyyy', 'en-US');
     this.onInitData();
   }

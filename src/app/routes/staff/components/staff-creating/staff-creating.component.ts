@@ -60,7 +60,7 @@ export class StaffCreatingComponent implements OnInit {
           first_name: res.first_name,
           gender: res.gender,
           age: res.age,
-          phone: res.phone?.replace(/\s/g, ''),
+          phone: res.phone,
           email: res.email,
           profile: image,
           position: res.position?._id,

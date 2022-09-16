@@ -21,6 +21,7 @@ import { FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { StaffService } from 'src/app/services/staff.service';
 import { PositionService } from 'src/app/services/position.service';
+import { MatDatepicker } from '@angular/material/datepicker';
 
 @Component({
   selector: 'app-filter',
@@ -42,7 +43,7 @@ export class FilterComponent {
   @ViewChild('select') select: MatSelect;
   @ViewChild('searchQuery') searchQuery: ElementRef;
 
-  @Input() hide?: string[] = ['dateRange', 'date'];
+  @Input() hide?: string[] = ['dateRange', 'date', 'month'];
   @Input() useFilters: useFilter[] = [];
   @Input() title: string = '';
   @Input() passingFilters: Partial<Filter>[] = []; // this filter is passing from their component
@@ -62,6 +63,7 @@ export class FilterComponent {
   @Output() actionButton: EventEmitter<any> = new EventEmitter();
   @Output() dateRangeEvent = new EventEmitter<any>();
   @Output() dateEvent = new EventEmitter<any>();
+  @Output() monthEvent = new EventEmitter<any>();
 
   date: Date = new Date();
   firstDate = new Date(this.date.getFullYear(), this.date.getMonth(), 1);
@@ -181,7 +183,7 @@ export class FilterComponent {
       labelFunc: 'status',
       paramKey: 'status',
       svgIcon: 'status'
-    },
+    }
   ];
   searchSubscription: Subscription;
   currentUrl: string;
@@ -444,6 +446,25 @@ export class FilterComponent {
 
   getFilterByKey(key: string): Filter {
     return this.filters.find(filter => filter.paramKey === key);
+  }
+
+  activeDayIsOpen: boolean = false;
+  month: FormControl = new FormControl(new Date());
+  onMonthChange(value?: any, datepicker?: MatDatepicker<moment.Moment>): void {
+    this.activeDayIsOpen = false;
+    if (datepicker) datepicker.close();
+    this.month.setValue(value);
+    this.monthEvent.emit(value);
+  }
+
+  onPrevDate() {
+    this.month.setValue(new Date(new Date(this.month.value).setMonth(new Date(this.month.value).getMonth() - 1)));
+    this.monthEvent.emit(this.month.value);
+  }
+
+  onNextDate() {
+    this.month.setValue(new Date(new Date(this.month.value).setMonth(new Date(this.month.value).getMonth() + 1)));
+    this.monthEvent.emit(this.month.value);
   }
 
   ngOnChanges(_: SimpleChanges): void {

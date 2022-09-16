@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <div class="detail-form grid gap-16 col-12">
+  <div class="detail-form grid gap-16 col-sm-12">
     <div class="profile-with-name mb-16 col-span-4">
       <img class="school-profile"
         [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
@@ -58,10 +58,10 @@
   </div>
 
   <div class="detail-form">
-    <div class="flex justify-between mt-16">
+    <div class="flex justify-between mt-16 mt-16">
       <div class="header-label">វត្តមានក្នុងខែនេះ</div>
     </div>
-    <app-filter (queryFilter)="setParams($event)" [hide]="['dateRange', 'date', 'search']" [useFilters]="['attendance_type', 'shift_type']"></app-filter>
+    <app-filter (monthEvent)="onMonthChange($event)" (queryFilter)="setParams($event)" [hide]="['dateRange', 'date', 'search']" [useFilters]="['attendance_type', 'shift_type']"></app-filter>
     <div id="table">
       <div class="progress-table">
         <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

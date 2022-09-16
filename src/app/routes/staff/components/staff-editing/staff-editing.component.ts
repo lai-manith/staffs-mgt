@@ -13,6 +13,7 @@ import { map } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
+import { Location } from '@angular/common';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -38,7 +39,7 @@ export class StaffEditingComponent implements OnInit {
     private dialog: MatDialog,
     private staticImagePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
-    private monthPipe: MonthPipe
+    private monthPipe: MonthPipe,
   ) {}
 
   ngOnInit(): void {

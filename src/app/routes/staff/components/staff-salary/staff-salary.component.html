@@ -11,7 +11,7 @@
     </div>
   </div>
 
-  <div class="detail-form grid gap-16 col-12">
+  <div class="detail-form grid gap-16 col-sm-12">
     <div class="profile-with-name mb-16 col-span-4">
       <img class="school-profile"
         [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
@@ -60,7 +60,7 @@
   </div>
 
   <div class="detail-form">
-    <div class="flex justify-between item-center mb-16">
+    <div class="flex justify-between item-center mb-16 mt-16">
       <div class="header-label" style="margin-bottom: 0">ប្រវត្តិនៃការកែប្រែប្រាក់ខែ</div>
       <button mat-raised-button color="primary" class="create-btn" (click)="updateSalary()">
         <mat-icon svgIcon="add_new"></mat-icon>

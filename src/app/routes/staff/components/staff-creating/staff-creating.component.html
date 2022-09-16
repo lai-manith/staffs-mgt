@@ -144,7 +144,6 @@
               </mat-form-field>
             </div>
 
-
             <div>
               <label>លេខទូរស័ព្ទ</label>
               <mat-form-field appearance="outline">
@@ -185,7 +184,7 @@
               <label>ថ្ងៃផុតកុងត្រា</label>
               <mat-form-field appearance="outline">
                 <input matInput [matDatepicker]="picker2" formControlName="contract_expiry_date"
-                  (click)="picker2.open()" placeholder="*" (dateChange)="onExpiredContact($event)">
+                  (click)="picker2.open()" placeholder="*" (dateChange)="onExpiredContact($event)" readonly>
                 <mat-datepicker-toggle matSuffix [for]="picker2">
                   <mat-icon matDatepickerToggleIcon>calendar_month</mat-icon>
                 </mat-datepicker-toggle>

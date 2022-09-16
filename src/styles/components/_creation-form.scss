@@ -78,6 +78,14 @@
 
   .invalid {
     color: variables.$color-required;
+
+    label {
+      color: variables.$color-required;
+    }
+
+    .mat-radio-outer-circle {
+      border-color: variables.$color-required;
+    }
   }
 
   .required::after {

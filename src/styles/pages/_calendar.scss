@@ -350,3 +350,195 @@
     }
   }
 }
+
+.holiday-container {
+  // background-color: $color-white;
+  border-radius: $rounded-md;
+
+  // margin-bottom: $rounded-2xl + 4;
+  // padding: $spacing-md + 4;
+  &__btn-group {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+
+    button {
+      border-color: $color-primary;
+      color: $color-primary;
+
+      &:not(:last-child) {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+      }
+
+      &:not(:first-child) {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+    }
+  }
+
+  .holiday-container__cal-title {
+    font-size: 25px;
+    font-weight: bold;
+    color: $color-primary;
+  }
+
+  //My Custom
+  .calendar-header {
+    //width: 100%;
+
+    // display: flex;
+    // align-items: center;
+    // margin-bottom: $spacing-lg - 7;
+    .calendar-button {
+      // color: $color-primary;
+
+      // button {
+      //   border: 1px solid $color-primary;
+      //   ;
+      //   padding: $spacing-xs - 2 $spacing-md + 4;
+      // }
+
+      .date-today {
+        position: relative;
+        border-radius: $rounded-sm;
+        background: $color-white;
+        z-index: 1;
+        min-width: 145px;
+
+        .hidden {
+          position: absolute;
+          top: 0;
+          visibility: hidden;
+        }
+      }
+
+      .date-back {
+        // border-right: none;
+        transform: translateX(5px);
+      }
+
+      .date-forward {
+        // border-left: none;
+        transform: translateX(-5px);
+      }
+    }
+
+    .date-display {
+      width: 73%;
+      text-align: center;
+
+      span {
+        font-size: 25px;
+        color: $color-primary;
+        ;
+        font-weight: bold;
+      }
+    }
+  }
+
+  //!Align Text Space Between
+  .group-btn {
+    margin-left: auto;
+  }
+
+  // .flex-media {
+  //   align-items: center;
+  //   margin-top: $spacing-md;
+  // }
+
+  .show-calendar {
+    @media screen and (min-width: 1280px) {
+      padding-right: $spacing-md;
+      border-right-width: 1px;
+      border-right-color: $color-thin-grey;
+    }
+
+    .cal-month-view {
+      .cal-day-cell.cal-weekend {
+        .cal-day-number {
+          color: $color-black;
+        }
+      }
+
+      .cal-day-number {
+        opacity: 1;
+      }
+
+      .cal-day-cell.cal-out-month {
+        .cal-day-number {
+          opacity: 0.3;
+        }
+      }
+
+      .cal-day-cell:not(:last-child) {
+        border-right-color: $color-white;
+      }
+
+      .cal-days {
+        border-color: $color-white;
+      }
+
+      .cal-open-day-events {
+        .cal-event-actions {
+          .button {
+            border-radius: 6px;
+          }
+        }
+      }
+
+      .cal-cell-row {
+        border-bottom-color: $color-white;
+        background-color: $color-primary;
+      }
+
+      mwl-calendar-month-cell {
+        background-color: #F9F9F9;
+
+        &:last-child {
+          .cal-day-number {
+            color: $color-red !important;
+          }
+        }
+      }
+
+      .cal-cell-row {
+        &:hover {
+          background-color: $color-primary;
+        }
+      }
+
+      mwl-calendar-month-view-header {
+        .cal-cell-row {
+          border-top-left-radius: $rounded-sm;
+          border-top-right-radius: $rounded-sm;
+
+          .cal-cell {
+            &:hover {
+              background-color: $color-primary;
+              border-top-left-radius: $rounded-sm;
+              border-top-right-radius: $rounded-sm;
+            }
+          }
+        }
+      }
+    }
+
+  }
+
+  @media only screen and (max-width: 650px) {
+    .flex-media {
+      flex-direction: column !important;
+    }
+
+    .calendar-header {
+      max-width: 100%;
+      justify-content: center;
+    }
+
+    .calendar-title {
+      max-width: 100% !important;
+    }
+  }
+}

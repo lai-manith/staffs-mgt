@@ -119,6 +119,35 @@
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
         </div>
+        <div class="section-box mb-xs-16 mb-sm-0 flex" *ngIf="!hide.includes('month')"
+          [ngStyle]="{'align-items': 'center'}">
+          <div class="holiday-container">
+            <div class="calendar-header group-btn">
+              <div class="holiday-container__btn-group calendar-button">
+                <button class="btn-sm date-back" mat-stroked-button (click)="onPrevDate()" #tooltip="matTooltip"
+                  matTooltip="ខែមុន" matTooltipPosition="above">
+                  <mat-icon>chevron_left</mat-icon>
+                </button>
+
+                <button class="date-today" mat-stroked-button mwlCalendarToday (click)="dp.open();">
+                  {{ (month.value | date: 'MM' | khmerMonth) + ' ' + (month.value | date: 'yyyy') }}
+                  <div class="hidden">
+                    <input matInput [matDatepicker]="dp" readonly [formControl]="month">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp startView="multi-year" (monthSelected)="onMonthChange($event, dp)"
+                      panelClass="example-month-picker">
+                    </mat-datepicker>
+                  </div>
+                </button>
+
+                <button class="btn-sm date-forward" mat-stroked-button mwlCalendarNextView (click)="onNextDate()"
+                  #tooltip="matTooltip" matTooltip="ខែបន្ទាប់" matTooltipPosition="above">
+                  <mat-icon>navigate_next</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </div>
