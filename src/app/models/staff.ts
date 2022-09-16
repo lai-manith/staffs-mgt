@@ -8,7 +8,7 @@ export interface Staff {
   last_name: string;
   gender: string;
   age: number;
-  phone: number;
+  phone: string;
   email?: string;
   address: Address;
   place_of_birth: Address;

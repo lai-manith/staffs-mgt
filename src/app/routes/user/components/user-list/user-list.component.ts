@@ -3,9 +3,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { User } from 'src/app/models/user';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
+import { Pagination } from 'src/app/shares/pagination/pagination';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
 
 @Component({
@@ -13,66 +15,61 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss']
 })
-export class UserListComponent implements OnInit {
-
+export class UserListComponent extends SearchFilter implements OnInit {
   displayedColumns: string[] = ['ID', 'name', 'username', 'dob', 'gender', 'email', 'status', '_id'];
   dataSource: MatTableDataSource<User> = new MatTableDataSource([]);
   total: number;
   params = {
     page: 1,
     limit: 10,
-    search: '',
-    image_size: 150,
+    search: ''
   };
 
   optionStatus = [
     {
       value: null,
       viewValue: 'ទាំងអស់'
-    },
-  ]
+    }
+  ];
   selectedStatus = this.optionStatus[0];
   isLoading: boolean = true;
   loadingTimeout: ReturnType<typeof setTimeout>;
 
-  constructor(
-    private userService: UserService,
-    private snackbarService: SnackbarService,
-    ) { }
+  constructor(private userService: UserService, private snackbarService: SnackbarService) {
+    super();
+  }
 
   ngOnInit() {
-    this.onLoad();
+    this.onInitData();
   }
 
-  onLoad() {
+  onInitData(pagination?: Pagination): void {
     this.setLoading(true);
-    this.userService.getAll(this.params)
-    .pipe(
-      map(map => {
-        for(let data of map.list) {
-          data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
-          data.status = data.status === true ? {name: 'សកម្ម' ,name_en: 'active'} : {name: 'អសកម្ម' ,name_en: 'inactive'};
-        }
-        return map;
-      })
-    )
-    .subscribe(
-      res => {
-        this.setLoading(false);
-        this.dataSource = new MatTableDataSource(res.list);
-        this.total = res.total;
-      },
-      err => this.snackbarService.onShowSnackbar({message: err.error.message ?? err, isError: true, component: SnackbarComponent})
-
-    )
-  }
-
-  onUpdateUser(id) {
-  }
-
-  onFilter(value) {
-    this.params.page = 1;
-    this.onLoad();
+    this.userService
+      .getAll({ ...this.params, ...this.filterParams, ...pagination })
+      .pipe(
+        map(map => {
+          for (let data of map.list) {
+            data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
+            data.status =
+              data.status === true ? { name: 'សកម្ម', name_en: 'active' } : { name: 'អសកម្ម', name_en: 'inactive' };
+          }
+          return map;
+        })
+      )
+      .subscribe(
+        res => {
+          this.setLoading(false);
+          this.dataSource = new MatTableDataSource(res.list);
+          this.total = res.total;
+        },
+        err =>
+          this.snackbarService.onShowSnackbar({
+            message: err.error.message ?? err,
+            isError: true,
+            component: SnackbarComponent
+          })
+      );
   }
 
   private setLoading(isLoading: boolean): void {
@@ -88,22 +85,4 @@ export class UserListComponent implements OnInit {
       this.loadingTimeout = null;
     }, delayTime);
   }
-
-  goTo(event: any) {
-    this.params.limit = event.limit;
-    this.params.page = event.page;
-    this.onLoad();
-  }
-  //TODO: searching functions
-  timer: ReturnType<typeof setTimeout>;
-  onSearch(value: string) {
-    this.params.search = value;
-    this.params.page = 1;
-    this.startSearch();
-  }
-  startSearch() {
-    clearTimeout(this.timer);
-    this.timer = setTimeout(() => this.onLoad(), 500);
-  }
-
 }

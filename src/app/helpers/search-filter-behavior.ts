@@ -25,11 +25,14 @@ export abstract class SearchFilter {
     this.startSearch();
   }
   private startSearch() {
+    this.params.page = 1;
     clearTimeout(this.timer);
     this.timer = setTimeout(() => this.onInitData(), 500);
   }
 
   goTo(pagination: Pagination) {
+    this.params.page = pagination.page;
+    this.params.limit = pagination.limit;
     this.onInitData(pagination);
   }
 }

@@ -44,7 +44,8 @@ import { StaffAttendanceComponent } from './components/staff-attendance/staff-at
 import { AttendanceTranslateModule } from 'src/app/shares/attendance-translate/attendance-translate.module';
 import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module';
 import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.pipe';
-
+import { PhoneMaskModule } from 'src/app/shares/phone/phone-mask.module';
+import { SearchbarInSelectOptionModule } from 'src/app/shares/searchbar-in-select-option/searchbar-in-select-option.module';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,7 @@ import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.p
     StaffSalaryDialogComponent,
     StaffContractComponent,
     StaffContractDialogComponent,
-    StaffAttendanceComponent,
+    StaffAttendanceComponent
   ],
   imports: [
     CommonModule,
@@ -88,7 +89,9 @@ import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.p
     MatProgressSpinnerModule,
     ImageCropperModule,
     AttendanceTranslateModule,
-    YearPickerModule
+    YearPickerModule,
+    PhoneMaskModule,
+    SearchbarInSelectOptionModule
   ],
   providers: [StaticFilePipe, DurationPipe, MonthPipe, StaticImagePipe]
 })

@@ -24,7 +24,7 @@ export class AttendanceTranslatePipe implements PipeTransform {
         break;
 
       case '2':
-        status = 'ល្ងាច';
+        status = 'ថ្ងៃ';
         break;
 
       default:

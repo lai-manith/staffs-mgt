@@ -5,7 +5,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { CityProvinces } from 'src/app/models/address';
-import { Filter } from 'src/app/models/filter';
+import { Filter, useFilter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -52,6 +52,7 @@ export class StaffComponent extends SearchFilter implements OnInit {
   images: string[];
   provinces: { label: string; value: string }[];
   @Output() dataEvent: EventEmitter<Staff[]> = new EventEmitter();
+  useFilter: useFilter[] = ['position', 'gender'];
 
   constructor(
     private router: Router,
@@ -64,10 +65,11 @@ export class StaffComponent extends SearchFilter implements OnInit {
   }
 
   ngOnInit() {
-    this.onInitData();
-
     if (this.router.url.includes('inactive')) this.params.status = false;
     else if (this.router.url.includes('active')) this.params.status = true;
+    else this.useFilter.push('status');
+
+    this.onInitData();
   }
 
   onInitData(pagination?: Pagination) {

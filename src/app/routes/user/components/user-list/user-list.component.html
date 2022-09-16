@@ -17,7 +17,8 @@
     </div>
   </div>
 
-  <app-filter (queryEvent)="onSearch($event)"></app-filter>
+  <app-filter (queryEvent)="onSearch($event)" [hide]="['filter', 'dateRange', 'date']" (queryFilter)="setParams($event)" [useFilters]="['status', 'gender']">
+  </app-filter>
   <div id="table">
     <div class="progress-table">
       <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>

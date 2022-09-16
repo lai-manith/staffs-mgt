@@ -38,7 +38,6 @@ export class StaffCreatingComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
     private addressService: AddressService,
-    private staticFilePipe: StaticFilePipe,
     private staticImagePipe: StaticImagePipe
   ) {}
 
@@ -61,7 +60,7 @@ export class StaffCreatingComponent implements OnInit {
           first_name: res.first_name,
           gender: res.gender,
           age: res.age,
-          phone: res.phone,
+          phone: res.phone?.replace(/\s/g, ''),
           email: res.email,
           profile: image,
           position: res.position?._id,
@@ -208,7 +207,7 @@ export class StaffCreatingComponent implements OnInit {
       first_name: [null, Validators.required],
       gender: [null, Validators.required],
       age: [null, Validators.required],
-      phone: [null, Validators.required],
+      phone: [null, [Validators.required, Validators.pattern('^0[0-9]{2}[0-9 ]{8,10}$')]],
       email: [null, [Validators.email, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')]],
       nationality: ['', Validators.required],
       ethnicity: ['', Validators.required],
@@ -315,7 +314,7 @@ export class StaffCreatingComponent implements OnInit {
   isCDClick: boolean;
   isCCClick: boolean;
   isCVClick: boolean;
-
+  cityProvinceList: CityProvinces[];
   getCityProvinces() {
     this.addressService.getCityProvince().subscribe(res => {
       if (res) {

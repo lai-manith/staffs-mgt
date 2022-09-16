@@ -34,6 +34,7 @@ export class StudentListDialogComponent extends SearchFilter implements OnInit {
     'position',
     'hire_date',
     'contact_expiry_date',
+    'province',
     'action'
   ];
   dataSource: MatTableDataSource<Staff> = new MatTableDataSource([]);
@@ -55,25 +56,18 @@ export class StudentListDialogComponent extends SearchFilter implements OnInit {
   selected: number = -1;
 
   constructor(
-    private loadingService: LoadingService,
     private snackBarService: SnackbarService,
-    private route: ActivatedRoute,
-    private dialog: MatDialog,
-    private dialogService: DialogService,
-    private router: Router,
     public dialogRef: MatDialogRef<StudentListDialogComponent>,
-    private readonly calendarService: CalendarService,
-    private staffService: StaffService,
-    private positionService: PositionService
+    public staffService: StaffService
   ) {
     super();
   }
 
   ngOnInit(): void {
+    this.onInitData();
   }
 
-
-  onInitData(pagination: Pagination) {
+  onInitData(pagination?: Pagination) {
     this.setLoading(true);
     this.staffService
       .getMany({ ...this.params, ...this.filterParams, ...pagination })

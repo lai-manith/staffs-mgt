@@ -32,10 +32,14 @@
 @use './components/drop-zone';
 @use './components/datepicker-arrow';
 @use './components/profile-hover';
+@use './components/searchbar_in_select';
 
 /* layout */
 @use './layouts/menu';
 @use './layouts/pagination';
+
+// materials
+@use './materials/mat-expansion';
 
 /* page */
 @use './pages/login';

@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-searchbar-in-select-option',
@@ -8,6 +9,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class SearchbarInSelectOptionComponent implements OnInit {
   @Output() createNew: EventEmitter<any> = new EventEmitter();
   @Output() queryEvent = new EventEmitter<string>();
+  searchQuery: FormControl = new FormControl();
 
   constructor() {}
 
@@ -19,5 +21,6 @@ export class SearchbarInSelectOptionComponent implements OnInit {
 
   clear() {
     this.queryEvent.emit('');
+    this.searchQuery.setValue(null);
   }
 }

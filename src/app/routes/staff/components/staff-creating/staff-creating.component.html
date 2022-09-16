@@ -39,7 +39,7 @@
             <div>
               <label>លេខអត្តសញ្ញាណប័ណ្ណ</label>
               <mat-form-field appearance="outline">
-                <input type="number" matInput formControlName="id_card" placeholder="*">
+                <input matInput formControlName="id_card" placeholder="*">
                 <mat-error *ngIf="form.get('staff_id').errors?.required">
                   ទាមទារ
                 </mat-error>
@@ -148,9 +148,12 @@
             <div>
               <label>លេខទូរស័ព្ទ</label>
               <mat-form-field appearance="outline">
-                <input type="text" matInput formControlName="phone" placeholder="*">
+                <input type="text" appPhoneMask matInput formControlName="phone" placeholder="*">
                 <mat-error *ngIf="form.get('phone').errors?.required">
                   ទាមទារ
+                </mat-error>
+                <mat-error *ngIf="form.get('phone').errors?.pattern">
+                  មិនត្រឹមត្រូវ
                 </mat-error>
               </mat-form-field>
             </div>

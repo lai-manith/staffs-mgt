@@ -6,7 +6,8 @@
 <mat-divider></mat-divider>
 <mat-dialog-content class="app-content">
   <div class="mt-16"></div>
-  <app-filter (queryEvent)="onSearch($event)"></app-filter>
+  <app-filter [apiRoute]="staffService.getFilter()" (queryEvent)="onSearch($event)" (queryFilter)="setParams($event)" [useFilters]="['position', 'gender']">
+  </app-filter>
   <div id="table">
     <div class="progress-table">
       <mat-progress-bar class="progress-bar" *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
@@ -79,6 +80,14 @@
             {{ element.contact_expiry_date | date: 'MM' | khmerMonth }}
             {{ element.contact_expiry_date | date: 'yyyy' }}
           </span>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="province">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>ទីកន្លែងកំណត់</th>
+        <td mat-cell *matCellDef="let element">
+          <span class="mobile-label">ទីកន្លែងកំណត់:</span>
+          <span>{{ element.place_of_birth.city_provinces.name }}</span>
         </td>
       </ng-container>
 

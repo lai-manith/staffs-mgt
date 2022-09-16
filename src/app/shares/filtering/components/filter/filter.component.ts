@@ -82,27 +82,6 @@ export class FilterComponent {
 
   filters: Filter[] = [
     {
-      title: 'ស្ថានភាព',
-      use: false,
-      data: [
-        {
-          value: null,
-          label: 'ទាំងអស់'
-        },
-        {
-          value: 'true',
-          label: 'សកម្ម'
-        },
-        {
-          value: 'false',
-          label: 'អសកម្ម'
-        }
-      ],
-      labelFunc: 'status',
-      paramKey: 'status',
-      svgIcon: 'status'
-    },
-    {
       title: 'ភេទ',
       use: false,
       data: [
@@ -144,7 +123,7 @@ export class FilterComponent {
           label: 'មានច្បាប់'
         }
       ],
-      labelFunc: 'attendance',
+      labelFunc: 'attendance_type',
       paramKey: 'attendance_type',
       svgIcon: 'attendance_type'
     },
@@ -165,7 +144,7 @@ export class FilterComponent {
           label: 'ថ្ងៃ'
         }
       ],
-      labelFunc: 'shift',
+      labelFunc: 'shift_type',
       paramKey: 'shift_type',
       svgIcon: 'shift_type'
     },
@@ -181,7 +160,28 @@ export class FilterComponent {
       labelFunc: 'position',
       paramKey: 'position',
       svgIcon: 'position'
-    }
+    },
+    {
+      title: 'ស្ថានភាព',
+      use: false,
+      data: [
+        {
+          value: null,
+          label: 'ទាំងអស់'
+        },
+        {
+          value: 'true',
+          label: 'សកម្ម'
+        },
+        {
+          value: 'false',
+          label: 'អសកម្ម'
+        }
+      ],
+      labelFunc: 'status',
+      paramKey: 'status',
+      svgIcon: 'status'
+    },
   ];
   searchSubscription: Subscription;
   currentUrl: string;

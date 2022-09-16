@@ -19,7 +19,7 @@
               <mat-form-field class="example-full-width username">
                 <mat-label>ឈ្មោះគណនី</mat-label>
                 <mat-icon matPrefix>perm_identity</mat-icon>
-                <input type="text" matInput formControlName="username" required name="username">
+                <input type="text" matInput formControlName="username" required name="username" autocomplete="off">
                 <img @fadeIn *ngIf="form.value.username" class="done-icon" src="/assets/icons/done-sign.svg" alt="">
                 <img @fadeIn *ngIf="form.get('username').touched && !form.value.username" class="undone-icon"
                   src="/assets/icons/incorrect_icon.svg" alt="">
@@ -31,7 +31,7 @@
               <mat-form-field class="example-full-width password">
                 <mat-label>ពាក្យសម្ងាត់</mat-label>
                 <mat-icon matPrefix>lock</mat-icon>
-                <input type="password" matInput formControlName="password" required name="password">
+                <input type="password" matInput formControlName="password" required name="password" autocomplete="off">
                 <img @fadeIn *ngIf="form.value.password" class="done-icon" src="/assets/icons/done-sign.svg" alt="">
                 <img @fadeIn *ngIf="form.get('password').touched && !form.value.password" class="undone-icon"
                   src="/assets/icons/incorrect_icon.svg" alt="">

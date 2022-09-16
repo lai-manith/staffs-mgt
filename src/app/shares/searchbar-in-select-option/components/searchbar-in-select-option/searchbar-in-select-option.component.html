@@ -1,9 +1,9 @@
-<div class="search-box">
-  <mat-form-field appearance="outline">
-      <input matInput #searchQuery (keyup)="search(searchQuery.value)" placeholder="search...">
+<div class="search-box__select-option">
+  <mat-form-field appearance="fill">
+      <input matInput [formControl]="searchQuery" (keyup)="search(searchQuery.value)" placeholder="search...">
       <mat-icon svgIcon="search" matPrefix></mat-icon>
-      <button *ngIf="searchQuery.value" mat-icon-button matSuffix
-          (click)="searchQuery.value = ''; clear()">
+      <button [ngStyle]="{'visibility': searchQuery.value ? 'visible' : 'hidden'}" mat-icon-button matSuffix
+          (click)="clear()">
           <mat-icon>clear</mat-icon>
       </button>
   </mat-form-field>
