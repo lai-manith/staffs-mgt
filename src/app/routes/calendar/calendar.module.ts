@@ -27,7 +27,6 @@ import { EmptyModule } from 'src/app/shares/empty/empty.module';
 import { NameModule } from 'src/app/shares/name/name.module';
 import { StaticFileModule } from 'src/app/shares/static-file/static-file.module';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ProfileHoverModule } from 'src/app/shares/profile-hover/profile-hover.module';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
@@ -64,7 +63,6 @@ import { MatNativeDateModule, NativeDateModule } from '@angular/material/core';
     EmptyModule,
     NameModule,
     StaticFileModule,
-    ProfileHoverModule,
     MatTooltipModule,
     MatDatepickerModule,
     MatNativeDateModule,
