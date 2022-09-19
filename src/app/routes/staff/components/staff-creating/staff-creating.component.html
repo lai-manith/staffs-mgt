@@ -27,10 +27,10 @@
         <div class="box mb-16">
           <div class="header-label">ព័ត៌មានទូទៅ</div>
           <div class="grid gap-x-16 col-sm-2">
-            <div *ngIf="_id">
+            <div>
               <label>អត្តលេខ</label>
               <mat-form-field appearance="outline">
-                <input matInput formControlName="staff_id" placeholder="*">
+                <input matInput type="number" formControlName="staff_id" [placeholder]="_id ? '*':''">
                 <mat-error *ngIf="form.get('staff_id').errors?.required">
                   ទាមទារ
                 </mat-error>

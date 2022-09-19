@@ -48,8 +48,8 @@ export class HomeComponent {
   onGetGender(): void {
     this.dashboardService.getGender().subscribe(
       res => {
-        this.dougnutChartDataset = [res.total_male, res.total_female];
-        this.doughnutChartLabels = ['បុគ្គលិកប្រុស', 'បុគ្គលិកស្រី'];
+        this.dougnutChartDataset = [res.total_female, res.total_male];
+        this.doughnutChartLabels = ['បុគ្គលិកស្រី', 'បុគ្គលិកប្រុស'];
         this.dougnutChartDataTotal = res.total;
       },
       err => {

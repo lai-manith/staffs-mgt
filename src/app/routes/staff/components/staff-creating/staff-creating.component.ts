@@ -225,7 +225,7 @@ export class StaffCreatingComponent implements OnInit {
         villages: ['', Validators.required],
         detail: ['']
       }),
-      staff_id: [null],
+      staff_id: this._id ? [null, Validators.required] : [null],
       profile: [null],
       attach_files: [null],
       file_name: [null],
