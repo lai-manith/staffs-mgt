@@ -10,6 +10,10 @@
             display: flex;
         }
     }
+
+    .mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+      font-family: Open Sans, Khmer, system ui;
+    }
 }
 
 .mat-expansion-panel-body {
