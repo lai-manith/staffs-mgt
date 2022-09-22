@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BaseDatatable } from '../models/datatables/base.datatable';
-import { ReportStaffAgeGender, ReportStaffPosition } from '../models/report';
+import { ReportCityProvince, ReportStaffAgeGender, ReportStaffPosition } from '../models/report';
 import { BaseCrudService } from './base-crud.service';
 
 @Injectable({
@@ -19,6 +19,13 @@ export class ReportService extends BaseCrudService<ReportStaffAgeGender> {
 
   getStaffPosition(data: { year: string }): Observable<BaseDatatable<ReportStaffPosition>> {
     return this.requestService.getJSON<BaseDatatable<ReportStaffPosition>>(this.path + '/position_by_year', {
+      data,
+      is_loading: true
+    });
+  }
+
+  getStaffCityProvince(data: { year: string }): Observable<BaseDatatable<ReportCityProvince>> {
+    return this.requestService.getJSON<BaseDatatable<ReportCityProvince>>(this.path + '/city_province', {
       data,
       is_loading: true
     });

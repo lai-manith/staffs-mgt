@@ -1,0 +1,31 @@
+<div class="app-content report">
+  <div class="app-title">
+    <h1 class="title">របាយការណ៍</h1>
+    <div class="group-btn">
+      <button class="year-picker">
+        <app-year-picker [_max]="maxDate" (selectedYear)="onSelectedYear($event)"></app-year-picker>
+      </button>
+      <button mat-flat-button color="print" (click)="onPrint()">
+        <mat-icon svgIcon="print"></mat-icon>
+        បោះពុម្ភ
+      </button>
+    </div>
+  </div>
+
+  <!-- Filtering -->
+  <section class="detail-form">
+    <div class="rounded-10">
+      <div class="header-label mt-32">
+        បុគ្គលិកតាមក្រុង/ខេត្ត
+      </div>
+      <div class="report__teacher-chart">
+        <div>
+          <app-line-chart id="province-of-staff" class="line-chart" [lineChartDataset]="staffChartDataset" [lineChartLabel]="lineChartLabel"
+          [datasetLabel]="'Staffs Absented'" [ngStyle]="{'margin-top': '0'}">
+        </app-line-chart>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

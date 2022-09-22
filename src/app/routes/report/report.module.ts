@@ -15,12 +15,14 @@ import { ChartModule } from 'src/app/shares/chart/chart.module';
 import { MatCardModule } from '@angular/material/card';
 import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module';
 import { StaffPositionByYearComponent } from './components/staff-position-by-year/staff-position-by-year.component';
+import { StaffProvinceByYearComponent } from './components/staff-province-by-year/staff-province-by-year.component';
 
 
 @NgModule({
   declarations: [
     StaffGenderByYearComponent,
-    StaffPositionByYearComponent
+    StaffPositionByYearComponent,
+    StaffProvinceByYearComponent
   ],
   imports: [
     CommonModule,

@@ -113,6 +113,13 @@ export class ContainerComponent implements OnInit {
             icon: 'diversity_3',
             svgIcon: '',
             permissions: []
+          },
+          {
+            title: 'បុគ្គលិកតាមក្រុង/ខេត្ត',
+            route: ['/report/by_province'],
+            icon: 'location_on',
+            svgIcon: '',
+            permissions: []
           }
         ],
         permissions: []

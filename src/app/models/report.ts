@@ -27,3 +27,9 @@ export interface ReportStaffPosition {
   data?: SimpleData;
   report?: PositionData[];
 }
+
+export interface ReportCityProvince {
+  count?: number;
+  name?: string;
+  _id?: string;
+}

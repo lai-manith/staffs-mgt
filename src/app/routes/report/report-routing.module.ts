@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from 'src/app/guards/auth.guard';
 import { StaffGenderByYearComponent } from './components/staff-gender-by-year/staff-gender-by-year.component';
 import { StaffPositionByYearComponent } from './components/staff-position-by-year/staff-position-by-year.component';
+import { StaffProvinceByYearComponent } from './components/staff-province-by-year/staff-province-by-year.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,11 @@ const routes: Routes = [
     path: 'by_position',
     canActivate: [AuthGuard],
     component: StaffPositionByYearComponent
+  },
+  {
+    path: 'by_province',
+    canActivate: [AuthGuard],
+    component: StaffProvinceByYearComponent
   }
 ];
 

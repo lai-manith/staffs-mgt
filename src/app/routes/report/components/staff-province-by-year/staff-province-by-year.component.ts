@@ -1,0 +1,230 @@
+import { Component, OnInit } from '@angular/core';
+import { ChartData, ChartOptions, InteractionMode, ChartDataset } from 'chart.js';
+import pdfMake from 'pdfmake/build/pdfmake';
+import { ReportService } from 'src/app/services/report.service';
+import { SnackbarService } from 'src/app/services/snackbar.service';
+import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
+
+@Component({
+  selector: 'app-staff-province-by-year',
+  templateUrl: './staff-province-by-year.component.html',
+  styleUrls: ['./staff-province-by-year.component.scss']
+})
+export class StaffProvinceByYearComponent implements OnInit {
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
+
+  year: string = new Date().getFullYear().toString();
+  maxDate: Date = new Date();
+
+  lineChartDataset: number[];
+  lineChartLabel: string[];
+  staffChartDataset: number[];
+  public tooltipMode: InteractionMode;
+
+  backgroundColor: string[] = ['#00C67C', '#DAD873'];
+
+  ngOnInit(): void {
+    this.onGetStaffCityProvince();
+  }
+
+  onGetStaffCityProvince(): void {
+    this.reportService.getStaffCityProvince({ year: this.year }).subscribe(res => {
+      this.lineChartLabel = res.list.map(l => l._id);
+      this.staffChartDataset = res.list.map(l => l.count);
+    });
+  }
+
+  sumArrays(list: any[]): number[] {
+    const sums = list[0].map((x, index: number) => list.reduce((sum, curr) => sum + curr[index], 0));
+    return sums;
+  }
+
+  onSelectedYear(value): void {
+    this.year = new Date(value).getFullYear().toString();
+    this.onGetStaffCityProvince();
+  }
+
+  calcMaxTarget(list: number[]): number {
+    let maxTarget = 0;
+    const maxNumber = Math.max(...list);
+    if (maxNumber == 0) {
+      return 10;
+    }
+    while (maxNumber > maxTarget) {
+      if (maxTarget < 50) {
+        maxTarget += 10;
+      } else if (maxTarget < 500) {
+        maxTarget += 50;
+      } else if (maxTarget < 5000) {
+        maxTarget += 500;
+      } else {
+        maxTarget += 1000;
+      }
+    }
+    return maxTarget;
+  }
+
+  async onPrint() {
+    let docDefinition: any = await this.getDocumentDefinition(); // return document definition
+
+    let fonts = {
+      Roboto: {
+        normal: 'Roboto-Regular.ttf',
+        bold: 'Roboto-Medium.ttf',
+        italics: 'Roboto-Italic.ttf',
+        bolditalics: 'Roboto-MediumItalic.ttf'
+      },
+      Battambang: {
+        normal: 'Battambang-Regular.ttf',
+        bold: 'Battambang-Bold.ttf',
+        italics: 'Battambang-Regular.ttf',
+        bolditalics: 'Battambang-Regular.ttf'
+      }
+    };
+    pdfMake.createPdf(docDefinition, null, fonts).open();
+    // pdfMake.createPdf(docDefinition, null, fonts).download(this.selectedFilter.type.value + '-report.pdf');
+  }
+
+  async getDocumentDefinition() {
+    (<any>pdfMake).pageLayout = {
+      height: 842,
+      width: 595,
+      margins: Array(4).fill(25)
+    };
+
+    return {
+      pageSize: 'A4',
+      pageMargins: (<any>pdfMake).pageLayout.margins,
+      info: {
+        title: 'report.pdf'
+      },
+      content: [
+        {
+          alignment: 'center',
+          columns: [
+            {
+              image: await this.getBase64ImageFromURL('assets/imgs/logo.png'),
+              fit: [45, 46],
+              alignment: 'right'
+            },
+            {
+              text: [
+                {
+                  text: 'ភោជនីយដ្ឋានស្រូវ',
+                  fontSize: 18,
+                  color: '#4F9573',
+                  bold: true,
+                  alignment: 'left'
+                }
+              ],
+              margin: [0, 10]
+            }
+          ],
+          columnGap: 10,
+          margin: [0, -10, 0, 0]
+        },
+        '\n',
+        {
+          columns: [
+            {
+              text: 'ឆ្នាំ: ' + this.year,
+              fontSize: 14
+            }
+          ]
+        },
+        '\n',
+        {
+          text: 'បុគ្គលិកតាមក្រុង/ខេត្ត',
+          color: '#4F9573',
+          fontSize: 14
+        },
+        {
+          image: await this.getBase64ImageFromURLChart(),
+          width:
+            (<any>pdfMake).pageLayout.width -
+            (<any>pdfMake).pageLayout.margins[0] -
+            (<any>pdfMake).pageLayout.margins[2] // page-width - margin-left - margin-right
+        },
+        '\n\n'
+      ],
+
+      styles: {
+        header: {
+          font: 'Roboto',
+          fontSize: 18,
+          bold: true
+        },
+        bigger: {
+          font: 'Roboto',
+          fontSize: 14,
+          bold: true
+        },
+        semibold: {
+          fontSize: 18,
+          bold: true
+        }
+      },
+
+      // Default style
+      defaultStyle: {
+        font: 'Battambang',
+        fontSize: 10,
+        columnGap: 32
+      }
+    };
+  }
+
+  getBase64ImageFromURL(url: string) {
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
+
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL('image/png');
+
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+
+      img.src = url;
+    });
+  }
+
+  getBase64ImageFromURLChart() {
+    console.log(1);
+    return new Promise((resolve, reject) => {
+      var img = new Image();
+      img.setAttribute('crossOrigin', 'anonymous');
+
+      const canvas = document.querySelector('#' + 'province-of-staff' + ' canvas');
+      const url = (<any>canvas).toDataURL();
+
+      img.onload = () => {
+        var canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+
+        var dataURL = canvas.toDataURL('image/png');
+        resolve(dataURL);
+      };
+
+      img.onerror = error => {
+        reject(error);
+      };
+      img.src = url;
+    });
+  }
+}
