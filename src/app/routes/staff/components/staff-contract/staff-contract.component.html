@@ -14,7 +14,7 @@
   <div class="detail-form grid gap-16 col-sm-12">
     <div class="profile-with-name mb-16 col-span-4">
       <img class="school-profile"
-        [src]="staff?.profile ? (staff?.profile | staticFile) : '/assets/imgs/profile-default.svg'"
+        [src]="staff?.profile ? ('size=m' + staff?.profile | staticImage) : '/assets/imgs/profile-default.svg'"
         alt="profile picture">
       <div class="grid gap-4 ml-16">
         <div class="value name mb-8">{{staff | fullName}}</div>
