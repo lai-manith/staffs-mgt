@@ -4,6 +4,8 @@ import { MatIconRegistry } from '@angular/material/icon';
 import { MatSidenav } from '@angular/material/sidenav';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { ChildItem, MenuItem } from 'src/app/models/menu-item';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -17,7 +19,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent implements OnInit {
+export class ContainerComponent extends Unsubscribe implements OnInit {
   @ViewChild('sidenav') sidenav!: MatSidenav;
   menu!: MenuItem[];
   isExpanded = true;
@@ -46,6 +48,8 @@ export class ContainerComponent implements OnInit {
     private userService: UserService,
     private snackBarService: SnackbarService
   ) {
+    super();
+
     this.menuAdmin = [
       {
         title: 'ទំព័រដើម',
@@ -146,10 +150,10 @@ export class ContainerComponent implements OnInit {
     //   }
     // });
 
-    this.authSubscribe = this.authService.authChange$.subscribe(isAuth => {
+    this.authSubscribe = this.authService.authChange$.pipe(takeUntil(this.unsubscribe$)).subscribe(isAuth => {
       this.isAuth = isAuth;
       if (this.isAuth) {
-        this.profileService.getAccountInfo().subscribe(
+        this.profileService.getAccountInfo().pipe(takeUntil(this.unsubscribe$)).subscribe(
           data => {
             this.account = data;
             this.profileService.staffId = data._id;
@@ -180,7 +184,7 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit(): void {
     this.onSmallScreen();
-    this.breakpointObserver.observe([Breakpoints.Large]).subscribe((state: BreakpointState) => {
+    this.breakpointObserver.observe([Breakpoints.Large]).pipe(takeUntil(this.unsubscribe$)).subscribe((state: BreakpointState) => {
       if (state.matches) {
         this.mobileQuery = false;
       }

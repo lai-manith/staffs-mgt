@@ -12,7 +12,7 @@ import {
 import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { MatSelect } from '@angular/material/select';
 import { Filter, Option, OptionParam, useFilter } from 'src/app/models/filter';
-import { map, pairwise, filter, throttleTime } from 'rxjs/operators';
+import { map, pairwise, filter, throttleTime, takeUntil } from 'rxjs/operators';
 import EnumConstant, { UserStatusEnum } from 'src/app/models/enums/enumConstant';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { Router } from '@angular/router';
@@ -22,19 +22,21 @@ import { formatDate } from '@angular/common';
 import { StaffService } from 'src/app/services/staff.service';
 import { PositionService } from 'src/app/services/position.service';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 
 @Component({
   selector: 'app-filter',
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
-export class FilterComponent {
+export class FilterComponent extends Unsubscribe {
   constructor(
     private cdr: ChangeDetectorRef,
     private router: Router,
     private staffService: StaffService,
     private positionService: PositionService
   ) {
+    super();
     this.currentUrl = router.url;
   }
 
@@ -325,7 +327,7 @@ export class FilterComponent {
   onMergeNewFilter(): void {
     if (this.apiRoute) {
       this.faslsy = [];
-      this.apiRoute.subscribe(data => {
+      this.apiRoute.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
         for (const item in data) {
           this.faslsy.push(
             Object.values(data[item]).every((value: any) => {
@@ -384,7 +386,7 @@ export class FilterComponent {
   }
 
   getPosition(): void {
-    this.positionService.getMany({ page: 1, limit: 0, search: '' }).subscribe(data => {
+    this.positionService.getMany({ page: 1, limit: 0, search: '' }).pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       let classList = data.list as any as {
         label: string;
         value: number | string | null;

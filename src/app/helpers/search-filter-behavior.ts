@@ -1,7 +1,8 @@
 import { Params } from '@angular/router';
 import { Pagination } from '../shares/pagination/pagination';
+import { Unsubscribe } from './unsubscribe';
 
-export abstract class SearchFilter {
+export abstract class SearchFilter extends Unsubscribe {
   protected filterParams: Params = {};
   protected params: Pagination = {
     limit: 10,

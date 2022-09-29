@@ -2,6 +2,8 @@ import { formatDate } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { Staff } from 'src/app/models/staff';
 import { ContractService } from 'src/app/services/contract.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -12,7 +14,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './staff-contract-dialog.component.html',
   styleUrls: ['./staff-contract-dialog.component.scss']
 })
-export class StaffContractDialogComponent implements OnInit {
+export class StaffContractDialogComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   id: string;
   isLoading: boolean = false;
@@ -24,7 +26,9 @@ export class StaffContractDialogComponent implements OnInit {
     public data: Staff,
     private snackbarService: SnackbarService,
     private contractService: ContractService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormControl();
@@ -54,6 +58,7 @@ export class StaffContractDialogComponent implements OnInit {
     this.isLoading = true;
     this.contractService
       .updateContract(this.data._id, { new_expired_contract: formatDate(this.form.value.new_expired_contract, 'MM-dd-yyyy', 'en-US') })
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
           this.isLoading = false;

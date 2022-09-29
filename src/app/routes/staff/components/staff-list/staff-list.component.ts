@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { Staff } from 'src/app/models/staff';
 import { ExcelService } from 'src/app/services/excel.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -11,6 +11,7 @@ import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
 
 import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -18,7 +19,7 @@ import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
   templateUrl: './staff-list.component.html',
   styleUrls: ['./staff-list.component.scss']
 })
-export class StaffListComponent implements OnInit {
+export class StaffListComponent extends Unsubscribe implements OnInit {
   index: number;
   urlParam: string;
   staffs: Staff[];
@@ -32,6 +33,7 @@ export class StaffListComponent implements OnInit {
     private staffService: StaffService,
     private snackbarService: SnackbarService
   ) {
+    super();
     this.urlParam = this.route.snapshot.params.tab;
   }
   ngOnInit(): void {
@@ -106,6 +108,7 @@ export class StaffListComponent implements OnInit {
     this.staffService
       .getAll({ page: 1, limit: 0, status: this.index === 0 ? null : this.index === 2 ? false : true })
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           this.dataRender = map.list.map(data => {
             return { ...data };

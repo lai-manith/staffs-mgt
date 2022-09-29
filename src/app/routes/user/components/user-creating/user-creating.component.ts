@@ -2,7 +2,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 import { MustMatch } from 'src/app/helpers/must-match';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { DialogService } from 'src/app/services/dialog.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
@@ -28,7 +30,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
     ])
   ]
 })
-export class UserCreatingComponent implements OnInit {
+export class UserCreatingComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   imgDefault = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
   imgUrl: string = '';
@@ -49,7 +51,9 @@ export class UserCreatingComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private userService: UserService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormInit();
@@ -60,7 +64,7 @@ export class UserCreatingComponent implements OnInit {
     this.isLoading = true;
     const DATA = this.form.value;
     delete DATA.confirm_password;
-    this.userService.postFile(DATA).subscribe(
+    this.userService.postFile(DATA).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.isLoading = false;
         this.snackbarService.onShowSnackbar({
@@ -88,7 +92,7 @@ export class UserCreatingComponent implements OnInit {
   startSearch(data: string) {
     clearTimeout(this.inputTime);
     this.inputTime = setTimeout(() => {
-      this.userService.checkDuplicated({ username: data }).subscribe(res => {
+      this.userService.checkDuplicated({ username: data }).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
         if (res.find) this.form.get('username').setErrors({ duplicated: true });
       });
     }, 500);

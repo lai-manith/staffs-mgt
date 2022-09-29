@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { DialogService } from 'src/app/services/dialog.service';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -11,7 +13,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './position-editing.component.html',
   styleUrls: ['./position-editing.component.scss']
 })
-export class PositionEditingComponent implements OnInit {
+export class PositionEditingComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   isEdit: boolean = false;
   _id: string = this.route.snapshot.params.id;
@@ -23,7 +25,9 @@ export class PositionEditingComponent implements OnInit {
     private router: Router,
     private dialogService: DialogService,
     private positionService: PositionService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormInit();
@@ -31,7 +35,7 @@ export class PositionEditingComponent implements OnInit {
   }
 
   onLoad() {
-    this.positionService.getById(this._id).subscribe(
+    this.positionService.getById(this._id).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.form.patchValue({
           title: res.title,
@@ -61,7 +65,7 @@ export class PositionEditingComponent implements OnInit {
   }
 
   onUpdate() {
-    this.positionService.update(this._id, this.form.value).subscribe(
+    this.positionService.update(this._id, this.form.value).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.form.disable();
         this.snackbarService.onShowSnackbar({
@@ -86,7 +90,7 @@ export class PositionEditingComponent implements OnInit {
       .afterClosed()
       .subscribe(res => {
         if (res === 'confirm') {
-          this.positionService.delete(this._id).subscribe(
+          this.positionService.delete(this._id).pipe(takeUntil(this.unsubscribe$)).subscribe(
             res => {
               this.router.navigate(['/setting/manage-position']);
               this.snackbarService.onShowSnackbar({

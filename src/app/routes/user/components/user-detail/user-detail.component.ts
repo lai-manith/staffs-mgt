@@ -1,12 +1,12 @@
-import { ChangeDetectorRef, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { MustMatch } from 'src/app/helpers/must-match';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { User } from 'src/app/models/user';
-import { DialogService } from 'src/app/services/dialog.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { UserService } from 'src/app/services/user.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
@@ -17,7 +17,7 @@ import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pip
   templateUrl: './user-detail.component.html',
   styleUrls: ['./user-detail.component.scss']
 })
-export class UserDetailComponent implements OnInit {
+export class UserDetailComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   imgDefault = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
   imgUrl: string = '';
@@ -46,7 +46,9 @@ export class UserDetailComponent implements OnInit {
     private userService: UserService,
     private dialog: MatDialog,
     private staticFilePipe: StaticFilePipe
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onLoad();
@@ -57,6 +59,7 @@ export class UserDetailComponent implements OnInit {
     this.userService
       .getOne(this._id)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(data => {
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
           return data;
@@ -81,7 +84,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   onGetInfo() {
-    this.userService.getUserLoggedInfo().subscribe(
+    this.userService.getUserLoggedInfo().pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         if (res._id === this._id) this.isSelf = true;
         else this.isSelf = false;
@@ -110,7 +113,7 @@ export class UserDetailComponent implements OnInit {
     const DATA = this.isSelf
       ? this.form.value
       : { ...this.form.value, ...{ requester_password: this.confirmUpdateForm.get('requester_password').value } };
-    this.userService.updateFile(this._id, DATA).subscribe(
+    this.userService.updateFile(this._id, DATA).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.form.disable();
         this.snackbarService.onShowSnackbar({ message: 'edit', component: SnackbarComponent });
@@ -146,7 +149,7 @@ export class UserDetailComponent implements OnInit {
     if (this.resetPasswordForm.invalid) return;
 
     delete data.confirm_password;
-    this.userService.changePassword(this._id, data).subscribe(
+    this.userService.changePassword(this._id, data).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.snackbarService.onShowSnackbar({ message: 'edit', component: SnackbarComponent });
         this.dialog.closeAll();
@@ -173,7 +176,7 @@ export class UserDetailComponent implements OnInit {
   }
 
   onConfirmStatusSubmit() {
-    this.userService.setAccountStatus(this._id, this.confirmStatus.value).subscribe(
+    this.userService.setAccountStatus(this._id, this.confirmStatus.value).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         let message = this.accountStatus ? 'គណនីត្រូវបានបើកជាបណ្ដោះអាសន្ន' : 'គណនីត្រូវបានបិទជាបណ្ដោះអាសន្ន';
         this.snackbarService.onShowSnackbar({ message: message, component: SnackbarComponent });
@@ -226,7 +229,7 @@ export class UserDetailComponent implements OnInit {
         _id: this._id,
         otp_number: value
       };
-      this.userService.changeEmailRequest(data).subscribe(
+      this.userService.changeEmailRequest(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
         res => {
           this.snackbarService.onShowSnackbar({
             message: 'ភ្ជាប់ការប្រើប្រាស់អុីម៉ែលជោគជ័យ',
@@ -255,7 +258,7 @@ export class UserDetailComponent implements OnInit {
         _id: this._id,
         email: this.bindEmailForm.get('email').value
       };
-      this.userService.linkEmailRequest(data).subscribe(
+      this.userService.linkEmailRequest(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
         res => {
           this.isGetCode = true;
           this.startTimer();
@@ -290,7 +293,7 @@ export class UserDetailComponent implements OnInit {
         _id: this._id,
         otp_number: value
       };
-      this.userService.linkEmailAccount(data).subscribe(
+      this.userService.linkEmailAccount(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
         res => {
           this.snackbarService.onShowSnackbar({
             message: 'ភ្ជាប់ការប្រើប្រាស់អុីម៉ែលជោគជ័យ',

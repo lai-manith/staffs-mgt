@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { User } from 'src/app/models/user';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -48,6 +46,7 @@ export class UserListComponent extends SearchFilter implements OnInit {
     this.userService
       .getAll({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';

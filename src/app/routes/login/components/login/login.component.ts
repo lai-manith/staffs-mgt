@@ -2,7 +2,9 @@ import { trigger, transition, style, animate } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
 import { MustMatch } from 'src/app/helpers/must-match';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { RoleEnum } from 'src/app/models/enums/role.enum';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -53,10 +55,10 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
         style({ opacity: 1, transform: 'translate(0, 0)' }),
         animate('0ms', style({ opacity: 0, transform: 'translate(-50px, 0)' }))
       ])
-    ]),
+    ])
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   loading = false;
   formResetPassword: FormGroup;
@@ -70,7 +72,9 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private snackbarService: SnackbarService,
     private profileService: ProfileService
-  ) { }
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -80,23 +84,22 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(): void {
-
     // stop here if form is invalid
     if (this.form.invalid) {
       return;
     }
 
     this.loading = true;
-    this.authService.login(this.form.value).subscribe(
+    this.authService.login(this.form.value).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.router.navigate(['']);
       },
-      (err) => {
+      err => {
         this.loading = false;
         let message;
-        if(err.error.message === 'Not Allowed') message = 'គណនីនេះមិនអនុញ្ញាតឲ្យចូលប្រព័ន្ធទេ';
-        else​ if (err.error.status === 0) message = "ឈ្មោះ ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ"
-        this.snackbarService.onShowSnackbar({message: message, isError: true, component: SnackbarComponent});
+        if (err.error.message === 'Not Allowed') message = 'គណនីនេះមិនអនុញ្ញាតឲ្យចូលប្រព័ន្ធទេ';
+        else if (err.error.status === 0) message = 'ឈ្មោះ ឬពាក្យសម្ងាត់មិនត្រឹមត្រូវ';
+        this.snackbarService.onShowSnackbar({ message: message, isError: true, component: SnackbarComponent });
       }
     );
   }
@@ -119,12 +122,12 @@ export class LoginComponent implements OnInit {
 
   isCodeExpired: boolean = false;
   invalidCode: boolean = false;
-  resendTime: { min: number, sec: number };
-  expireTime: { min: number, sec: number };
+  resendTime: { min: number; sec: number };
+  expireTime: { min: number; sec: number };
   config = {
     allowNumbersOnly: true,
     length: 6
-  }
+  };
   emailToken: string = '';
   passwordToken: string = '';
   id: string;
@@ -135,21 +138,31 @@ export class LoginComponent implements OnInit {
       const data = {
         email: this.formEmail.get('email').value
       };
-      this.profileService.requestOTP(data).subscribe(
-        (res) => {
+      this.profileService.requestOTP(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
+        res => {
           this.formState = 2;
           this.startTimer();
           this.id = res.owner;
         },
-        (err) => {
+        err => {
           if (err.error.message == 'This email is not verify') {
-            this.snackbarService.onShowSnackbar({message: 'អុីម៉ែលនេះបានភ្ជាប់រួចហើយ', isError: true, component: SnackbarComponent});
-          }
-          else if (err.error.message == 'Not Found Email') {
-            this.snackbarService.onShowSnackbar({message: 'មិនមានគណនីអុីម៉ែលនេះទេ', isError: true, component: SnackbarComponent});
-          }
-          else {
-            this.snackbarService.onShowSnackbar({message: 'ការផ្ញើលេខកូដបរាជ័យ', isError: true, component: SnackbarComponent});
+            this.snackbarService.onShowSnackbar({
+              message: 'អុីម៉ែលនេះបានភ្ជាប់រួចហើយ',
+              isError: true,
+              component: SnackbarComponent
+            });
+          } else if (err.error.message == 'Not Found Email') {
+            this.snackbarService.onShowSnackbar({
+              message: 'មិនមានគណនីអុីម៉ែលនេះទេ',
+              isError: true,
+              component: SnackbarComponent
+            });
+          } else {
+            this.snackbarService.onShowSnackbar({
+              message: 'ការផ្ញើលេខកូដបរាជ័យ',
+              isError: true,
+              component: SnackbarComponent
+            });
           }
         }
       );
@@ -163,20 +176,30 @@ export class LoginComponent implements OnInit {
         _id: this.id,
         email: this.formEmail.get('email').value
       };
-      this.profileService.requestOTP(data).subscribe(
-        (res) => {
+      this.profileService.requestOTP(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
+        res => {
           this.formState = 2;
           this.startTimer();
         },
-        (err) => {
+        err => {
           if (err.error.message == 'This email is not verify') {
-            this.snackbarService.onShowSnackbar({message: 'អុីម៉ែលនេះបានភ្ជាប់រួចហើយ', isError: true, component: SnackbarComponent});
-          }
-          else if (err.error.message == 'Not Found Email') {
-            this.snackbarService.onShowSnackbar({message: 'មិនមានគណនីអុីម៉ែលនេះទេ', isError: true, component: SnackbarComponent});
-          }
-          else {
-            this.snackbarService.onShowSnackbar({message: 'ការផ្ញើលេខកូដបរាជ័យ', isError: true, component: SnackbarComponent});
+            this.snackbarService.onShowSnackbar({
+              message: 'អុីម៉ែលនេះបានភ្ជាប់រួចហើយ',
+              isError: true,
+              component: SnackbarComponent
+            });
+          } else if (err.error.message == 'Not Found Email') {
+            this.snackbarService.onShowSnackbar({
+              message: 'មិនមានគណនីអុីម៉ែលនេះទេ',
+              isError: true,
+              component: SnackbarComponent
+            });
+          } else {
+            this.snackbarService.onShowSnackbar({
+              message: 'ការផ្ញើលេខកូដបរាជ័យ',
+              isError: true,
+              component: SnackbarComponent
+            });
           }
         }
       );
@@ -186,24 +209,31 @@ export class LoginComponent implements OnInit {
   onOtpChange(value) {
     this.invalidCode = false;
     if (value.length == 6) {
-      this.formResetPassword = this.formBuilder.group({
-        new_password: [null, [Validators.required, Validators.minLength(8)]],
-        confirm_password: [null, Validators.required]
-      }, {
-        validators: MustMatch('new_password', 'confirm_password')
-      });
+      this.formResetPassword = this.formBuilder.group(
+        {
+          new_password: [null, [Validators.required, Validators.minLength(8)]],
+          confirm_password: [null, Validators.required]
+        },
+        {
+          validators: MustMatch('new_password', 'confirm_password')
+        }
+      );
       const data = {
         _id: this.id,
         otp_number: value
       };
-      this.profileService.verifyOTP(data).subscribe(
-        (res) => {
+      this.profileService.verifyOTP(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
+        res => {
           this.startTokenTimer();
           this.formState = 3;
         },
-        (err) => {
+        err => {
           this.invalidCode = true;
-          this.snackbarService.onShowSnackbar({message: 'លេខកូដមិនត្រឹមត្រូវ', isError: true, component: SnackbarComponent});
+          this.snackbarService.onShowSnackbar({
+            message: 'លេខកូដមិនត្រឹមត្រូវ',
+            isError: true,
+            component: SnackbarComponent
+          });
         }
       );
     }
@@ -220,8 +250,7 @@ export class LoginComponent implements OnInit {
       if (this.resendTime.sec - 1 == -1) {
         this.resendTime.min -= 1;
         this.resendTime.sec = 59;
-      }
-      else {
+      } else {
         this.resendTime.sec -= 1;
       }
       if (this.resendTime.min === 0 && this.resendTime.sec === 0) {
@@ -242,8 +271,7 @@ export class LoginComponent implements OnInit {
       if (this.expireTime.sec - 1 == -1) {
         this.expireTime.min -= 1;
         this.expireTime.sec = 59;
-      }
-      else {
+      } else {
         this.expireTime.sec -= 1;
       }
       if (this.expireTime.min === 0 && this.expireTime.sec === 0) {
@@ -258,15 +286,22 @@ export class LoginComponent implements OnInit {
       const data = {
         _id: this.id,
         password: this.formResetPassword.get('new_password').value
-      }
-      this.profileService.changePassword(data).subscribe(
-        (res) => {
-          this.snackbarService.onShowSnackbar({message: 'ការកំណត់ពាក្យសម្ងាត់ថ្មីជោគជ័យ', component: SnackbarComponent});
+      };
+      this.profileService.changePassword(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
+        res => {
+          this.snackbarService.onShowSnackbar({
+            message: 'ការកំណត់ពាក្យសម្ងាត់ថ្មីជោគជ័យ',
+            component: SnackbarComponent
+          });
           clearInterval(this.tokenTimer);
           this.formState = 0;
         },
-        (err) => {
-          this.snackbarService.onShowSnackbar({message: 'ការកំណត់ពាក្យសម្ងាត់ថ្មីបរាជ័យ', isError: true, component: SnackbarComponent});
+        err => {
+          this.snackbarService.onShowSnackbar({
+            message: 'ការកំណត់ពាក្យសម្ងាត់ថ្មីបរាជ័យ',
+            isError: true,
+            component: SnackbarComponent
+          });
         }
       );
     }

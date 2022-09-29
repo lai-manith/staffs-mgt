@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/operators';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { Position } from 'src/app/models/position';
 import { PositionService } from 'src/app/services/position.service';
@@ -34,7 +35,7 @@ export class PositionComponent extends SearchFilter implements OnInit {
 
   onInitData(pagination?: Pagination) {
     this.setLoading(true);
-    this.positionService.getMany({ ...this.params, ...this.filterParams, ...pagination }).subscribe(
+    this.positionService.getMany({ ...this.params, ...this.filterParams, ...pagination }).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.isLoading = true;
         this.dataSource = new MatTableDataSource(res.list);

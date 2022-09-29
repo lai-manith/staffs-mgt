@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { DialogService } from 'src/app/services/dialog.service';
 import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -11,7 +13,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './position-creating.component.html',
   styleUrls: ['./position-creating.component.scss']
 })
-export class PositionCreatingComponent implements OnInit {
+export class PositionCreatingComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   _id: string = this.route.snapshot.params.id;
 
@@ -21,7 +23,9 @@ export class PositionCreatingComponent implements OnInit {
     private snackbarService: SnackbarService,
     private router: Router,
     private positionService: PositionService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormInit();
@@ -29,7 +33,7 @@ export class PositionCreatingComponent implements OnInit {
 
   onSubmit() {
     if (this.form.invalid) return;
-    this.positionService.create(this.form.value).subscribe(
+    this.positionService.create(this.form.value).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.snackbarService.onShowSnackbar({ message: 'add', component: SnackbarComponent });
         this.router.navigate(['/setting/manage-position/detail/' + res._id]);

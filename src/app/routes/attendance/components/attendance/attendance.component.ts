@@ -3,6 +3,8 @@ import { Component, Inject, LOCALE_ID, OnInit, ViewChild } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { Attendance, AttendanceCreateModel, AttendanceList } from 'src/app/models/staff-attendance';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffAttendanceService } from 'src/app/services/staff-attendance.service';
@@ -13,12 +15,14 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './attendance.component.html',
   styleUrls: ['./attendance.component.scss']
 })
-export class AttendanceComponent implements OnInit {
+export class AttendanceComponent extends Unsubscribe implements OnInit {
   constructor(
     private attendanceService: StaffAttendanceService,
     @Inject(LOCALE_ID) private locale: string,
     private snackbarService: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.attendantDate = new Date();
@@ -81,7 +85,7 @@ export class AttendanceComponent implements OnInit {
     };
 
     this.isSaved = true;
-    this.attendanceService.getAttendance({ date: tempDate, limit: 0 }).subscribe(
+    this.attendanceService.getAttendance({ date: tempDate, limit: 0 }).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.attendance = res.list;
         if (this.attendantDate <= today) {
@@ -128,7 +132,7 @@ export class AttendanceComponent implements OnInit {
       date: this.attendanceCreate.date,
       list: this.attendanceCreate.list.filter(e => e.staff != 'all')
     };
-    this.attendanceService.createAttendance(data).subscribe(
+    this.attendanceService.createAttendance(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.isLoading = false;
         this.snackbarService.onShowSnackbar({

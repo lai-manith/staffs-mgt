@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { ManageSalary } from 'src/app/models/salary';
 import { Staff } from 'src/app/models/staff';
 import { DialogService } from 'src/app/services/dialog.service';
@@ -17,7 +18,7 @@ import { StaffSalaryDialogComponent } from '../staff-salary-dialog/staff-salary-
   templateUrl: './staff-salary.component.html',
   styleUrls: ['./staff-salary.component.scss']
 })
-export class StaffSalaryComponent implements OnInit {
+export class StaffSalaryComponent extends Unsubscribe implements OnInit {
   displayedColumns: string[] = ['ID', 'current_salary', 'last_salary', 'createAt', 'status', 'action'];
   dataSource: MatTableDataSource<ManageSalary> = new MatTableDataSource([]);
   total: number;
@@ -37,7 +38,9 @@ export class StaffSalaryComponent implements OnInit {
     private salaryService: SalaryService,
     private dialogService: DialogService,
     private staffService: StaffService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.onLoad();
@@ -48,6 +51,7 @@ export class StaffSalaryComponent implements OnInit {
     this.staffService
       .getById(this.route.snapshot.params.id)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(data => {
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
           data.status =
@@ -73,6 +77,7 @@ export class StaffSalaryComponent implements OnInit {
     this.salaryService
       .getMany(this.params)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           map.list.forEach(element => {
             element.last_salary = element.last_salary.toLocaleString('en-US', {
@@ -130,7 +135,7 @@ export class StaffSalaryComponent implements OnInit {
       .afterClosed()
       .subscribe(res => {
         if (res === 'confirm') {
-          this.salaryService.delete(id).subscribe(
+          this.salaryService.delete(id).pipe(takeUntil(this.unsubscribe$)).subscribe(
             res => {
               this.onLoad();
               this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Params } from '@angular/router';
 import { map } from 'rxjs/internal/operators/map';
+import { takeUntil } from 'rxjs/operators';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
@@ -77,6 +78,7 @@ export class AttendanceHistoryRecordComponent extends SearchFilter implements On
     this.staffService
       .getHistoryRecord({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (const element of map.list) {
             element.attendance_type = AttendanceTypeEnum[element.attendance_type] as any;

@@ -6,14 +6,18 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts.js';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
+import { takeUntil } from 'rxjs/operators';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 @Component({
   selector: 'app-staff-position-by-year',
   templateUrl: './staff-position-by-year.component.html',
   styleUrls: ['./staff-position-by-year.component.scss']
 })
-export class StaffPositionByYearComponent implements OnInit {
-  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
+export class StaffPositionByYearComponent extends Unsubscribe implements OnInit {
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {
+    super();
+  }
 
   year: string = new Date().getFullYear().toString();
   maxDate: Date = new Date();
@@ -30,7 +34,7 @@ export class StaffPositionByYearComponent implements OnInit {
   }
 
   onGetGender(): void {
-    this.reportService.getStaffPosition({ year: this.year }).subscribe(
+    this.reportService.getStaffPosition({ year: this.year }).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         let labels = [],
           female = [],

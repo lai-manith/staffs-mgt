@@ -6,6 +6,8 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
 
 import * as pdfMake from 'pdfmake/build/pdfmake';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts.js';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
+import { takeUntil } from 'rxjs/operators';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -13,8 +15,10 @@ import * as pdfFonts from 'src/assets/fonts/vfs_fonts.js';
   templateUrl: './staff-gender-by-year.component.html',
   styleUrls: ['./staff-gender-by-year.component.scss']
 })
-export class StaffGenderByYearComponent implements OnInit {
-  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
+export class StaffGenderByYearComponent extends Unsubscribe implements OnInit {
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {
+    super();
+  }
 
   dougnutChartDataset: number[];
   doughnutChartLabels: string[];
@@ -34,7 +38,7 @@ export class StaffGenderByYearComponent implements OnInit {
   }
 
   onGetGender(): void {
-    this.reportService.getStaffAgeGender({ year: this.year }).subscribe(
+    this.reportService.getStaffAgeGender({ year: this.year }).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.dougnutChartDataset = [res.data.total_female, res.data.total_male];
         this.doughnutChartLabels =

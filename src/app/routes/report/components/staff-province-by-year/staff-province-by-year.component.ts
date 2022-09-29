@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ChartData, ChartOptions, InteractionMode, ChartDataset } from 'chart.js';
 import pdfMake from 'pdfmake/build/pdfmake';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { ReportService } from 'src/app/services/report.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/snackbar.component';
@@ -10,8 +12,10 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './staff-province-by-year.component.html',
   styleUrls: ['./staff-province-by-year.component.scss']
 })
-export class StaffProvinceByYearComponent implements OnInit {
-  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {}
+export class StaffProvinceByYearComponent extends Unsubscribe implements OnInit {
+  constructor(private reportService: ReportService, private snackbarService: SnackbarService) {
+    super();
+  }
 
   year: string = new Date().getFullYear().toString();
   maxDate: Date = new Date();
@@ -28,7 +32,7 @@ export class StaffProvinceByYearComponent implements OnInit {
   }
 
   onGetStaffCityProvince(): void {
-    this.reportService.getStaffCityProvince({ year: this.year }).subscribe(res => {
+    this.reportService.getStaffCityProvince({ year: this.year }).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       this.lineChartLabel = res.list.map(l => l._id);
       this.staffChartDataset = res.list.map(l => l.count);
     });

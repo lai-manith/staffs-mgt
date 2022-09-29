@@ -4,9 +4,10 @@ import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { Staff } from 'src/app/models/staff';
-import { AttendanceHistory, AttendanceType } from 'src/app/models/staff-attendance';
+import { AttendanceType } from 'src/app/models/staff-attendance';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffAttendanceService } from 'src/app/services/staff-attendance.service';
 import { Pagination } from 'src/app/shares/pagination/pagination';
@@ -18,13 +19,15 @@ import { AttendanceHistoryRecordComponent } from '../attendance-history-record/a
   templateUrl: './attendance-history.component.html',
   styleUrls: ['./attendance-history.component.scss']
 })
-export class AttendanceHistoryComponent implements OnInit {
+export class AttendanceHistoryComponent extends Unsubscribe implements OnInit {
   constructor(
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private staffService: StaffAttendanceService,
     private snackbarService: SnackbarService
-  ) {}
+  ) {
+    super();
+  }
 
   //*Array Type
   displayedColumns: string[] = [
@@ -78,6 +81,7 @@ export class AttendanceHistoryComponent implements OnInit {
     this.staffService
       .getHistory(this.params)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (let data of map.staff) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';

@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { CityProvinces, Districts, Communes, Villages, Nationality } from 'src/app/models/address';
 import { Position } from 'src/app/models/position';
 import { AddressService } from 'src/app/services/address.service';
@@ -16,7 +18,7 @@ import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.p
   templateUrl: './staff-creating.component.html',
   styleUrls: ['./staff-creating.component.scss']
 })
-export class StaffCreatingComponent implements OnInit {
+export class StaffCreatingComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   imgDefault = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1638865473/image/user-icon_n2sii7.svg';
   imgUrl: string = '';
@@ -38,8 +40,10 @@ export class StaffCreatingComponent implements OnInit {
     private snackBarService: SnackbarService,
     private readonly staffService: StaffService,
     private addressService: AddressService,
-    private staticImagePipe: StaticImagePipe
-  ) {}
+    private staticImagePipe: StaticImagePipe,
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormInit();
@@ -51,7 +55,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   onLoad() {
-    this.staffService.getById(this.route.snapshot.params.id).subscribe(
+    this.staffService.getById(this.route.snapshot.params.id).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         let image = res?.profile ? (this.staticImagePipe.transform('size=m' + res.profile) as string) : null;
         this.form.patchValue({
@@ -150,7 +154,7 @@ export class StaffCreatingComponent implements OnInit {
     DATA.address = JSON.stringify(DATA.address);
     DATA.place_of_birth = JSON.stringify(DATA.place_of_birth);
 
-    this.staffService.postFile(DATA).subscribe(
+    this.staffService.postFile(DATA).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.isLoading = false;
         this.snackBarService.onShowSnackbar({
@@ -179,7 +183,7 @@ export class StaffCreatingComponent implements OnInit {
     //TODO: correct data to submit
     DATA.address = JSON.stringify(DATA.address);
     DATA.place_of_birth = JSON.stringify(DATA.place_of_birth);
-    this.staffService.updateFile(this._id, DATA).subscribe(
+    this.staffService.updateFile(this._id, DATA).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.isLoading = false;
         this.snackBarService.onShowSnackbar({
@@ -255,7 +259,7 @@ export class StaffCreatingComponent implements OnInit {
       limit: 0,
       search: ''
     };
-    this.positionService.getMany(param).subscribe(
+    this.positionService.getMany(param).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         res.list.forEach(element => {
           this.position.push({
@@ -316,7 +320,7 @@ export class StaffCreatingComponent implements OnInit {
   isCVClick: boolean;
   cityProvinceList: CityProvinces[];
   getCityProvinces() {
-    this.addressService.getCityProvince().subscribe(res => {
+    this.addressService.getCityProvince().pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.cityProvinces = res['list'];
       }
@@ -324,7 +328,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getNationality() {
-    this.addressService.getNationality().subscribe(res => {
+    this.addressService.getNationality().pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.ethnicity = res['list'];
         this.nationality = res['list'];
@@ -333,7 +337,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getBirthDistricts(_id: number) {
-    this.addressService.getDistrict(_id).subscribe(res => {
+    this.addressService.getDistrict(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.birthDistricts = res['list'];
       }
@@ -341,7 +345,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getBirthCommunes(_id: number) {
-    this.addressService.getCommune(_id).subscribe(res => {
+    this.addressService.getCommune(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.birthCommunes = res['list'];
       }
@@ -349,7 +353,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getBirthVillages(_id: number) {
-    this.addressService.getVillage(_id).subscribe(res => {
+    this.addressService.getVillage(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.birthVillages = res['list'];
       }
@@ -433,7 +437,7 @@ export class StaffCreatingComponent implements OnInit {
   currentVillages: Villages[];
 
   getCurrentDistricts(_id: number) {
-    this.addressService.getDistrict(_id).subscribe(res => {
+    this.addressService.getDistrict(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.currentDistricts = res['list'];
       }
@@ -441,7 +445,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getCurrentCommunes(_id: number) {
-    this.addressService.getCommune(_id).subscribe(res => {
+    this.addressService.getCommune(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.currentCommunes = res['list'];
       }
@@ -449,7 +453,7 @@ export class StaffCreatingComponent implements OnInit {
   }
 
   getCurrentVillages(_id: number) {
-    this.addressService.getVillage(_id).subscribe(res => {
+    this.addressService.getVillage(_id).pipe(takeUntil(this.unsubscribe$)).subscribe(res => {
       if (res) {
         this.currentVillages = res['list'];
       }

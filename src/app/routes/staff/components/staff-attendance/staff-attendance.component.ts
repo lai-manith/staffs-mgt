@@ -2,8 +2,9 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Params } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { AttendanceTypeEnum } from 'src/app/models/enums/attendance-type.enum';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
@@ -78,6 +79,7 @@ export class StaffAttendanceComponent extends SearchFilter implements OnInit {
           return map;
         })
       )
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {
           this.setLoading(false);

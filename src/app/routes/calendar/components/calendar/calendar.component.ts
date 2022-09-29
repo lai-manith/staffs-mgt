@@ -6,7 +6,8 @@ import { MatDatepicker } from '@angular/material/datepicker';
 import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { StaffDayOff } from 'src/app/models/calendar';
 import { Staff } from 'src/app/models/staff';
 import { CalendarService } from 'src/app/services/calendar.service';
@@ -53,7 +54,7 @@ export class CalendarDay {
     ])
   ]
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent extends Unsubscribe implements OnInit {
   calendar: CalendarDay[] = [];
   monthNames = [
     'January',
@@ -98,7 +99,9 @@ export class CalendarComponent implements OnInit {
     private readonly calendarService: CalendarService,
     private dialog: MatDialog,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.generateCalendarDays(new Date());
@@ -168,7 +171,7 @@ export class CalendarComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result: StaffDayOff) => {
       if (result) {
         result.day_off_date = date;
-        this.calendarService.create(result).subscribe(
+        this.calendarService.create(result).pipe(takeUntil(this.unsubscribe$)).subscribe(
           res => {
             this.snackBarService.onShowSnackbar({ message: 'add', component: SnackbarComponent });
             this.onGetStaffDayOff();
@@ -192,7 +195,7 @@ export class CalendarComponent implements OnInit {
   // }
 
   onDeleteDayOff(id: string) {
-    this.calendarService.delete(id).subscribe(
+    this.calendarService.delete(id).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });
         this.generateCalendarDays(new Date(this.date));
@@ -212,7 +215,7 @@ export class CalendarComponent implements OnInit {
   //     day_off_date: this.dateDayOff,
   //     staff: this.staffSelected,
   //   };
-  //   this.calendarService.create(data).subscribe(
+  //   this.calendarService.create(data).pipe(takeUntil(this.unsubscribe$)).subscribe(
   //     (res) => {
   //       this.snackBarService.onShowSnackbar('add', true, SnackbarComponent);
   //       this.onGetStaffDayOff();

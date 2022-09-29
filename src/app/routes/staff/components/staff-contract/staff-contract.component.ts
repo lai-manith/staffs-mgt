@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { ManageContract } from 'src/app/models/contract';
 import { Staff } from 'src/app/models/staff';
 import { ContractService } from 'src/app/services/contract.service';
@@ -17,7 +18,7 @@ import { StaffContractDialogComponent } from '../staff-contract-dialog/staff-con
   templateUrl: './staff-contract.component.html',
   styleUrls: ['./staff-contract.component.scss']
 })
-export class StaffContractComponent implements OnInit {
+export class StaffContractComponent extends Unsubscribe implements OnInit {
 
   displayedColumns: string[] = ['ID', 'hire_date', 'current_expired_contract', 'new_expired_contract', 'current_duration', 'duration', 'duration_total', 'createAt', 'action'];
   dataSource: MatTableDataSource<ManageContract> = new MatTableDataSource([]);
@@ -33,13 +34,14 @@ export class StaffContractComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private router: Router,
     private route: ActivatedRoute,
     private snackBarService: SnackbarService,
     private contractService: ContractService,
     private dialogService: DialogService,
     private staffService: StaffService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.onLoad();
@@ -50,6 +52,7 @@ export class StaffContractComponent implements OnInit {
     this.staffService
       .getById(this.route.snapshot.params.id)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(data => {
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
           return data;
@@ -73,6 +76,7 @@ export class StaffContractComponent implements OnInit {
     this.contractService
       .getMany(this.params)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           map.list.forEach(element => {
             element.status =
@@ -124,7 +128,7 @@ export class StaffContractComponent implements OnInit {
       .afterClosed()
       .subscribe(res => {
         if (res === 'confirm') {
-          this.contractService.delete(id).subscribe(
+          this.contractService.delete(id).pipe(takeUntil(this.unsubscribe$)).subscribe(
             res => {
               this.onLoad();
               this.snackBarService.onShowSnackbar({ message: 'delete', component: SnackbarComponent });

@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { ChartData, ChartOptions, InteractionMode, ChartDataset } from 'chart.js';
 import moment from 'moment';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { SalarySummary } from 'src/app/models/dashboard';
 import { UserStatusEnum } from 'src/app/models/enums/user-status.enum';
 import { DashboardService } from 'src/app/services/dashboard.service';
@@ -15,12 +16,13 @@ import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent extends Unsubscribe {
   constructor(
     private dashboardService: DashboardService,
     private snackbarService: SnackbarService,
     private khmerMonth: MonthPipe
   ) {
+    super();
     this.onGetGender();
     this.onGetStaffPosition();
     this.onGetSalarySummary();
@@ -46,26 +48,30 @@ export class HomeComponent {
   );
 
   onGetGender(): void {
-    this.dashboardService.getGender().subscribe(
-      res => {
-        this.dougnutChartDataset = [res.total_female, res.total_male];
-        this.doughnutChartLabels = ['បុគ្គលិកស្រី', 'បុគ្គលិកប្រុស'];
-        this.dougnutChartDataTotal = res.total;
-      },
-      err => {
-        this.snackbarService.onShowSnackbar({
-          message: err.error.message,
-          isError: true,
-          component: SnackbarComponent
-        });
-      }
-    );
+    this.dashboardService
+      .getGender()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        res => {
+          this.dougnutChartDataset = [res.total_female, res.total_male];
+          this.doughnutChartLabels = ['បុគ្គលិកស្រី', 'បុគ្គលិកប្រុស'];
+          this.dougnutChartDataTotal = res.total;
+        },
+        err => {
+          this.snackbarService.onShowSnackbar({
+            message: err.error.message,
+            isError: true,
+            component: SnackbarComponent
+          });
+        }
+      );
   }
 
   onGetSalarySummary(): void {
     this.dashboardService
       .getSalarySummary()
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           // map.max_salary = map.max_salary.toLocaleString('en-US', {
           //   style: 'currency',
@@ -107,83 +113,86 @@ export class HomeComponent {
   }
 
   onGetStaffPosition(): void {
-    this.dashboardService.getStaffByPosition().subscribe(
-      res => {
-        let labels = [],
-          female = [],
-          male = [],
-          data = [];
+    this.dashboardService
+      .getStaffByPosition()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        res => {
+          let labels = [],
+            female = [],
+            male = [],
+            data = [];
 
-        res.list.map((res: any) => {
-          labels.push(res.name);
-          female.push(res.total_female);
-          male.push(res.total_male);
-        });
-        data.push(female, male);
+          res.list.map((res: any) => {
+            labels.push(res.name);
+            female.push(res.total_female);
+            male.push(res.total_male);
+          });
+          data.push(female, male);
 
-        const datasets: ChartDataset[] = [
-          {
-            label: 'បុគ្គលិកស្រី',
-            backgroundColor: this.backgroundColor[0],
-            hoverBackgroundColor: this.backgroundColor[0],
-            barThickness: 16,
-            data: data[0]
-          },
-          {
-            label: 'បុគ្គលិកប្រុស',
-            backgroundColor: this.backgroundColor[1],
-            hoverBackgroundColor: this.backgroundColor[1],
-            barThickness: 16,
-            data: data[1]
-          }
-        ];
-
-        const summaryList = this.sumArrays(data);
-        let maxTarget = 0;
-
-        if (summaryList?.length > 0) {
-          maxTarget = this.calcMaxTarget(summaryList);
-        }
-
-        const options: ChartOptions = {
-          indexAxis: 'y',
-          scales: {
-            // configured into stacked bar charts by changing the settings on the X and Y axes to enable stacking
-            x: {
-              stacked: true,
-              grid: {
-                borderDash: [5]
-              },
-              ticks: {
-                stepSize: maxTarget / 5
-              },
-              min: 0,
-              max: maxTarget
+          const datasets: ChartDataset[] = [
+            {
+              label: 'បុគ្គលិកស្រី',
+              backgroundColor: this.backgroundColor[0],
+              hoverBackgroundColor: this.backgroundColor[0],
+              barThickness: 16,
+              data: data[0]
             },
-            y: {
-              stacked: true,
-              grid: {
-                display: false
+            {
+              label: 'បុគ្គលិកប្រុស',
+              backgroundColor: this.backgroundColor[1],
+              hoverBackgroundColor: this.backgroundColor[1],
+              barThickness: 16,
+              data: data[1]
+            }
+          ];
+
+          const summaryList = this.sumArrays(data);
+          let maxTarget = 0;
+
+          if (summaryList?.length > 0) {
+            maxTarget = this.calcMaxTarget(summaryList);
+          }
+
+          const options: ChartOptions = {
+            indexAxis: 'y',
+            scales: {
+              // configured into stacked bar charts by changing the settings on the X and Y axes to enable stacking
+              x: {
+                stacked: true,
+                grid: {
+                  borderDash: [5]
+                },
+                ticks: {
+                  stepSize: maxTarget / 5
+                },
+                min: 0,
+                max: maxTarget
               },
-              ticks: {
-                font: {
-                  family: "'Open Sans', Khmer, 'system ui'"
+              y: {
+                stacked: true,
+                grid: {
+                  display: false
+                },
+                ticks: {
+                  font: {
+                    family: "'Open Sans', Khmer, 'system ui'"
+                  }
                 }
               }
             }
-          }
-        };
+          };
 
-        this.config(labels, datasets, options, true, 'index');
-      },
-      err => {
-        this.snackbarService.onShowSnackbar({
-          message: err.error.message,
-          isError: true,
-          component: SnackbarComponent
-        });
-      }
-    );
+          this.config(labels, datasets, options, true, 'index');
+        },
+        err => {
+          this.snackbarService.onShowSnackbar({
+            message: err.error.message,
+            isError: true,
+            component: SnackbarComponent
+          });
+        }
+      );
   }
 
   getStaffAttendance(): void {

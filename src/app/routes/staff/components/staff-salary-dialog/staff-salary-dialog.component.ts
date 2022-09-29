@@ -1,6 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { takeUntil } from 'rxjs/operators';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { Staff } from 'src/app/models/staff';
 import { SalaryService } from 'src/app/services/salary.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -11,7 +13,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './staff-salary-dialog.component.html',
   styleUrls: ['./staff-salary-dialog.component.scss']
 })
-export class StaffSalaryDialogComponent implements OnInit {
+export class StaffSalaryDialogComponent extends Unsubscribe implements OnInit {
   form: FormGroup;
   id: string;
   isLoading: boolean = false;
@@ -23,7 +25,9 @@ export class StaffSalaryDialogComponent implements OnInit {
     public data: Staff,
     private snackbarService: SnackbarService,
     private salaryService: SalaryService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onFormControl();
@@ -49,24 +53,27 @@ export class StaffSalaryDialogComponent implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.salaryService.updateSalary(this.data._id, { salary: this.form.value.new_salary }).subscribe(
-      res => {
-        this.isLoading = false;
-        this.snackbarService.onShowSnackbar({
-          message: 'ប្រាក់ខែត្រូវបានកែប្រែដោយជោគជ័យ',
-          component: SnackbarComponent
-        });
-        this.dialogRef.close(this.form.value);
-      },
-      err => {
-        console.log(err);
-        this.isLoading = false;
-        this.snackbarService.onShowSnackbar({
-          message: err.error.message,
-          component: SnackbarComponent,
-          isError: true
-        })
-      }
-    );
+    this.salaryService
+      .updateSalary(this.data._id, { salary: this.form.value.new_salary })
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        res => {
+          this.isLoading = false;
+          this.snackbarService.onShowSnackbar({
+            message: 'ប្រាក់ខែត្រូវបានកែប្រែដោយជោគជ័យ',
+            component: SnackbarComponent
+          });
+          this.dialogRef.close(this.form.value);
+        },
+        err => {
+          console.log(err);
+          this.isLoading = false;
+          this.snackbarService.onShowSnackbar({
+            message: err.error.message,
+            component: SnackbarComponent,
+            isError: true
+          });
+        }
+      );
   }
 }

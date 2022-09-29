@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
 import { Filter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
@@ -72,6 +72,7 @@ export class StudentListDialogComponent extends SearchFilter implements OnInit {
     this.staffService
       .getMany({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';

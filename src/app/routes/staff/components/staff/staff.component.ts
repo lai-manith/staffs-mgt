@@ -1,13 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router, ActivatedRoute } from '@angular/router';
-import { filter, map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 import { SearchFilter } from 'src/app/helpers/search-filter-behavior';
-import { CityProvinces } from 'src/app/models/address';
-import { Filter, useFilter } from 'src/app/models/filter';
+import { useFilter } from 'src/app/models/filter';
 import { Staff } from 'src/app/models/staff';
-import { PositionService } from 'src/app/services/position.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
 import { StaffService } from 'src/app/services/staff.service';
 import { Pagination } from 'src/app/shares/pagination/pagination';
@@ -59,7 +56,6 @@ export class StaffComponent extends SearchFilter implements OnInit {
     private route: ActivatedRoute,
     public staffService: StaffService,
     private snackBarService: SnackbarService,
-    private readonly positionService: PositionService
   ) {
     super();
   }
@@ -77,6 +73,7 @@ export class StaffComponent extends SearchFilter implements OnInit {
     this.staffService
       .getAll({ ...this.params, ...this.filterParams, ...pagination })
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';

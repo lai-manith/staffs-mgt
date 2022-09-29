@@ -9,11 +9,11 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
 
 import * as pdfMake from '../../../../../../node_modules/pdfmake/build/pdfmake.js';
 import * as pdfFonts from 'src/assets/fonts/vfs_fonts';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
 import { StaticFilePipe } from 'src/app/shares/static-file/pipes/static-file.pipe';
 import { DurationPipe } from 'src/app/shares/static-month/pipe/duration.pipe';
 import { MonthPipe } from 'src/app/shares/static-month/pipe/month.pipe';
-import { Location } from '@angular/common';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 (pdfMake as any).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -21,7 +21,7 @@ import { Location } from '@angular/common';
   templateUrl: './staff-editing.component.html',
   styleUrls: ['./staff-editing.component.scss']
 })
-export class StaffEditingComponent implements OnInit {
+export class StaffEditingComponent extends Unsubscribe implements OnInit {
   imgDefault = 'assets/imgs/profile-default.svg';
   imgActive: string = 'https://res.cloudinary.com/dxrkctl9c/image/upload/v1639121305/image/password-animate_kl148c.svg';
   staff: Staff;
@@ -40,7 +40,9 @@ export class StaffEditingComponent implements OnInit {
     private staticImagePipe: StaticFilePipe,
     private durationPipe: DurationPipe,
     private monthPipe: MonthPipe,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.onLoad();
@@ -50,6 +52,7 @@ export class StaffEditingComponent implements OnInit {
     this.staffService
       .getById(this.route.snapshot.params.id)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(data => {
           this.isActive = data.status;
           data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
@@ -88,7 +91,7 @@ export class StaffEditingComponent implements OnInit {
       .afterClosed()
       .subscribe(res => {
         if (res === 'confirm') {
-          this.staffService.delete(this._id).subscribe(
+          this.staffService.delete(this._id).pipe(takeUntil(this.unsubscribe$)).subscribe(
             res => {
               this.router.navigate(['../../'], { relativeTo: this.route });
               this.snackBarService.onShowSnackbar({
@@ -125,7 +128,7 @@ export class StaffEditingComponent implements OnInit {
   }
 
   onConfirmStatusSubmit(status: boolean) {
-    this.staffService.setStatus(this._id).subscribe(
+    this.staffService.setStatus(this._id).pipe(takeUntil(this.unsubscribe$)).subscribe(
       res => {
         let message = this.isActive ? 'គណនីត្រូវបានបិទជាបណ្ដោះអាសន្ន' : 'គណនីត្រូវបានបើកជាបណ្ដោះអាសន្ន';
         this.snackBarService.onShowSnackbar({
@@ -189,6 +192,7 @@ export class StaffEditingComponent implements OnInit {
           ? (this.staticImagePipe.transform(this.staff?.profile) as string)
           : 'assets/imgs/profile-default.png'
       })
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         (res: any) => {
           this.isLoading = false;

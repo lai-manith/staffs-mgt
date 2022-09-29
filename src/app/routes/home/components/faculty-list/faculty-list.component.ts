@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router, ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs';
+import { map, takeUntil } from 'rxjs';
+import { Unsubscribe } from 'src/app/helpers/unsubscribe';
 import { Staff } from 'src/app/models/staff';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import { SnackbarService } from 'src/app/services/snackbar.service';
@@ -13,7 +12,7 @@ import { SnackbarComponent } from 'src/app/shares/snackbar/components/snackbar/s
   templateUrl: './faculty-list.component.html',
   styleUrls: ['./faculty-list.component.scss']
 })
-export class FacultyListComponent {
+export class FacultyListComponent extends Unsubscribe {
   displayedColumns: string[] = [
     'ID',
     'name',
@@ -42,7 +41,9 @@ export class FacultyListComponent {
   constructor(
     private dashboardService: DashboardService,
     private snackBarService: SnackbarService,
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit() {
     this.onLoad();
@@ -53,6 +54,7 @@ export class FacultyListComponent {
     this.dashboardService
       .getNearlyExpiredStaff(this.params)
       .pipe(
+        takeUntil(this.unsubscribe$),
         map(map => {
           for (let data of map.list) {
             data.gender = data.gender === 'male' ? 'ប្រុស' : 'ស្រី';
