@@ -57,7 +57,7 @@ export class StaffContractDialogComponent extends Unsubscribe implements OnInit 
     }
     this.isLoading = true;
     this.contractService
-      .updateContract(this.data._id, { new_expired_contract: formatDate(this.form.value.new_expired_contract, 'MM-dd-yyyy', 'en-US') })
+      .updateContract(this.data._id, { new_expired_contract: this.form.value.new_expired_contract })
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         res => {

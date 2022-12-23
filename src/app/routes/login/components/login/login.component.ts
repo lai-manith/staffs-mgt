@@ -147,7 +147,7 @@ export class LoginComponent extends Unsubscribe implements OnInit {
         err => {
           if (err.error.message == 'This email is not verify') {
             this.snackbarService.onShowSnackbar({
-              message: 'អុីម៉ែលនេះបានភ្ជាប់រួចហើយ',
+              message: 'អុីម៉ែលនេះមិនអាចភ្ជាប់បានទេ',
               isError: true,
               component: SnackbarComponent
             });
