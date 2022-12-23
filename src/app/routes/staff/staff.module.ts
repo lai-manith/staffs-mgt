@@ -46,6 +46,7 @@ import { YearPickerModule } from 'src/app/shares/year-picker/year-picker.module'
 import { StaticImagePipe } from 'src/app/shares/static-file/pipes/static-image.pipe';
 import { PhoneMaskModule } from 'src/app/shares/phone/phone-mask.module';
 import { SearchbarInSelectOptionModule } from 'src/app/shares/searchbar-in-select-option/searchbar-in-select-option.module';
+import { NumberModule } from 'src/app/shares/number/number.module';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { SearchbarInSelectOptionModule } from 'src/app/shares/searchbar-in-selec
     AttendanceTranslateModule,
     YearPickerModule,
     PhoneMaskModule,
-    SearchbarInSelectOptionModule
+    SearchbarInSelectOptionModule,
+    NumberModule
   ],
   providers: [StaticFilePipe, DurationPipe, MonthPipe, StaticImagePipe]
 })
